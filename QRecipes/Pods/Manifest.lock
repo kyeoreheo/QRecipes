@@ -64,10 +64,12 @@ PODS:
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
   - PromisesObjC (1.2.8)
+  - SnapKit (5.0.1)
 
 DEPENDENCIES:
   - Alamofire
   - Firebase/Core
+  - SnapKit
 
 SPEC REPOS:
   trunk:
@@ -84,6 +86,7 @@ SPEC REPOS:
     - GoogleUtilities
     - nanopb
     - PromisesObjC
+    - SnapKit
 
 SPEC CHECKSUMS:
   Alamofire: 0fe5fd24b4298dc377a6550da7d5f1b30e286fcb
@@ -99,7 +102,8 @@ SPEC CHECKSUMS:
   GoogleUtilities: 06eb53bb579efe7099152735900dd04bf09e7275
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: 677a2b4c321f8fb14448a1bd8aff5b6e94121889
+PODFILE CHECKSUM: 4c4960d9e8687023243e959811e0865569db3ef4
 
 COCOAPODS: 1.9.3

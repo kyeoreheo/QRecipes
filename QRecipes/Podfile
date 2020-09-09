@@ -9,5 +9,6 @@ target 'QRecipes' do
 
   pod 'Alamofire'
   pod 'Firebase/Core'
+  pod 'SnapKit'
 
 end
