@@ -3,28 +3,32 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		314DCC51250863E400011BAD /* FrontEndTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314DCC50250863E400011BAD /* FrontEndTestVC.swift */; };
 		317218052508454200EDF3DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317218042508454200EDF3DB /* AppDelegate.swift */; };
 		317218072508454200EDF3DB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317218062508454200EDF3DB /* SceneDelegate.swift */; };
-		317218092508454200EDF3DB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317218082508454200EDF3DB /* ViewController.swift */; };
+		317218092508454200EDF3DB /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317218082508454200EDF3DB /* SplashVC.swift */; };
 		3172180C2508454200EDF3DB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3172180A2508454200EDF3DB /* Main.storyboard */; };
 		3172180E2508454400EDF3DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3172180D2508454400EDF3DB /* Assets.xcassets */; };
 		317218112508454400EDF3DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3172180F2508454400EDF3DB /* LaunchScreen.storyboard */; };
+		3172181B25085DA300EDF3DB /* BackEndTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3172181A25085DA300EDF3DB /* BackEndTestVC.swift */; };
 		4A2A77BBB02A59AA291EF584 /* Pods_QRecipes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23171396F957630F02FB16F /* Pods_QRecipes.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		314DCC50250863E400011BAD /* FrontEndTestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrontEndTestVC.swift; sourceTree = "<group>"; };
 		317218012508454200EDF3DB /* QRecipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QRecipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		317218042508454200EDF3DB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		317218062508454200EDF3DB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		317218082508454200EDF3DB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		317218082508454200EDF3DB /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		3172180B2508454200EDF3DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3172180D2508454400EDF3DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		317218102508454400EDF3DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		317218122508454400EDF3DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3172181A25085DA300EDF3DB /* BackEndTestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackEndTestVC.swift; sourceTree = "<group>"; };
 		59433B390CDEE59F0FA6D4B0 /* Pods-QRecipes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.release.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.release.xcconfig"; sourceTree = "<group>"; };
 		637B5E3B9B20F801C5601BAC /* Pods-QRecipes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.debug.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.debug.xcconfig"; sourceTree = "<group>"; };
 		C23171396F957630F02FB16F /* Pods_QRecipes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QRecipes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,13 +52,14 @@
 				637B5E3B9B20F801C5601BAC /* Pods-QRecipes.debug.xcconfig */,
 				59433B390CDEE59F0FA6D4B0 /* Pods-QRecipes.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
 		317217F82508454200EDF3DB = {
 			isa = PBXGroup;
 			children = (
+				3172181D250862C700EDF3DB /* Application */,
+				3172181825085D8000EDF3DB /* API */,
 				317218032508454200EDF3DB /* QRecipes */,
 				317218022508454200EDF3DB /* Products */,
 				29F2C9D1AC38737206BAB569 /* Pods */,
@@ -73,15 +78,39 @@
 		317218032508454200EDF3DB /* QRecipes */ = {
 			isa = PBXGroup;
 			children = (
+				317218082508454200EDF3DB /* SplashVC.swift */,
+				314DCC50250863E400011BAD /* FrontEndTestVC.swift */,
+				3172181C250862B200EDF3DB /* MainTabBar */,
+			);
+			path = QRecipes;
+			sourceTree = "<group>";
+		};
+		3172181825085D8000EDF3DB /* API */ = {
+			isa = PBXGroup;
+			children = (
+				3172181A25085DA300EDF3DB /* BackEndTestVC.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		3172181C250862B200EDF3DB /* MainTabBar */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MainTabBar;
+			sourceTree = "<group>";
+		};
+		3172181D250862C700EDF3DB /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				3172180D2508454400EDF3DB /* Assets.xcassets */,
 				317218042508454200EDF3DB /* AppDelegate.swift */,
 				317218062508454200EDF3DB /* SceneDelegate.swift */,
-				317218082508454200EDF3DB /* ViewController.swift */,
 				3172180A2508454200EDF3DB /* Main.storyboard */,
-				3172180D2508454400EDF3DB /* Assets.xcassets */,
 				3172180F2508454400EDF3DB /* LaunchScreen.storyboard */,
 				317218122508454400EDF3DB /* Info.plist */,
 			);
-			path = QRecipes;
+			path = Application;
 			sourceTree = "<group>";
 		};
 		B1F3C816C01134E32B5BE68F /* Frameworks */ = {
@@ -207,8 +236,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				317218092508454200EDF3DB /* ViewController.swift in Sources */,
+				317218092508454200EDF3DB /* SplashVC.swift in Sources */,
+				3172181B25085DA300EDF3DB /* BackEndTestVC.swift in Sources */,
 				317218052508454200EDF3DB /* AppDelegate.swift in Sources */,
+				314DCC51250863E400011BAD /* FrontEndTestVC.swift in Sources */,
 				317218072508454200EDF3DB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,7 +388,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = YDBB8774WP;
-				INFOPLIST_FILE = QRecipes/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Application/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -378,7 +409,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = YDBB8774WP;
-				INFOPLIST_FILE = QRecipes/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Application/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
