@@ -15,6 +15,7 @@ class SplashVC: UIViewController, UIGestureRecognizerDelegate {
     
     private let backEndButton = UIButton()
     private let frontEndButton = UIButton()
+    private let authenticationVCButton = UIButton()
     private let teamMembersLabel = UILabel()
 
     //MARK:- LifeCycles
@@ -75,6 +76,17 @@ class SplashVC: UIViewController, UIGestureRecognizerDelegate {
             make.top.equalTo(sampleLable.snp.bottom).offset(20)
         }
         
+        view.addSubview(authenticationVCButton)
+        authenticationVCButton.addTarget(self, action: #selector(displayAuthenticationVC), for: .touchUpInside)
+        authenticationVCButton.setTitle("AuthenticationVC", for: .normal)
+        authenticationVCButton.setTitleColor(.white, for: .normal)
+        authenticationVCButton.backgroundColor = .blue
+        authenticationVCButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        authenticationVCButton.layer.cornerRadius = 5
+        authenticationVCButton.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
         view.addSubview(teamMembersLabel)
         teamMembersLabel.text = "Dan: zhaodan618@gmail.com\nYiheng: yihengcen@gmail.com\nMingu: mingu0629@gmail.com\nKyo: 91kyoheo@gmail.com"
         teamMembersLabel.numberOfLines = 0
@@ -84,10 +96,13 @@ class SplashVC: UIViewController, UIGestureRecognizerDelegate {
             make.centerX.equalToSuperview()
             make.top.equalTo(frontEndButton.snp.bottom).offset(8)
         }
-        
     }
     
     //MARK:- Selectors
+    @objc func displayAuthenticationVC() {
+        navigationController?.pushViewController(AuthenticationVC(), animated: true)
+    }
+    
     @objc func displayBackEndTestVC() {
         print("DEBUG:- BackEndButton is clicked!")
         navigationController?.pushViewController(BackEndTestVC(), animated: true)

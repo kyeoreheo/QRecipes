@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		3113CB1F250AEA5200C147FF /* QRAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3113CB1E250AEA5200C147FF /* QRAPI.swift */; };
+		313C2F7B25105426004BEB5A /* AuthenticationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F7A25105426004BEB5A /* AuthenticationVC.swift */; };
+		313C2F7D251060BD004BEB5A /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F7C251060BD004BEB5A /* UIColorExtension.swift */; };
+		313C2F7F251062FB004BEB5A /* MainTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F7E251062FB004BEB5A /* MainTabBar.swift */; };
+		313C2F8125106395004BEB5A /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F8025106395004BEB5A /* HomeVC.swift */; };
+		313C2F83251063CC004BEB5A /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F82251063CC004BEB5A /* SearchVC.swift */; };
+		313C2F85251063E1004BEB5A /* FavoriteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F84251063E1004BEB5A /* FavoriteVC.swift */; };
+		313C2F87251063EE004BEB5A /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F86251063EE004BEB5A /* SettingVC.swift */; };
+		313C2F892510643C004BEB5A /* PlaceHolderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F882510643C004BEB5A /* PlaceHolderVC.swift */; };
 		314DCC51250863E400011BAD /* FrontEndTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314DCC50250863E400011BAD /* FrontEndTestVC.swift */; };
 		317218052508454200EDF3DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317218042508454200EDF3DB /* AppDelegate.swift */; };
 		317218072508454200EDF3DB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317218062508454200EDF3DB /* SceneDelegate.swift */; };
@@ -21,6 +29,14 @@
 
 /* Begin PBXFileReference section */
 		3113CB1E250AEA5200C147FF /* QRAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRAPI.swift; sourceTree = "<group>"; };
+		313C2F7A25105426004BEB5A /* AuthenticationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationVC.swift; sourceTree = "<group>"; };
+		313C2F7C251060BD004BEB5A /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		313C2F7E251062FB004BEB5A /* MainTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainTabBar.swift; path = Application/MainTabBar.swift; sourceTree = SOURCE_ROOT; };
+		313C2F8025106395004BEB5A /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomeVC.swift; path = Application/HomeVC.swift; sourceTree = SOURCE_ROOT; };
+		313C2F82251063CC004BEB5A /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchVC.swift; path = Application/SearchVC.swift; sourceTree = SOURCE_ROOT; };
+		313C2F84251063E1004BEB5A /* FavoriteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavoriteVC.swift; path = Application/FavoriteVC.swift; sourceTree = SOURCE_ROOT; };
+		313C2F86251063EE004BEB5A /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingVC.swift; path = Application/SettingVC.swift; sourceTree = SOURCE_ROOT; };
+		313C2F882510643C004BEB5A /* PlaceHolderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlaceHolderVC.swift; path = Application/PlaceHolderVC.swift; sourceTree = SOURCE_ROOT; };
 		314DCC50250863E400011BAD /* FrontEndTestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrontEndTestVC.swift; sourceTree = "<group>"; };
 		317218012508454200EDF3DB /* QRecipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QRecipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		317218042508454200EDF3DB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -57,6 +73,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		313C2F8A251065A4004BEB5A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				313C2F7C251060BD004BEB5A /* UIColorExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		317217F82508454200EDF3DB = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				317218082508454200EDF3DB /* SplashVC.swift */,
+				313C2F7A25105426004BEB5A /* AuthenticationVC.swift */,
 				314DCC50250863E400011BAD /* FrontEndTestVC.swift */,
 				3172181C250862B200EDF3DB /* MainTabBar */,
 			);
@@ -99,6 +124,12 @@
 		3172181C250862B200EDF3DB /* MainTabBar */ = {
 			isa = PBXGroup;
 			children = (
+				313C2F7E251062FB004BEB5A /* MainTabBar.swift */,
+				313C2F8025106395004BEB5A /* HomeVC.swift */,
+				313C2F82251063CC004BEB5A /* SearchVC.swift */,
+				313C2F84251063E1004BEB5A /* FavoriteVC.swift */,
+				313C2F86251063EE004BEB5A /* SettingVC.swift */,
+				313C2F882510643C004BEB5A /* PlaceHolderVC.swift */,
 			);
 			path = MainTabBar;
 			sourceTree = "<group>";
@@ -112,6 +143,7 @@
 				3172180A2508454200EDF3DB /* Main.storyboard */,
 				3172180F2508454400EDF3DB /* LaunchScreen.storyboard */,
 				317218122508454400EDF3DB /* Info.plist */,
+				313C2F8A251065A4004BEB5A /* Extensions */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -239,12 +271,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				313C2F7F251062FB004BEB5A /* MainTabBar.swift in Sources */,
+				313C2F83251063CC004BEB5A /* SearchVC.swift in Sources */,
+				313C2F8125106395004BEB5A /* HomeVC.swift in Sources */,
 				317218092508454200EDF3DB /* SplashVC.swift in Sources */,
+				313C2F85251063E1004BEB5A /* FavoriteVC.swift in Sources */,
 				3172181B25085DA300EDF3DB /* BackEndTestVC.swift in Sources */,
 				317218052508454200EDF3DB /* AppDelegate.swift in Sources */,
+				313C2F7D251060BD004BEB5A /* UIColorExtension.swift in Sources */,
 				314DCC51250863E400011BAD /* FrontEndTestVC.swift in Sources */,
+				313C2F7B25105426004BEB5A /* AuthenticationVC.swift in Sources */,
 				317218072508454200EDF3DB /* SceneDelegate.swift in Sources */,
 				3113CB1F250AEA5200C147FF /* QRAPI.swift in Sources */,
+				313C2F892510643C004BEB5A /* PlaceHolderVC.swift in Sources */,
+				313C2F87251063EE004BEB5A /* SettingVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
