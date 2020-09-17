@@ -16,6 +16,7 @@
 		317218112508454400EDF3DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3172180F2508454400EDF3DB /* LaunchScreen.storyboard */; };
 		3172181B25085DA300EDF3DB /* BackEndTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3172181A25085DA300EDF3DB /* BackEndTestVC.swift */; };
 		4A2A77BBB02A59AA291EF584 /* Pods_QRecipes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23171396F957630F02FB16F /* Pods_QRecipes.framework */; };
+		C66F5F5325131EE000E7B8EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C66F5F5225131EE000E7B8EA /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		59433B390CDEE59F0FA6D4B0 /* Pods-QRecipes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.release.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.release.xcconfig"; sourceTree = "<group>"; };
 		637B5E3B9B20F801C5601BAC /* Pods-QRecipes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.debug.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.debug.xcconfig"; sourceTree = "<group>"; };
 		C23171396F957630F02FB16F /* Pods_QRecipes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QRecipes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C66F5F5225131EE000E7B8EA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				3172180A2508454200EDF3DB /* Main.storyboard */,
 				3172180F2508454400EDF3DB /* LaunchScreen.storyboard */,
 				317218122508454400EDF3DB /* Info.plist */,
+				C66F5F5225131EE000E7B8EA /* GoogleService-Info.plist */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				317218112508454400EDF3DB /* LaunchScreen.storyboard in Resources */,
+				C66F5F5325131EE000E7B8EA /* GoogleService-Info.plist in Resources */,
 				3172180E2508454400EDF3DB /* Assets.xcassets in Resources */,
 				3172180C2508454200EDF3DB /* Main.storyboard in Resources */,
 			);
