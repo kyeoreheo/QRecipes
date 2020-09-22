@@ -35,15 +35,6 @@ class AuthenticationVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Helpers
     private func configure() {
         view.backgroundColor = .white
-        
-        //To make this view as a root view
-        let navigationController = UINavigationController(rootViewController: self)
-        UIApplication.shared.windows.first?.rootViewController = navigationController
-        UIApplication.shared.windows.first?.makeKeyAndVisible()
-
-        navigationController.interactivePopGestureRecognizer?.delegate = self
-        navigationController.interactivePopGestureRecognizer?.isEnabled = true
-        navigationController.setNavigationBarHidden(true, animated: false)
     }
     
     private func configureUI() {
