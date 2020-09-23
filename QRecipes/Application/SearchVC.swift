@@ -23,7 +23,6 @@ class SearchVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Helpers
     private func configure() {
         view.backgroundColor = .green
-
     }
     
     private func configureUI() {

@@ -10,6 +10,9 @@ import UIKit
 
 extension UIColor {
     static let primeOrange = UIColor(hexString: "#FF922B")
+    static let cherryRed = UIColor(hexString: "#D21404")
+    static let facebookBlue = UIColor(hexString: "#3B5998")
+    static let lightlightGray = UIColor(hexString: "#D3D3D3")
     
     convenience init(hexString: String, alpha: CGFloat = 1.0) {
           let hexString: String = hexString.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
