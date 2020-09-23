@@ -10,12 +10,14 @@ import UIKit
 import Firebase
 
 class MainTabBar: UITabBarController {
+    let qrButton = AuthenticationVM().logoView(logoSize: 70)
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTabBar()
-
+        configureUI()
+        
     }
     
     // MARK: - configures
@@ -27,6 +29,16 @@ class MainTabBar: UITabBarController {
         let settingTab = barTabView(view: SettingVC(), image: "setting")
         
         viewControllers = [homeTab, searchTab, middleTab, favoriteTab, settingTab]
+        tabBarController?.tabBar.items?[2].isEnabled = false
+    }
+    
+    func configureUI() {
+        view.addSubview(qrButton)
+        qrButton.snp.makeConstraints { make in
+            make.width.height.equalTo(70)
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
+        }
     }
     
     // MARK:- Helper
