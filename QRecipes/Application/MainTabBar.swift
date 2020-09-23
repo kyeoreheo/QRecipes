@@ -11,15 +11,12 @@ import Firebase
 
 class MainTabBar: UITabBarController {
     
-
-    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTabBar()
 
     }
-    
     
     // MARK: - configures
     func configureTabBar() {

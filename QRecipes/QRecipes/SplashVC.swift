@@ -104,6 +104,5 @@ class SplashVC: UIViewController, UIGestureRecognizerDelegate {
         print("DEBUG:- FrontEndButton is clicked!")
         navigationController?.pushViewController(FrontEndTestVC(), animated: true)
     }
-
 }
 
