@@ -8,20 +8,25 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
     lazy var ratio = (view.frame.height / 812.0) < 1 ? 1:(view.frame.height / 812.0)
     private let viewModel = QRScanVM()
     
+    //Timer
     private var timer: Timer?
     private var currentTimer = 30.0
-    
-    private lazy var frame = viewModel.frame(target: self)
-    private lazy var noCameraView = viewModel.askCameraPermissionView(target: self,
-                                              action: #selector(openSetting))
     private lazy var counter = UIView()
     private lazy var processBar = ProgressBar()
     private let timerLable = UILabel()
-    
+
+    //Camera frame
+    private var hasScanned = false
     private let videoPreview = UIView()
     private var qrFrameColor = UIColor()
     private let noCameraPlaceholder = UIImageView()
-    private var hasScanned = false
+    private lazy var frame = viewModel.frame(target: self)
+    private lazy var noCameraView = viewModel.askCameraPermissionView(
+                                    target: self,action: #selector(openSetting))
+    
+    //Debug TextLabel
+    private let validationLabel = UILabel()
+    private let qrCodeLabel = UILabel()
 
     enum error: Error {
         case noCameraAvaliable
@@ -41,25 +46,12 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         counter.isHidden = false
         processBar.isHidden = false
         timerLable.isHidden = false
         setTimer(every: 0.1)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     // MARK:- Configures
@@ -115,6 +107,26 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
                                     width: view.frame.width - 48,
                                     height: view.frame.width - 48)
         
+        view.addSubview(validationLabel)
+        validationLabel.text = "Not scanned yet 🙄"
+        validationLabel.textColor = .white
+        validationLabel.textAlignment = .center
+        validationLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        validationLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
+            make.centerX.equalToSuperview()
+        }
+        
+        view.addSubview(qrCodeLabel)
+        qrCodeLabel.text = "Not scanned yet 🙄"
+        qrCodeLabel.textColor = .white
+        qrCodeLabel.textAlignment = .center
+        qrCodeLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        qrCodeLabel.snp.makeConstraints { make in
+            make.top.equalTo(validationLabel.snp.bottom).offset(8)
+            make.centerX.equalToSuperview()
+        }
+        
     }
     
     // MARK:- Helpers
@@ -128,13 +140,19 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
                     return
                 }
                 updateBoundingBox(transformedObject.corners)
+                setupBoundingBox(color: .gray)
+
                 hideBoundingBox(after: 0.25)
-                
-                if (qrCode.count > 2) && qrCode.first == "%" && qrCode.last == "&" && !hasScanned {
+                qrCodeLabel.text = qrCode
+                validationLabel.text = "Invalid code 🥺"
+
+                if (qrCode.count > 2) && qrCode.first == "%" && qrCode.last == "&" {
+                    //} && !hasScanned { need to check this when we are trying to Fetch API
                     setupBoundingBox(color: .primeOrange)
                     hasScanned = true
                     let cleanQRCode = qrCode.dropFirst().dropLast()
-                    
+                    validationLabel.text = "Valid Code 😆"
+                    qrCodeLabel.text = String(cleanQRCode)
                 }
                 
             }

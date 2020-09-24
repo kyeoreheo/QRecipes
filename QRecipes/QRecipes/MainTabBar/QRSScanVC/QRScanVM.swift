@@ -15,7 +15,7 @@ class QRScanVM {
         let titleLabel = UILabel()
         let handlerImage = UIImageView()
         let handler = UIButton()
-        
+
         view.backgroundColor = .white
         
         view.addSubview(titleLabel)
