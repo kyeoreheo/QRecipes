@@ -12,8 +12,7 @@ import SnapKit
 class SettingVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Properties
     private let sampleLable = UILabel()
-
-
+    
     //MARK:- LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
