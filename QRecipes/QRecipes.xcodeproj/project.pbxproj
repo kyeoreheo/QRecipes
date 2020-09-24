@@ -16,11 +16,13 @@
 		313C2F83251063CC004BEB5A /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F82251063CC004BEB5A /* SearchVC.swift */; };
 		313C2F85251063E1004BEB5A /* FavoriteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F84251063E1004BEB5A /* FavoriteVC.swift */; };
 		313C2F87251063EE004BEB5A /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F86251063EE004BEB5A /* SettingVC.swift */; };
-		313C2F892510643C004BEB5A /* PlaceHolderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F882510643C004BEB5A /* PlaceHolderVC.swift */; };
+		313C2F892510643C004BEB5A /* QRScanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F882510643C004BEB5A /* QRScanVC.swift */; };
 		314DCC51250863E400011BAD /* FrontEndTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314DCC50250863E400011BAD /* FrontEndTestVC.swift */; };
 		316B798B251BB0D000B4E080 /* AuthenticationVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316B798A251BB0D000B4E080 /* AuthenticationVM.swift */; };
 		316B7990251BB56100B4E080 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316B798F251BB56100B4E080 /* UILabelExtension.swift */; };
 		316B7993251BBBDB00B4E080 /* UIWindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316B7992251BBBDB00B4E080 /* UIWindowExtension.swift */; };
+		316B799A251BEC1400B4E080 /* QRScanVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316B7999251BEC1400B4E080 /* QRScanVM.swift */; };
+		316B799F251BEDDE00B4E080 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316B799E251BEDDE00B4E080 /* ProgressBar.swift */; };
 		317218052508454200EDF3DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317218042508454200EDF3DB /* AppDelegate.swift */; };
 		317218072508454200EDF3DB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317218062508454200EDF3DB /* SceneDelegate.swift */; };
 		317218092508454200EDF3DB /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317218082508454200EDF3DB /* SplashVC.swift */; };
@@ -42,11 +44,13 @@
 		313C2F82251063CC004BEB5A /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchVC.swift; path = Application/SearchVC.swift; sourceTree = SOURCE_ROOT; };
 		313C2F84251063E1004BEB5A /* FavoriteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavoriteVC.swift; path = Application/FavoriteVC.swift; sourceTree = SOURCE_ROOT; };
 		313C2F86251063EE004BEB5A /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingVC.swift; path = Application/SettingVC.swift; sourceTree = SOURCE_ROOT; };
-		313C2F882510643C004BEB5A /* PlaceHolderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlaceHolderVC.swift; path = Application/PlaceHolderVC.swift; sourceTree = SOURCE_ROOT; };
+		313C2F882510643C004BEB5A /* QRScanVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QRScanVC.swift; path = QRecipes/MainTabBar/QRSScanVC/QRScanVC.swift; sourceTree = SOURCE_ROOT; };
 		314DCC50250863E400011BAD /* FrontEndTestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrontEndTestVC.swift; sourceTree = "<group>"; };
 		316B798A251BB0D000B4E080 /* AuthenticationVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationVM.swift; sourceTree = "<group>"; };
 		316B798F251BB56100B4E080 /* UILabelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
 		316B7992251BBBDB00B4E080 /* UIWindowExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWindowExtension.swift; sourceTree = "<group>"; };
+		316B7999251BEC1400B4E080 /* QRScanVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanVM.swift; sourceTree = "<group>"; };
+		316B799E251BEDDE00B4E080 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		317218012508454200EDF3DB /* QRecipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QRecipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		317218042508454200EDF3DB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		317218062508454200EDF3DB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +96,16 @@
 				316B7992251BBBDB00B4E080 /* UIWindowExtension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		316B7998251BEC0100B4E080 /* QRSScanVC */ = {
+			isa = PBXGroup;
+			children = (
+				316B7999251BEC1400B4E080 /* QRScanVM.swift */,
+				313C2F882510643C004BEB5A /* QRScanVC.swift */,
+				316B799E251BEDDE00B4E080 /* ProgressBar.swift */,
+			);
+			path = QRSScanVC;
 			sourceTree = "<group>";
 		};
 		317217F82508454200EDF3DB = {
@@ -142,7 +156,7 @@
 				313C2F82251063CC004BEB5A /* SearchVC.swift */,
 				313C2F84251063E1004BEB5A /* FavoriteVC.swift */,
 				313C2F86251063EE004BEB5A /* SettingVC.swift */,
-				313C2F882510643C004BEB5A /* PlaceHolderVC.swift */,
+				316B7998251BEC0100B4E080 /* QRSScanVC */,
 			);
 			path = MainTabBar;
 			sourceTree = "<group>";
@@ -298,6 +312,7 @@
 				313C2F83251063CC004BEB5A /* SearchVC.swift in Sources */,
 				313C2F8125106395004BEB5A /* HomeVC.swift in Sources */,
 				317218092508454200EDF3DB /* SplashVC.swift in Sources */,
+				316B799A251BEC1400B4E080 /* QRScanVM.swift in Sources */,
 				31BAFF04251AAB9F0055A354 /* CustomView.swift in Sources */,
 				31306598251068C400491E44 /* CreaditVC.swift in Sources */,
 				313C2F85251063E1004BEB5A /* FavoriteVC.swift in Sources */,
@@ -306,10 +321,11 @@
 				317218052508454200EDF3DB /* AppDelegate.swift in Sources */,
 				313C2F7D251060BD004BEB5A /* UIColorExtension.swift in Sources */,
 				314DCC51250863E400011BAD /* FrontEndTestVC.swift in Sources */,
+				316B799F251BEDDE00B4E080 /* ProgressBar.swift in Sources */,
 				313C2F7B25105426004BEB5A /* AuthenticationVC.swift in Sources */,
 				317218072508454200EDF3DB /* SceneDelegate.swift in Sources */,
 				3113CB1F250AEA5200C147FF /* QRAPI.swift in Sources */,
-				313C2F892510643C004BEB5A /* PlaceHolderVC.swift in Sources */,
+				313C2F892510643C004BEB5A /* QRScanVC.swift in Sources */,
 				316B7993251BBBDB00B4E080 /* UIWindowExtension.swift in Sources */,
 				316B7990251BB56100B4E080 /* UILabelExtension.swift in Sources */,
 				313C2F87251063EE004BEB5A /* SettingVC.swift in Sources */,
