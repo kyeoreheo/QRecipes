@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		20ECFA1D2520466B00EEE280 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20ECFA1C2520466B00EEE280 /* FeedCell.swift */; };
 		3113CB1F250AEA5200C147FF /* QRAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3113CB1E250AEA5200C147FF /* QRAPI.swift */; };
 		31306598251068C400491E44 /* CreaditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31306597251068C400491E44 /* CreaditVC.swift */; };
 		313C2F7B25105426004BEB5A /* AuthenticationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F7A25105426004BEB5A /* AuthenticationVC.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		20ECFA1C2520466B00EEE280 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		3113CB1E250AEA5200C147FF /* QRAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRAPI.swift; sourceTree = "<group>"; };
 		31306597251068C400491E44 /* CreaditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreaditVC.swift; sourceTree = "<group>"; };
 		313C2F7A25105426004BEB5A /* AuthenticationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationVC.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 			children = (
 				313C2F7E251062FB004BEB5A /* MainTabBar.swift */,
 				313C2F8025106395004BEB5A /* HomeVC.swift */,
+				20ECFA1C2520466B00EEE280 /* FeedCell.swift */,
 				313C2F82251063CC004BEB5A /* SearchVC.swift */,
 				313C2F84251063E1004BEB5A /* FavoriteVC.swift */,
 				313C2F86251063EE004BEB5A /* SettingVC.swift */,
@@ -323,6 +326,7 @@
 				314DCC51250863E400011BAD /* FrontEndTestVC.swift in Sources */,
 				316B799F251BEDDE00B4E080 /* ProgressBar.swift in Sources */,
 				313C2F7B25105426004BEB5A /* AuthenticationVC.swift in Sources */,
+				20ECFA1D2520466B00EEE280 /* FeedCell.swift in Sources */,
 				317218072508454200EDF3DB /* SceneDelegate.swift in Sources */,
 				3113CB1F250AEA5200C147FF /* QRAPI.swift in Sources */,
 				313C2F892510643C004BEB5A /* QRScanVC.swift in Sources */,
