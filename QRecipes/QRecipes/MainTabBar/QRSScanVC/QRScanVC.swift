@@ -154,7 +154,6 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
                     validationLabel.text = "Valid Code 😆"
                     qrCodeLabel.text = String(cleanQRCode)
                 }
-                
             }
         }
     }
