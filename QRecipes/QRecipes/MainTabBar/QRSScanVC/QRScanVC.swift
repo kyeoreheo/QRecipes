@@ -139,7 +139,7 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
                 guard let transformedObject = (videoPreview.layer.sublayers![0] as! AVCaptureVideoPreviewLayer).transformedMetadataObject(for: machineReadableCode) as? AVMetadataMachineReadableCodeObject else {
                     return
                 }
-                updateBoundingBox(transformedObject.corners)
+//                updateBoundingBox(transformedObject.corners)
                 setupBoundingBox(color: .gray)
 
                 hideBoundingBox(after: 0.25)
@@ -154,7 +154,6 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
                     validationLabel.text = "Valid Code 😆"
                     qrCodeLabel.text = String(cleanQRCode)
                 }
-                
             }
         }
     }

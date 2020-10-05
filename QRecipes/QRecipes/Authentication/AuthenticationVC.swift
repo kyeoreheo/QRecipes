@@ -93,7 +93,9 @@ class AuthenticationVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Selectors
     @objc func presentMainTabBar() {
         DispatchQueue.main.async {
-            let navigation = UINavigationController(rootViewController: MainTabBar())
+            let navigation = UINavigationController(rootViewController: LogInVC())
+//            let navigation = UINavigationController(rootViewController: MainTabBar())
+
             navigation.modalPresentationStyle = .fullScreen
             navigation.navigationBar.isHidden = true
             self.present(navigation, animated: false, completion: nil)
