@@ -11,7 +11,24 @@ import SnapKit
 
 class FavoriteVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Properties
-    private let sampleLable = UILabel()
+    let columns: CGFloat = 2.0
+    let inset: CGFloat = 8.0
+
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Favorites"
+        label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 28)
+        return label
+    }()
+    
+    lazy var collectionView: UICollectionView = {
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        cv.backgroundColor = UIColor(rgb: 0xF5F5F5)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.register(FavoriteCell.self, forCellWithReuseIdentifier: "cell")
+        return cv
+    } ()
 
     //MARK:- LifeCycles
     override func viewDidLoad() {
@@ -22,20 +39,65 @@ class FavoriteVC: UIViewController, UIGestureRecognizerDelegate {
     
     //MARK:- Helpers
     private func configure() {
-        view.backgroundColor = .blue
-
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
     
     private func configureUI() {
-        view.addSubview(sampleLable)
-        sampleLable.text = "This is a FavoriteTab"
-        sampleLable.textColor = .black
-        sampleLable.font = UIFont.systemFont(ofSize: 20)
-        sampleLable.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+        view.backgroundColor = .white
+        
+        view.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.height.equalTo(44)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.left.equalTo(view).offset(12)
+        }
+        
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.left.right.equalToSuperview()
         }
     }
     
-    //MARK:- Selectors
+    // Delete an item from collection view
+    @objc func deleteItem(sender: UIButton!) {
+        let indexPath = IndexPath(row: sender.tag, section: 0)
+        self.collectionView.deleteItems(at: [indexPath])
+        self.collectionView.reloadData()
+    }
+}
+
+//MARK:- Collection view data source
+extension FavoriteVC: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
     
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! FavoriteCell
+        
+        cell.titleLabel.text = "Cupcakes"
+        cell.favoriteButton.tag = indexPath.item
+        cell.favoriteButton.addTarget(self, action: #selector(deleteItem), for: .touchUpInside)
+        
+        return cell
+    }
+}
+
+//MARK:- Collection view layout
+extension FavoriteVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (collectionView.frame.width / columns) - (inset*1.5)
+        return CGSize(width: width, height: width*1.2)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return inset
+    }
 }
