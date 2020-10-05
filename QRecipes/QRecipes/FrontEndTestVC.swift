@@ -13,6 +13,7 @@ import UIKit
 class FrontEndTestVC: UIViewController {
     //MARK:- Properties
     private let sampleLable = UILabel()
+    //testComment
 
     //MARK:- LifeCycles
     override func viewDidLoad() {

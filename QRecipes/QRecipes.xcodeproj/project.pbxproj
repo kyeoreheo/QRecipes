@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		20C9424E252AE620000698E6 /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C9424D252AE620000698E6 /* FavoriteCell.swift */; };
 		20ECFA1D2520466B00EEE280 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20ECFA1C2520466B00EEE280 /* FeedCell.swift */; };
-		20F448BB2528D14400FB7857 /* HexColorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F448BA2528D14400FB7857 /* HexColorConverter.swift */; };
 		3113CB1F250AEA5200C147FF /* QRAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3113CB1E250AEA5200C147FF /* QRAPI.swift */; };
 		31306598251068C400491E44 /* CreaditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31306597251068C400491E44 /* CreaditVC.swift */; };
 		313C2F7B25105426004BEB5A /* AuthenticationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F7A25105426004BEB5A /* AuthenticationVC.swift */; };
@@ -41,7 +40,6 @@
 /* Begin PBXFileReference section */
 		20C9424D252AE620000698E6 /* FavoriteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
 		20ECFA1C2520466B00EEE280 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
-		20F448BA2528D14400FB7857 /* HexColorConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColorConverter.swift; sourceTree = "<group>"; };
 		3113CB1E250AEA5200C147FF /* QRAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRAPI.swift; sourceTree = "<group>"; };
 		31306597251068C400491E44 /* CreaditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreaditVC.swift; sourceTree = "<group>"; };
 		313C2F7A25105426004BEB5A /* AuthenticationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationVC.swift; sourceTree = "<group>"; };
@@ -92,14 +90,6 @@
 				20C9424D252AE620000698E6 /* FavoriteCell.swift */,
 			);
 			path = CustomCells;
-			sourceTree = "<group>";
-		};
-		20F448BE2528D18000FB7857 /* UIColorExtension */ = {
-			isa = PBXGroup;
-			children = (
-				20F448BA2528D14400FB7857 /* HexColorConverter.swift */,
-			);
-			path = UIColorExtension;
 			sourceTree = "<group>";
 		};
 		29F2C9D1AC38737206BAB569 /* Pods */ = {
@@ -159,7 +149,6 @@
 				31BAFF02251AAB770055A354 /* Authentication */,
 				314DCC50250863E400011BAD /* FrontEndTestVC.swift */,
 				3172181C250862B200EDF3DB /* MainTabBar */,
-				20F448BE2528D18000FB7857 /* UIColorExtension */,
 			);
 			path = QRecipes;
 			sourceTree = "<group>";
@@ -359,7 +348,6 @@
 				313C2F892510643C004BEB5A /* QRScanVC.swift in Sources */,
 				316B7993251BBBDB00B4E080 /* UIWindowExtension.swift in Sources */,
 				316B7990251BB56100B4E080 /* UILabelExtension.swift in Sources */,
-				20F448BB2528D14400FB7857 /* HexColorConverter.swift in Sources */,
 				313C2F87251063EE004BEB5A /* SettingVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
