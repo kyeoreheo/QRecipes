@@ -32,7 +32,7 @@ class SplashVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func setRatio() {
-        let widthRatio = view.frame.width / 375.0
+        let widthRatio = view.frame.width / 222.0
         let heightRatio = view.frame.height / 812.0
         SplashVC.shared.ratio = heightRatio < 1 ? 1:heightRatio
     }
