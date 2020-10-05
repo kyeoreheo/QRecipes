@@ -9,6 +9,11 @@
 import UIKit
 import SnapKit
 
+struct SampleAccount {
+    let email: String
+    let password: String
+}
+
 class LogInVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Properties
     private let ratio = SplashVC.shared.ratio
@@ -16,31 +21,55 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
     private let viewModel = AuthenticationVM()
     private let titleLabel = UILabel()
     private lazy var emailTextField = viewModel.textField(placeHolder: "Email", target: self, action: #selector(emailTextFieldDidChange), type: .email)
-    private lazy var passwordTextField = viewModel.textField(placeHolder: "Password", target: self, action: #selector(passwordTextFieldDIdchange), type: .password, buttonAction: #selector(toggleEyeButton))
-    private lazy var signInButton = UIButton()
-    private lazy var rememberMeButton = UIButton()
+    private lazy var passwordTextField = viewModel.textField(placeHolder: "Password", target: self, action: #selector(passwordTextFieldDidchange), type: .password, buttonAction: #selector(toggleEyeButton))
+    private let signInButton = UIButton()
+    private let warningLabel = UILabel()
+    private let rememberMeButton = UIButton()
     private let rememberMeLabel = UILabel()
-    private lazy var forgotPasswordButton = UIButton()
+    private let forgotPasswordButton = UIButton()
     private let bottomLabel = UILabel()
-    private lazy var facebookPlugInButton = UIButton()
-    private lazy var googlePlugInButton = UIButton()
+    private let facebookPlugInButton = UIButton()
+    private let googlePlugInButton = UIButton()
     private let signUpLabel = UILabel()
-    private lazy var signUpButton = UIButton()
+    private let signUpButton = UIButton()
     private let centerDot = UIView()
     
     private var email = ""
     private var password = ""
     private var isPasswodHideen = true
     
+    private var accounts = [SampleAccount]()
+    private var keyboardHeight: CGFloat = 0.0
+    private var buttonConstraint: NSLayoutConstraint?
+    
     //MARK:- LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
         configureUI()
+        generateSampleAccount()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //subscribeToShowKeyboardNotifications()
+        if keyboardHeight > 0.0 {
+              buttonConstraint?.constant =  20 - keyboardHeight
+        }
+        view.layoutIfNeeded()
+        super.viewWillAppear(animated)
+    }
+    
     //MARK:- Helpers
+    private func generateSampleAccount() {
+        accounts = [SampleAccount(email: "kyo@gmail.com", password: "0000"),
+                    SampleAccount(email: "yiheng@gmail.com", password: "0000"),
+                    SampleAccount(email: "den@gmail.com", password: "0000"),
+                    SampleAccount(email: "mingu@gmail.com", password: "0000") ]
+    }
+    
     private func configure() {
         view.backgroundColor = .white
+        warningLabel.isHidden = true
     }
     
     private func configureUI() {
@@ -55,7 +84,7 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
         
         view.addSubview(emailTextField)
         emailTextField.snp.makeConstraints { make in
-            make.height.equalTo(36 + ratio)
+            make.height.equalTo(36 * ratio)
             make.top.equalTo(titleLabel.snp.bottom).offset(50)
             make.left.equalToSuperview().offset(30)
             make.right.equalToSuperview().offset(-30)
@@ -69,14 +98,23 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
             make.right.equalToSuperview().offset(-30)
         }
         
+        view.addSubview(warningLabel)
+        warningLabel.textColor = .red
+        warningLabel.font = UIFont.boldSystemFont(ofSize: 12)
+        warningLabel.snp.makeConstraints { make in
+            make.top.equalTo(passwordTextField.snp.bottom).offset(8)
+            make.left.equalToSuperview().offset(30)
+        }
+        
         view.addSubview(signInButton)
-        signInButton.backgroundColor = .black
+        signInButton.backgroundColor = .lightGray
         signInButton.layer.cornerRadius = 10
-        signInButton.setTitle("Sign In", for: .normal)
+        signInButton.setTitle("Log In", for: .normal)
         signInButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18 * ratio)
         signInButton.setTitleColor(.white, for: .normal)
+        signInButton.addTarget(self, action: #selector(logInButton), for: .touchUpInside)
         signInButton.snp.makeConstraints { make in
-            make.height.equalTo(50 * ratio)
+            make.height.equalTo(60 * ratio)
             make.top.equalTo(passwordTextField.snp.bottom).offset(30)
             make.left.equalToSuperview().offset(30)
             make.right.equalToSuperview().offset(-30)
@@ -103,6 +141,17 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
             make.left.equalTo(rememberMeButton.snp.right).offset(10)
         }
         
+        let crosssLine = UIView()
+        view.addSubview(crosssLine)
+        crosssLine.backgroundColor = .gray
+        crosssLine.alpha = 0.7
+        crosssLine.snp.makeConstraints { make in
+            make.height.equalTo(2)
+            make.centerY.equalTo(rememberMeButton.snp.centerY)
+            make.left.equalTo(rememberMeButton.snp.left)
+            make.right.equalTo(rememberMeLabel.snp.right)
+        }
+
         view.addSubview(forgotPasswordButton)
         forgotPasswordButton.backgroundColor = .white
         forgotPasswordButton.addTarget(self, action: #selector(notReadyYetButton), for: .touchUpInside)
@@ -113,6 +162,17 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
         forgotPasswordButton.snp.makeConstraints { make in
             make.centerY.equalTo(rememberMeButton.snp.centerY)
             make.right.equalToSuperview().offset(-30)
+        }
+        
+        let crosssLine2 = UIView()
+        view.addSubview(crosssLine2)
+        crosssLine2.backgroundColor = .gray
+        crosssLine2.alpha = 0.7
+        crosssLine2.snp.makeConstraints { make in
+            make.height.equalTo(2)
+            make.centerY.equalTo(forgotPasswordButton.snp.centerY)
+            make.left.equalTo(forgotPasswordButton.snp.left)
+            make.right.equalTo(forgotPasswordButton.snp.right)
         }
         
         view.addSubview(bottomLabel)
@@ -137,7 +197,18 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
         facebookPlugInButton.snp.makeConstraints { make in
             make.width.height.equalTo(50)
             make.centerY.equalTo(centerDot.snp.centerY)
-            make.right.equalTo(centerDot.snp.left).offset(-30)
+            make.right.equalTo(centerDot.snp.left).offset(-15)
+        }
+        
+        let crosssLine3 = UIView()
+        view.addSubview(crosssLine3)
+        crosssLine3.backgroundColor = .gray
+        crosssLine3.alpha = 0.7
+        crosssLine3.snp.makeConstraints { make in
+            make.height.equalTo(2)
+            make.centerY.equalTo(facebookPlugInButton.snp.centerY)
+            make.left.equalTo(facebookPlugInButton.snp.left)
+            make.right.equalTo(facebookPlugInButton.snp.right)
         }
         
         view.addSubview(googlePlugInButton)
@@ -145,12 +216,23 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
         googlePlugInButton.snp.makeConstraints { make in
             make.width.height.equalTo(50)
             make.centerY.equalTo(centerDot.snp.centerY)
-            make.left.equalTo(centerDot.snp.left).offset(30)
+            make.left.equalTo(centerDot.snp.left).offset(15)
+        }
+        
+        let crosssLine4 = UIView()
+        view.addSubview(crosssLine4)
+        crosssLine4.backgroundColor = .gray
+        crosssLine4.alpha = 0.7
+        crosssLine4.snp.makeConstraints { make in
+            make.height.equalTo(2)
+            make.centerY.equalTo(googlePlugInButton.snp.centerY)
+            make.left.equalTo(googlePlugInButton.snp.left)
+            make.right.equalTo(googlePlugInButton.snp.right)
         }
         
         view.addSubview(signUpLabel)
         signUpLabel.text = "Have no account?  Sing Up!"
-        signUpLabel.textColor = .lightGray
+        signUpLabel.textColor = .gray
         signUpLabel.font = UIFont.systemFont(ofSize: 12 * ratio)
         signUpLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -159,11 +241,11 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
         
         view.addSubview(signUpButton)
         signUpButton.backgroundColor = .white
-        signUpButton.addTarget(self, action: #selector(notReadyYetButton), for: .touchUpInside)
+        signUpButton.addTarget(self, action: #selector(presentSignUpVC), for: .touchUpInside)
         signUpButton.setTitle("Sign Up!", for: .normal)
         signUpButton.titleLabel?.underline()
         signUpButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12 * ratio)
-        signUpButton.setTitleColor(.black, for: .normal)
+        signUpButton.setTitleColor(.primeOrange, for: .normal)
         signUpButton.snp.makeConstraints { make in
             make.right.equalTo(signUpLabel.snp.right)
             make.centerY.equalTo(signUpLabel.snp.centerY)
@@ -176,17 +258,25 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
     @objc func emailTextFieldDidChange(_ textField: UITextField) {
         guard let email = textField.text else { return }
         self.email = email
-//        warningLabel.isHidden = true
-       
-//        activeButton(button: confirmButton, email != "" && password != "")
+        warningLabel.isHidden = true
+        if email != "" && password != "" {
+            signInButton.backgroundColor = .primeOrange
+        } else {
+            signInButton.backgroundColor = .lightGray
+        }
+
     }
     
-    @objc func passwordTextFieldDIdchange(_ textField: UITextField) {
+    @objc func passwordTextFieldDidchange(_ textField: UITextField) {
         guard let password = textField.text else { return }
         self.password = password
-//        warningLabel.isHidden = true
-       
-//        activeButton(button: confirmButton, email != "" && password != "")
+        warningLabel.isHidden = true
+        if email != "" && password != "" {
+            signInButton.backgroundColor = .primeOrange
+        } else {
+            signInButton.backgroundColor = .lightGray
+        }
+
     }
     
     @objc func toggleEyeButton() {
@@ -206,6 +296,36 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
     
     @objc func notReadyYetButton() {
         print("DEBUG:- Not ready")
+    }
+    
+    @objc func logInButton() {
+        let lowerCaseEmail = email.lowercased()
+        var hasFound = false
+        
+        if email != "" && password != "" {
+            accounts.forEach {
+                if $0.email == lowerCaseEmail && $0.password == password {
+                    hasFound = true
+                    DispatchQueue.main.async {
+                        let navigation = UINavigationController(rootViewController: MainTabBar())
+                        navigation.modalPresentationStyle = .fullScreen
+                        navigation.navigationBar.isHidden = true
+                        self.present(navigation, animated: false, completion: nil)
+                    }
+                }
+            }
+            if !hasFound {
+                warningLabel.isHidden = false
+                warningLabel.text = "Email or password is incorrect."
+            }
+        } else {
+            warningLabel.isHidden = false
+            warningLabel.text = "Type your email and password."
+        }
+    }
+    
+    @objc func presentSignUpVC() {
+        navigationController?.pushViewController(SignUpVC(), animated: true)
     }
 
 }
