@@ -33,6 +33,7 @@
 		3172181B25085DA300EDF3DB /* BackEndTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3172181A25085DA300EDF3DB /* BackEndTestVC.swift */; };
 		31BAFF04251AAB9F0055A354 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BAFF03251AAB9F0055A354 /* CustomView.swift */; };
 		4A2A77BBB02A59AA291EF584 /* Pods_QRecipes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23171396F957630F02FB16F /* Pods_QRecipes.framework */; };
+		C20FE50E2525B00C003BDA99 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		31BAFF03251AAB9F0055A354 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		59433B390CDEE59F0FA6D4B0 /* Pods-QRecipes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.release.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.release.xcconfig"; sourceTree = "<group>"; };
 		637B5E3B9B20F801C5601BAC /* Pods-QRecipes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.debug.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.debug.xcconfig"; sourceTree = "<group>"; };
+		C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		C23171396F957630F02FB16F /* Pods_QRecipes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QRecipes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -157,6 +159,7 @@
 				313C2F8025106395004BEB5A /* HomeVC.swift */,
 				20ECFA1C2520466B00EEE280 /* FeedCell.swift */,
 				313C2F82251063CC004BEB5A /* SearchVC.swift */,
+				C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */,
 				313C2F84251063E1004BEB5A /* FavoriteVC.swift */,
 				313C2F86251063EE004BEB5A /* SettingVC.swift */,
 				316B7998251BEC0100B4E080 /* QRSScanVC */,
@@ -318,6 +321,7 @@
 				316B799A251BEC1400B4E080 /* QRScanVM.swift in Sources */,
 				31BAFF04251AAB9F0055A354 /* CustomView.swift in Sources */,
 				31306598251068C400491E44 /* CreaditVC.swift in Sources */,
+				C20FE50E2525B00C003BDA99 /* CustomTableViewCell.swift in Sources */,
 				313C2F85251063E1004BEB5A /* FavoriteVC.swift in Sources */,
 				316B798B251BB0D000B4E080 /* AuthenticationVM.swift in Sources */,
 				3172181B25085DA300EDF3DB /* BackEndTestVC.swift in Sources */,
