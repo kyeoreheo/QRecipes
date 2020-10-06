@@ -126,6 +126,7 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
         signInButton.titleLabel?.underline()
         signInButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12 * ratio)
         signInButton.setTitleColor(.primeOrange, for: .normal)
+        signInButton.addTarget(self, action: #selector(popVC), for: .touchUpInside)
         signInButton.snp.makeConstraints { make in
             make.right.equalTo(signInLabel.snp.right)
             make.centerY.equalTo(signInLabel.snp.centerY)
