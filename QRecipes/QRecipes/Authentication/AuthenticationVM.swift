@@ -8,7 +8,71 @@
 
 import UIKit
 
+enum TextFieldType {
+    case name
+    case phone
+    case password
+    case email
+}
+
 class AuthenticationVM {
+    func textField(placeHolder: String, target: Any, action: Selector, type: TextFieldType, buttonAction: Selector? = nil) -> UIView {
+        let view = UIView()
+        let textField = UITextField()
+        let divider = UIImageView()
+        let sideButton = UIButton()
+        
+        view.addSubview(textField)
+        textField.textColor = .black
+        textField.font = UIFont.boldSystemFont(ofSize: 18)
+        textField.attributedPlaceholder = NSAttributedString(string: placeHolder, attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)])
+        textField.delegate = target as? UITextFieldDelegate
+        textField.addTarget(target, action: action, for: .editingChanged)
+        textField.autocorrectionType = .no
+        textField.snp.makeConstraints { make in
+            make.height.equalTo(36)
+            make.top.left.right.equalToSuperview()
+        }
+        
+        switch type {
+        case .name :
+            textField.keyboardType = .default
+        case .phone:
+            textField.keyboardType = .numberPad
+        case .email:
+            textField.keyboardType = .emailAddress
+        case .password:
+            textField.keyboardType = .default
+            textField.isSecureTextEntry = true
+        }
+    
+        view.addSubview(divider)
+        divider.contentMode = .scaleAspectFit
+        divider.clipsToBounds = true
+        divider.isUserInteractionEnabled = true
+        divider.backgroundColor = .lightlightGray
+        divider.snp.makeConstraints { make in
+            make.height.equalTo(1)
+            make.bottom.left.right.equalToSuperview()
+        }
+        
+        if let buttonAction = buttonAction {
+            view.addSubview(sideButton)
+            sideButton.setImage(UIImage(named: "eyeOn"), for: .normal)
+            sideButton.tintColor = .gray
+            sideButton.imageView?.contentMode = UIView.ContentMode.scaleAspectFit
+            sideButton.addTarget(target, action: buttonAction, for: .touchUpInside)
+            sideButton.snp.makeConstraints { make in
+                make.width.height.equalTo(20)
+                make.top.equalToSuperview().offset(6)
+                make.right.equalToSuperview()
+            }
+        }
+        
+
+        return view
+    }
+    
     func backgroundView() -> UIView {
         let view = UIView()
         let backgroundImage = UIImageView()

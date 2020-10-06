@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		20C94251252AE748000698E6 /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C94250252AE748000698E6 /* FavoriteCell.swift */; };
 		20ECFA1D2520466B00EEE280 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20ECFA1C2520466B00EEE280 /* FeedCell.swift */; };
+		20F448BB2528D14400FB7857 /* HexColorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F448BA2528D14400FB7857 /* HexColorConverter.swift */; };
 		3113CB1F250AEA5200C147FF /* QRAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3113CB1E250AEA5200C147FF /* QRAPI.swift */; };
 		31306598251068C400491E44 /* CreaditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31306597251068C400491E44 /* CreaditVC.swift */; };
 		313C2F7B25105426004BEB5A /* AuthenticationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F7A25105426004BEB5A /* AuthenticationVC.swift */; };
@@ -31,13 +33,17 @@
 		3172180E2508454400EDF3DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3172180D2508454400EDF3DB /* Assets.xcassets */; };
 		317218112508454400EDF3DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3172180F2508454400EDF3DB /* LaunchScreen.storyboard */; };
 		3172181B25085DA300EDF3DB /* BackEndTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3172181A25085DA300EDF3DB /* BackEndTestVC.swift */; };
+		31748918252ADF6F00666CA2 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31748917252ADF6F00666CA2 /* SignUpVC.swift */; };
+		3184D1AC25241B4500D3D75A /* LogInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3184D1AB25241B4500D3D75A /* LogInVC.swift */; };
 		31BAFF04251AAB9F0055A354 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BAFF03251AAB9F0055A354 /* CustomView.swift */; };
 		4A2A77BBB02A59AA291EF584 /* Pods_QRecipes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23171396F957630F02FB16F /* Pods_QRecipes.framework */; };
 		C20FE50E2525B00C003BDA99 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		20C94250252AE748000698E6 /* FavoriteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
 		20ECFA1C2520466B00EEE280 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
+		20F448BA2528D14400FB7857 /* HexColorConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColorConverter.swift; sourceTree = "<group>"; };
 		3113CB1E250AEA5200C147FF /* QRAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRAPI.swift; sourceTree = "<group>"; };
 		31306597251068C400491E44 /* CreaditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreaditVC.swift; sourceTree = "<group>"; };
 		313C2F7A25105426004BEB5A /* AuthenticationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationVC.swift; sourceTree = "<group>"; };
@@ -63,6 +69,8 @@
 		317218102508454400EDF3DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		317218122508454400EDF3DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3172181A25085DA300EDF3DB /* BackEndTestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackEndTestVC.swift; sourceTree = "<group>"; };
+		31748917252ADF6F00666CA2 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		3184D1AB25241B4500D3D75A /* LogInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInVC.swift; sourceTree = "<group>"; };
 		31BAFF03251AAB9F0055A354 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		59433B390CDEE59F0FA6D4B0 /* Pods-QRecipes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.release.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.release.xcconfig"; sourceTree = "<group>"; };
 		637B5E3B9B20F801C5601BAC /* Pods-QRecipes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.debug.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.debug.xcconfig"; sourceTree = "<group>"; };
@@ -82,6 +90,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		20C9424F252AE748000698E6 /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+				20C94250252AE748000698E6 /* FavoriteCell.swift */,
+			);
+			path = CustomCells;
+			sourceTree = "<group>";
+		};
+		20F448BE2528D18000FB7857 /* UIColorExtension */ = {
+			isa = PBXGroup;
+			children = (
+				20F448BA2528D14400FB7857 /* HexColorConverter.swift */,
+			);
+			path = UIColorExtension;
+			sourceTree = "<group>";
+		};
 		29F2C9D1AC38737206BAB569 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +163,7 @@
 				31BAFF02251AAB770055A354 /* Authentication */,
 				314DCC50250863E400011BAD /* FrontEndTestVC.swift */,
 				3172181C250862B200EDF3DB /* MainTabBar */,
+				20F448BE2528D18000FB7857 /* UIColorExtension */,
 			);
 			path = QRecipes;
 			sourceTree = "<group>";
@@ -162,6 +187,7 @@
 				C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */,
 				313C2F84251063E1004BEB5A /* FavoriteVC.swift */,
 				313C2F86251063EE004BEB5A /* SettingVC.swift */,
+				20C9424F252AE748000698E6 /* CustomCells */,
 				316B7998251BEC0100B4E080 /* QRSScanVC */,
 			);
 			path = MainTabBar;
@@ -187,6 +213,8 @@
 				316B798A251BB0D000B4E080 /* AuthenticationVM.swift */,
 				313C2F7A25105426004BEB5A /* AuthenticationVC.swift */,
 				31306597251068C400491E44 /* CreaditVC.swift */,
+				3184D1AB25241B4500D3D75A /* LogInVC.swift */,
+				31748917252ADF6F00666CA2 /* SignUpVC.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -316,6 +344,7 @@
 			files = (
 				313C2F7F251062FB004BEB5A /* MainTabBar.swift in Sources */,
 				313C2F83251063CC004BEB5A /* SearchVC.swift in Sources */,
+				20C94251252AE748000698E6 /* FavoriteCell.swift in Sources */,
 				313C2F8125106395004BEB5A /* HomeVC.swift in Sources */,
 				317218092508454200EDF3DB /* SplashVC.swift in Sources */,
 				316B799A251BEC1400B4E080 /* QRScanVM.swift in Sources */,
@@ -324,6 +353,7 @@
 				C20FE50E2525B00C003BDA99 /* CustomTableViewCell.swift in Sources */,
 				313C2F85251063E1004BEB5A /* FavoriteVC.swift in Sources */,
 				316B798B251BB0D000B4E080 /* AuthenticationVM.swift in Sources */,
+				3184D1AC25241B4500D3D75A /* LogInVC.swift in Sources */,
 				3172181B25085DA300EDF3DB /* BackEndTestVC.swift in Sources */,
 				317218052508454200EDF3DB /* AppDelegate.swift in Sources */,
 				313C2F7D251060BD004BEB5A /* UIColorExtension.swift in Sources */,
@@ -336,7 +366,9 @@
 				313C2F892510643C004BEB5A /* QRScanVC.swift in Sources */,
 				316B7993251BBBDB00B4E080 /* UIWindowExtension.swift in Sources */,
 				316B7990251BB56100B4E080 /* UILabelExtension.swift in Sources */,
+				20F448BB2528D14400FB7857 /* HexColorConverter.swift in Sources */,
 				313C2F87251063EE004BEB5A /* SettingVC.swift in Sources */,
+				31748918252ADF6F00666CA2 /* SignUpVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
