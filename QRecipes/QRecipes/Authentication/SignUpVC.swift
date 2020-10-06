@@ -101,7 +101,7 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
         registerButton.setTitle("Register", for: .normal)
         registerButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18 * ratio)
         registerButton.setTitleColor(.white, for: .normal)
-        registerButton.addTarget(self, action: #selector(logInButton), for: .touchUpInside)
+        registerButton.addTarget(self, action: #selector(registerUser), for: .touchUpInside)
         registerButton.snp.makeConstraints { make in
             make.height.equalTo(60 * ratio)
             make.top.equalTo(passwordTextField.snp.bottom).offset(30)
@@ -134,26 +134,42 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
         }
         
     }
+    
+    func checkValidity() {
+        if firstName != "" && lastName != "" && email != "" && password != "" {
+            print("DEBUG:- \(firstName), \(lastName), \(email), \(password)")
+            registerButton.backgroundColor = .primeOrange
+        } else {
+            registerButton.backgroundColor = .lightGray
+        }
+        
+    }
+
 
     //MARK:- Selectors
     @objc func emailTextFieldDidChange(_ textField: UITextField) {
         guard let email = textField.text else { return }
         self.email = email
+        checkValidity()
+
     }
     
     @objc func passwordTextFieldDidchange(_ textField: UITextField) {
         guard let password = textField.text else { return }
         self.password = password
+        checkValidity()
     }
     
     @objc func firstNameTextFieldDidhange(_ textField: UITextField) {
         guard let firstName = textField.text else { return }
         self.firstName = firstName
+        checkValidity()
     }
     
     @objc func lastNameTextFieldDidhange(_ textField: UITextField) {
         guard let lastName = textField.text else { return }
         self.lastName = lastName
+        checkValidity()
     }
     
     @objc func toggleEyeButton() {
@@ -175,14 +191,14 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
         print("DEBUG:- Not ready")
     }
     
-    @objc func logInButton() {
+    @objc func registerUser() {
         let lowerCaseEmail = email.lowercased()
         var hasFound = false
-        
     }
     
     @objc func popVC() {
         navigationController?.popViewController(animated: true)
     }
+
 
 }
