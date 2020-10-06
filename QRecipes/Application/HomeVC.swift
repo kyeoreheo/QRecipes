@@ -26,7 +26,8 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
-        configureNavBar()
+        //navigationController?.isNavigationBarHidden = false
+        //configureNavBar()
         configureUI()
     }
     
