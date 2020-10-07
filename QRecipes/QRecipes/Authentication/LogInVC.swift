@@ -62,6 +62,7 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Helpers
     private func generateSampleAccount() {
         accounts = [SampleAccount(email: "kyo@gmail.com", password: "0000"),
+                    SampleAccount(email: "0", password: "0"),
                     SampleAccount(email: "yiheng@gmail.com", password: "0000"),
                     SampleAccount(email: "den@gmail.com", password: "0000"),
                     SampleAccount(email: "mingu@gmail.com", password: "0000") ]
