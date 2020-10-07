@@ -22,13 +22,13 @@ class FavoriteCell: UICollectionViewCell {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.textColor = UIColor(rgb: 0x424242)
+        label.textColor = .charcoalBlack
         return label
     }()
     
     lazy var favoriteButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.tintColor = UIColor(rgb: 0xF4511E)
+        button.tintColor = .pumpkinRed
         button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         return button
     }()

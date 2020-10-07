@@ -24,7 +24,7 @@ class FavoriteVC: UIViewController, UIGestureRecognizerDelegate {
     
     lazy var collectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        cv.backgroundColor = UIColor(rgb: 0xF5F5F5)
+        cv.backgroundColor = .backgroundGray
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(FavoriteCell.self, forCellWithReuseIdentifier: "cell")
         return cv

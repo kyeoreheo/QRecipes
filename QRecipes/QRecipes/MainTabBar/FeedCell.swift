@@ -16,7 +16,7 @@ class FeedCell: UICollectionViewCell {
         view.layer.shadowOpacity = 0.5
         view.layer.shadowOffset = .zero
         view.layer.shadowRadius = 2
-        view.backgroundColor = UIColor(rgb: 0xF5F5F5)
+        view.backgroundColor = .backgroundGray
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -34,7 +34,7 @@ class FeedCell: UICollectionViewCell {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.textColor = UIColor(rgb: 0x424242)
+        label.textColor = .charcoalBlack
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
