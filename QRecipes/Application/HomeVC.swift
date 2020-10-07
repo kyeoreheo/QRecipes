@@ -26,7 +26,8 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
-        configureNavBar()
+        //navigationController?.isNavigationBarHidden = false
+        //configureNavBar()
         configureUI()
     }
     
@@ -52,7 +53,7 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate {
         view.addSubview(bigTitleLabel)
         
         bigTitleLabel.text = "POPULAR RECIPES"
-        bigTitleLabel.textColor = UIColor(rgb: 0x424242)
+        bigTitleLabel.textColor = .charcoalBlack
         bigTitleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         
         bigTitleLabel.snp.makeConstraints { make in
