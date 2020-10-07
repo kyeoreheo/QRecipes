@@ -91,6 +91,7 @@
 		20C9424F252AE748000698E6 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				20ECFA1C2520466B00EEE280 /* FeedCell.swift */,
 				20C94250252AE748000698E6 /* FavoriteCell.swift */,
 			);
 			path = CustomCells;
@@ -171,7 +172,6 @@
 			children = (
 				313C2F7E251062FB004BEB5A /* MainTabBar.swift */,
 				313C2F8025106395004BEB5A /* HomeVC.swift */,
-				20ECFA1C2520466B00EEE280 /* FeedCell.swift */,
 				313C2F82251063CC004BEB5A /* SearchVC.swift */,
 				C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */,
 				313C2F84251063E1004BEB5A /* FavoriteVC.swift */,
