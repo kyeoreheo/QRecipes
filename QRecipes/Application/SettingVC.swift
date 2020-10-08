@@ -1,32 +1,32 @@
-
-//
 //  Created by kyo on 9/14/20.
 //  Copyright © 2020 Kyo. All rights reserved.
 //
 
 import UIKit
-import SDWebImage
 
 class SettingVC: UIViewController {
     
     // MARK: - Properties
+    let tableView = UITableView()
     
     lazy var containerView: UIView = {
         let view = UIView()
+        
+        
         view.backgroundColor = .orange
         
         view.addSubview(profileImageView)
         profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profileImageView.anchor(top: view.topAnchor, paddingTop: 88,
-                                width: 120, height: 120)
-        profileImageView.layer.cornerRadius = 120 / 2
+                                width: 100, height: 100)
+        profileImageView.layer.cornerRadius = 100 / 2
         
         view.addSubview(messageButton)
         messageButton.anchor(top: view.topAnchor, left: view.leftAnchor,
                              paddingTop: 64, paddingLeft: 32, width: 32, height: 32)
         
-        view.addSubview(followButton)
-        followButton.anchor(top: view.topAnchor, right: view.rightAnchor,
+        view.addSubview(logoutButton)
+        logoutButton.anchor(top: view.topAnchor, right: view.rightAnchor,
                              paddingTop: 64, paddingRight: 32, width: 32, height: 32)
         
         view.addSubview(nameLabel)
@@ -42,7 +42,7 @@ class SettingVC: UIViewController {
     
     let profileImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "cupcakes")
+        iv.image =  #imageLiteral(resourceName: "avatar")
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.layer.borderWidth = 3
@@ -52,23 +52,23 @@ class SettingVC: UIViewController {
     
     let messageButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage( #imageLiteral(resourceName: "envelope").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(handleMessageUser), for: .touchUpInside)
+        button.setImage(  #imageLiteral(resourceName: "envelope").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleService), for: .touchUpInside)
         return button
     }()
     
-    let followButton: UIButton = {
+    let logoutButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage( #imageLiteral(resourceName: "logout-512").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(handleFollowUser), for: .touchUpInside)
+        button.setImage(  #imageLiteral(resourceName: "logout-512").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
         return button
     }()
     
     let nameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = "User Name"
-        label.font = UIFont.boldSystemFont(ofSize: 26)
+        label.text = "Dan Zhao"
+        label.font = UIFont.boldSystemFont(ofSize: 22)
         label.textColor = .white
         return label
     }()
@@ -76,8 +76,8 @@ class SettingVC: UIViewController {
     let emailLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = "Email"
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.text = "zhaodan618@gmail.com"
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .white
         return label
     }()
@@ -86,37 +86,51 @@ class SettingVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureTableView()
         
-        view.backgroundColor = .white
+        //view.backgroundColor = .blue
         
         view.addSubview(containerView)
+        
         containerView.anchor(top: view.topAnchor, left: view.leftAnchor,
-                             right: view.rightAnchor, height: 300)
-        fetchUser() 
+                             right: view.rightAnchor, height: 280)
+ 
+        //containerView.pin(to: view)
+    }
+    
+    func configureTableView(){
+        view.addSubview(tableView)
+        
+        setTableViewDelegates()
+        //tableView.rowHeight = 100
+//        tableView.anchor(top: view.topAnchor, left: view.leftAnchor,
+//        right: view.rightAnchor, height: 280)
+        tableView.pin(to: view)
+        
+    }
+    func setTableViewDelegates(){
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+    
+
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    // MARK:- Helpers
-    private func fetchUser() {
-        emailLabel.text = User.shared.email
-        nameLabel.text = User.shared.firstName + " " + User.shared.lastName
-        profileImageView.sd_setImage(with: User.shared.profileImage, completed: nil)
-
-    }
     
     // MARK: - Selectors
     
-    @objc func handleMessageUser() {
+    @objc func handleService() {
         print("Contact to the customer service here..")
     }
     
-    @objc func handleFollowUser() {
+    @objc func handleLogout() {
         print("Logging out..")
     }
 }
-
+/*
 extension UIColor {
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
         return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
@@ -124,7 +138,7 @@ extension UIColor {
     
     static let mainBlue = UIColor.rgb(red: 0, green: 150, blue: 255)
 }
-
+*/
 extension UIView {
     
     func anchor(top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, paddingTop: CGFloat? = 0,
@@ -160,4 +174,25 @@ extension UIView {
             heightAnchor.constraint(equalToConstant: height).isActive = true
         }
     }
+ 
+    func pin(to superView: UIView){
+        translatesAutoresizingMaskIntoConstraints = false
+        topAnchor.constraint(equalTo: superView.topAnchor).isActive = true
+        leadingAnchor.constraint(equalTo: superView.leadingAnchor).isActive = true
+        trailingAnchor.constraint(equalTo: superView.trailingAnchor).isActive = true
+        bottomAnchor.constraint(equalTo: superView.bottomAnchor).isActive = true
+    }
+   
 }
+extension SettingVC: UITableViewDelegate,UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 6
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+    
+    
+}
+

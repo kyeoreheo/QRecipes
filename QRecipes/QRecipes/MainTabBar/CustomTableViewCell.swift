@@ -1,4 +1,3 @@
-//
 //  CustomTableViewCell.swift
 //  QRecipes
 //
@@ -16,8 +15,8 @@ class CustomTableViewCell: UITableViewCell {
         return view
     }()
     lazy var userImage: UIImageView = {
-//        let userImage = UIImageView()
-//        userImage.contentMode = .scaleAspectFill
+        let userImage = UIImageView()
+        userImage.contentMode = .scaleAspectFill
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
@@ -26,21 +25,21 @@ class CustomTableViewCell: UITableViewCell {
         img.translatesAutoresizingMaskIntoConstraints = false
         return img
     }()
-//    lazy var nameLbl : UILabel = {
-//       let lbl = UILabel(frame: CGRect(x: 116, y: 8, width: backView.frame.width - 116, height: 30))
-//        lbl.textAlignment = .center
-//        lbl.font = UIFont.boldSystemFont(ofSize: 12)
-//        return lbl
-//    }()
-//    
-//    lazy var restaurantLbl : UILabel = {
-//       let lbl = UILabel(frame: CGRect(x: 116, y: 42, width: backView.frame.width - 116, height: 30))
-//        lbl.textAlignment = .center
-//        lbl.font = UIFont.boldSystemFont(ofSize: 12)
-//        //lbl.font = UIFont.boldSystemFont(ofSize: 18)
-//        return lbl
-//    }()
-//    
+    lazy var nameLbl : UILabel = {
+       let lbl = UILabel()
+        //lbl.textAlignment = .right
+        lbl.font = UIFont.boldSystemFont(ofSize: 12)
+        return lbl
+    }()
+    
+    lazy var restaurantLbl : UILabel = {
+       let lbl = UILabel()
+        //lbl.textAlignment = .left
+        lbl.font = UIFont.boldSystemFont(ofSize: 12)
+        //lbl.font = UIFont.boldSystemFont(ofSize: 18)
+        return lbl
+    }()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -57,8 +56,8 @@ class CustomTableViewCell: UITableViewCell {
 
         contentView.addSubview(backView)
         backView.addSubview(userImage)
-        //backView.addSubview(nameLbl)
-        //backView.addSubview(restaurantLbl)
+        backView.addSubview(nameLbl)
+        backView.addSubview(restaurantLbl)
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -73,15 +72,32 @@ class CustomTableViewCell: UITableViewCell {
         
         contentView.addSubview(backView)
         backView.addSubview(userImage)
-    
+        backView.addSubview(nameLbl)
+        backView.addSubview(restaurantLbl)
+        
         backView.snp.makeConstraints { make in
             make.top.left.right.bottom.equalToSuperview()
         }
         userImage.snp.makeConstraints { make in
+            make.width.equalTo(130)
             make.top.equalTo(contentView.snp.top).offset(10)
-            make.bottom.equalTo(contentView.snp.bottom)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-10)
             make.left.equalTo(contentView.snp.left).offset(10)
-            make.right.equalTo(contentView.snp.right)
+            //make.right.equalTo(contentView.snp.right)
+        }
+        nameLbl.snp.makeConstraints { make in
+            make.width.equalTo(110)
+            make.top.equalTo(contentView.snp.top).offset(20)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-50)
+            make.left.equalTo(contentView.snp.left).offset(170)
+            make.right.equalTo(contentView.snp.right).offset(10)
+        }
+        restaurantLbl.snp.makeConstraints { make in
+            make.width.equalTo(110)
+            make.top.equalTo(contentView.snp.top).offset(70)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-30)
+            make.left.equalTo(contentView.snp.left).offset(170)
+            make.right.equalTo(contentView.snp.right).offset(10)
         }
         
     }
