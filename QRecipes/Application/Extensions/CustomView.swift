@@ -44,31 +44,32 @@ class CustomView {
         view.addSubview(frameView)
         frameView.backgroundColor = .white
         frameView.clipsToBounds = true
-        frameView.layer.cornerRadius = 5
+        frameView.layer.cornerRadius = 10
         frameView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.width.equalTo(200)
-            make.height.equalTo(200)
+            make.width.equalTo(250)
+            make.height.equalTo(250)
         }
 
         frameView.addSubview(messageLabel)
         messageLabel.text = message
-        messageLabel.textColor = .cherryRed
+        messageLabel.textColor = .black
         messageLabel.numberOfLines = 0
         messageLabel.textAlignment = .center
-        messageLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        messageLabel.font = UIFont.boldSystemFont(ofSize: 24)
         messageLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview().offset(-20)
         }
 
         frameView.addSubview(button)
-        button.backgroundColor = .facebookBlue
+        button.backgroundColor = .primeOrange
         button.setTitle(buttonText, for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         button.addTarget(target, action: action, for: .touchUpInside)
         button.snp.makeConstraints { make in
-            make.height.equalTo(40)
+            make.height.equalTo(60)
             make.left.right.bottom.equalToSuperview()
         }
         

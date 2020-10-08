@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import Firebase
 
 class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Properties
@@ -24,6 +25,9 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
     private let signInLabel = UILabel()
     private let signInButton = UIButton()
     private let bottomLabel = UILabel()
+    private let warningLabel = UILabel()
+    
+    private lazy var popUpModal = CustomView().popUpModal(message: "Registered!", buttonText: "Log In", action: #selector(popVC), target: self)
 
     private var email = ""
     private var password = ""
@@ -40,6 +44,8 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Helpers
     private func configure() {
         view.backgroundColor = .white
+        warningLabel.isHidden = true
+        popUpModal.isHidden = true
     }
     
     private func configureUI() {
@@ -95,6 +101,14 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
             make.right.equalToSuperview().offset(-30)
         }
         
+        view.addSubview(warningLabel)
+        warningLabel.textColor = .red
+        warningLabel.font = UIFont.systemFont(ofSize: 12)
+        warningLabel.snp.makeConstraints { make in
+            make.top.equalTo(passwordTextField.snp.bottom).offset(8)
+            make.left.equalToSuperview().offset(30)
+        }
+        
         view.addSubview(registerButton)
         registerButton.backgroundColor = .lightGray
         registerButton.layer.cornerRadius = 10
@@ -104,11 +118,10 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
         registerButton.addTarget(self, action: #selector(registerUser), for: .touchUpInside)
         registerButton.snp.makeConstraints { make in
             make.height.equalTo(60 * ratio)
-            make.top.equalTo(passwordTextField.snp.bottom).offset(30)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(50)
             make.left.equalToSuperview().offset(30)
             make.right.equalToSuperview().offset(-30)
         }
-        
         
         view.addSubview(signInLabel)
         signInLabel.text = "I'm already a member, Sign In"
@@ -133,18 +146,40 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-50)
         }
         
+        view.addSubview(popUpModal)
+        popUpModal.snp.makeConstraints { make in
+            make.top.left.bottom.right.equalToSuperview()
+        }
+        
     }
     
     func checkValidity() {
+        warningLabel.isHidden = true
         if firstName != "" && lastName != "" && email != "" && password != "" {
-            print("DEBUG:- \(firstName), \(lastName), \(email), \(password)")
             registerButton.backgroundColor = .primeOrange
         } else {
             registerButton.backgroundColor = .lightGray
         }
         
     }
-
+    
+    @objc func registerUser() {
+        let lowerCaseEmail = email.lowercased()
+        var hasFound = false
+        
+        let user = AuthProperties(email: lowerCaseEmail, password: password, firstName: firstName, lastName: lastName, profileImage: UIImage(named: "taco")!)
+        
+        API.registerUser(user: user) { [weak self] (error, ref) in
+            guard let strongSelf = self else { return }
+            if let error = error {
+                strongSelf.warningLabel.isHidden = false
+                strongSelf.warningLabel.text = error.localizedDescription
+                
+            } else {
+                strongSelf.popUpModal.isHidden = false
+            }
+        }
+    }
 
     //MARK:- Selectors
     @objc func emailTextFieldDidChange(_ textField: UITextField) {
@@ -190,15 +225,9 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
     @objc func notReadyYetButton() {
         print("DEBUG:- Not ready")
     }
-    
-    @objc func registerUser() {
-        let lowerCaseEmail = email.lowercased()
-        var hasFound = false
-    }
-    
+
     @objc func popVC() {
         navigationController?.popViewController(animated: true)
     }
-
 
 }
