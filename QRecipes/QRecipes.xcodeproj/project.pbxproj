@@ -35,12 +35,12 @@
 		31748918252ADF6F00666CA2 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31748917252ADF6F00666CA2 /* SignUpVC.swift */; };
 		3184D1AC25241B4500D3D75A /* LogInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3184D1AB25241B4500D3D75A /* LogInVC.swift */; };
 		31BAFF04251AAB9F0055A354 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BAFF03251AAB9F0055A354 /* CustomView.swift */; };
-		31D3ED0D252F67AE000CA905 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 31D3ED0C252F67AE000CA905 /* GoogleService-Info.plist */; };
 		31D3ED10252F6838000CA905 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D3ED0F252F6838000CA905 /* API.swift */; };
 		31D3ED13252F6847000CA905 /* API+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D3ED12252F6847000CA905 /* API+Auth.swift */; };
 		31D3ED51252FA721000CA905 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D3ED50252FA721000CA905 /* User.swift */; };
 		4A2A77BBB02A59AA291EF584 /* Pods_QRecipes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23171396F957630F02FB16F /* Pods_QRecipes.framework */; };
 		C20FE50E2525B00C003BDA99 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */; };
+		C20FE51A252FC752003BDA99 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C20FE519252FC751003BDA99 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,13 +74,13 @@
 		31748917252ADF6F00666CA2 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		3184D1AB25241B4500D3D75A /* LogInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInVC.swift; sourceTree = "<group>"; };
 		31BAFF03251AAB9F0055A354 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
-		31D3ED0C252F67AE000CA905 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		31D3ED0F252F6838000CA905 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		31D3ED12252F6847000CA905 /* API+Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Auth.swift"; sourceTree = "<group>"; };
 		31D3ED50252FA721000CA905 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		59433B390CDEE59F0FA6D4B0 /* Pods-QRecipes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.release.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.release.xcconfig"; sourceTree = "<group>"; };
 		637B5E3B9B20F801C5601BAC /* Pods-QRecipes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.debug.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.debug.xcconfig"; sourceTree = "<group>"; };
 		C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		C20FE519252FC751003BDA99 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C23171396F957630F02FB16F /* Pods_QRecipes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QRecipes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -200,9 +200,9 @@
 				317218042508454200EDF3DB /* AppDelegate.swift */,
 				317218062508454200EDF3DB /* SceneDelegate.swift */,
 				3172180A2508454200EDF3DB /* Main.storyboard */,
+				C20FE519252FC751003BDA99 /* GoogleService-Info.plist */,
 				3172180F2508454400EDF3DB /* LaunchScreen.storyboard */,
 				317218122508454400EDF3DB /* Info.plist */,
-				31D3ED0C252F67AE000CA905 /* GoogleService-Info.plist */,
 				313C2F8A251065A4004BEB5A /* Extensions */,
 			);
 			path = Application;
@@ -289,7 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				317218112508454400EDF3DB /* LaunchScreen.storyboard in Resources */,
-				31D3ED0D252F67AE000CA905 /* GoogleService-Info.plist in Resources */,
+				C20FE51A252FC752003BDA99 /* GoogleService-Info.plist in Resources */,
 				3172180E2508454400EDF3DB /* Assets.xcassets in Resources */,
 				3172180C2508454200EDF3DB /* Main.storyboard in Resources */,
 			);

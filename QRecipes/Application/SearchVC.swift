@@ -20,7 +20,7 @@ class UserModal {
     }
 }
 
-class SearchVC: UIViewController {
+class SearchVC: UIViewController{
     //MARK:- Properties
     //private let sampleLable = UILabel()
     //let topLabel = UILabel()
@@ -28,6 +28,8 @@ class SearchVC: UIViewController {
     //let searchController = UISearchController(searchResultsController: nil)
     let searchBar = UISearchBar()
     let tableView = UITableView()
+    let lbl = UILabel()
+    
     var userArr = [UserModal]()
     //MARK:- LifeCycles
     override func viewDidLoad() {
@@ -38,19 +40,19 @@ class SearchVC: UIViewController {
         configureSearchBar()
         setTableView()
         
-        userArr.append(UserModal(userImage:  #imageLiteral(resourceName: "salmon"), name: "Recipe: Salmon", restaurant: "Cheesecake Factory"))
-        userArr.append(UserModal(userImage: #imageLiteral(resourceName: "pasta") , name: "Recipe: Pasta", restaurant: "Oliva Garden"))
-        userArr.append(UserModal(userImage: #imageLiteral(resourceName: "Boeuf-bourguignon") , name: "Boeuf-bourguignon", restaurant: "Le Rivage"))
-        userArr.append(UserModal(userImage:#imageLiteral(resourceName: "cheese-fries-1"), name: "Recipe: Cheese fries", restaurant: "Shake Shake"))
-        userArr.append(UserModal(userImage: #imageLiteral(resourceName: "chicken-nuggets") , name: "Recipe: Chicken Nugget", restaurant: "McDonald"))
-        userArr.append(UserModal(userImage: #imageLiteral(resourceName: "shushi") , name: "Recipe: Shushi", restaurant: "Tobiko"))
-        userArr.append(UserModal(userImage: #imageLiteral(resourceName: "taco") , name: "Recipe: Taco", restaurant: "La Espiga"))
+        userArr.append(UserModal(userImage: #imageLiteral(resourceName: "salmon"), name: "Recipe: Salmon", restaurant: "Restaurant: Cheesecake Factory"))
+        userArr.append(UserModal(userImage:  #imageLiteral(resourceName: "pasta"), name: "Recipe: Pasta", restaurant: "Restaurant: Oliva Garden"))
+        userArr.append(UserModal(userImage:  #imageLiteral(resourceName: "Boeuf-bourguignon"), name: "Recipe: Boeuf-bourguignon", restaurant: "Restaurant: Le Rivage"))
+        userArr.append(UserModal(userImage:  #imageLiteral(resourceName: "cheese-fries-1"), name: "Recipe: Cheese fries", restaurant: "Restaurant: Shake Shake"))
+        userArr.append(UserModal(userImage:  #imageLiteral(resourceName: "chicken-nuggets"), name: "Recipe: Chicken Nugget", restaurant: "Restaurant: McDonald"))
+        userArr.append(UserModal(userImage:  #imageLiteral(resourceName: "shushi"), name: "Recipe: Shushi", restaurant: "Restaurant: Tobiko"))
+        userArr.append(UserModal(userImage:  #imageLiteral(resourceName: "taco"), name: "Recipe: Taco", restaurant: "Restaurant: La Espiga"))
         //navigationItem.searchController = searchController
         //searchController.searchBar.delegate = self
         //setupTableView()
         //tableView.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     func setTableView() {
         tableView.frame = self.view.frame
         tableView.backgroundColor = UIColor.clear
@@ -84,6 +86,7 @@ class SearchVC: UIViewController {
         searchBar.sizeToFit()
         searchBar.isTranslucent = false
         searchBar.delegate = self
+        searchBar.setShowsCancelButton(true, animated: false)
         
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
@@ -109,17 +112,32 @@ class SearchVC: UIViewController {
 }
 
 extension SearchVC: UISearchBarDelegate{
-    func searchBar(_ searchBar: UISearchBar, textDidChange textSearched: String)
-    {
-        print(textSearched)
+    func searchBar(_ searchBar: UISearchBar, textDidChange textSearched: String){
+        
+    }
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = nil
+        //searchBar.showsCancelButton = false
+        searchBar.resignFirstResponder() // turn off the keyboard
+
+        searchBar.endEditing(true)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        searchBar.resignFirstResponder()
     }
     
 }
+
 extension SearchVC: UINavigationBarDelegate {
-    // Unified the status bar area with the nav bar
-//    func position(for bar: UIBarPositioning) -> UIBarPosition {
-//        return .topAttached
-//    }
+     //Unified the status bar area with the nav bar
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return .topAttached
+    }
 }
 extension SearchVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -131,80 +149,18 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource{
         
         CustomTableViewCell else {fatalError("Unable to create cell")}
         cell.userImage.image = userArr[indexPath.row].userImage
-        //cell.nameLbl.text = userArr[indexPath.row].name
-        //cell.restaurantLbl.text = userArr[indexPath.row].restaurant
+        cell.nameLbl.text = userArr[indexPath.row].name
+        cell.restaurantLbl.text = userArr[indexPath.row].restaurant
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 118
+        return 130
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
+        scrollView.delegate = self
+        scrollView.contentSize = CGSize(width:self.view.frame.size.width, height: 1000)
+        searchBar.resignFirstResponder()
     }
 }
-
-    /*
-    @objc func handleShowSearchBar(){
-        search(shouldShow: true)
-        
-        searchBar.becomeFirstResponder()
-    }
- */
-    //MARK:- Helpers
-
-   /*
-    func showSearchBarButton(shouldShow: Bool){
-        
-        if shouldShow{
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(handleShowSearchBar))
-        } else {
-            navigationItem.rightBarButtonItem = nil
-        }
-    }
-    func search(shouldShow: Bool){
-        showSearchBarButton(shouldShow: !shouldShow)
-        searchBar.showsCancelButton = shouldShow
-        navigationItem.titleView = shouldShow ? searchBar : nil
-    }
-//        internal func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
-//             print(searchText)
-//        }
-//
-//        private func configureNavBar() {
-//            naviBar.delegate = self as? UINavigationBarDelegate
-//               naviBar.setItems([UINavigationItem(title: "Search")], animated: false)
-//
-//               view.addSubview(naviBar)
-//               naviBar.snp.makeConstraints { make in
-//                   make.height.equalTo(44)
-//                   make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-//                   make.left.right.equalToSuperview()
-//               }
-//           }
-//        private func configureUI() {
-//            view.addSubview(topLabel)
-//            topLabel.text = "SEARCH POPULAR RECIPES"
-//            topLabel.textColor = .black
-//            topLabel.font = UIFont.systemFont(ofSize: 18)
-//
-//            topLabel.snp.makeConstraints { make in
-//            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(54)
-//            make.left.equalTo(view).offset(12)
-//            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.top).offset(84)
-//            make.right.equalTo(view).offset(-12)
-//            }
-//    }
-    
-    //MARK:- Selectors
-    
- */
-
-//
-//extension SearchVC: UISearchBarDelegate{
-//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        search(shouldShow: false)
-//    }
-//}
-
