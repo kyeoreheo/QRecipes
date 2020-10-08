@@ -27,6 +27,10 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
     private let bottomLabel = UILabel()
     private let warningLabel = UILabel()
     
+    private let imagePicker = UIImagePickerController()
+    private var profileImage = UIImage(named: "avatar")
+    private let addPhotoButton = UIButton()
+    
     private lazy var popUpModal = CustomView().popUpModal(message: "Registered!", buttonText: "Log In", action: #selector(popVC), target: self)
 
     private var email = ""
@@ -44,6 +48,8 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Helpers
     private func configure() {
         view.backgroundColor = .white
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
         warningLabel.isHidden = true
         popUpModal.isHidden = true
     }
@@ -69,10 +75,24 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
             make.left.equalToSuperview().offset(20)
         }
         
+        view.addSubview(addPhotoButton)
+        addPhotoButton.layer.cornerRadius = 130 / 2
+        addPhotoButton.layer.masksToBounds = true
+        addPhotoButton.layer.borderWidth = 2
+        addPhotoButton.layer.borderColor = UIColor.gray.cgColor
+        addPhotoButton.setTitle("Add Photo", for: .normal)
+        addPhotoButton.setTitleColor(.black, for: .normal)
+        addPhotoButton.addTarget(self, action: #selector(addPhoto), for: .touchUpInside)
+        addPhotoButton.snp.makeConstraints { make in
+            make.width.height.equalTo(130)
+            make.top.equalTo(backButton.snp.top)
+            make.right.equalToSuperview().offset(-30)
+        }
+        
         view.addSubview(firstNameTextField)
         firstNameTextField.snp.makeConstraints { make in
             make.height.equalTo(36 * ratio)
-            make.top.equalTo(titleLabel.snp.bottom).offset(50)
+            make.top.equalTo(addPhotoButton.snp.bottom).offset(20)
             make.left.equalToSuperview().offset(30)
             make.right.equalTo(view.snp.centerX).offset(-15)
         }
@@ -80,7 +100,7 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
         view.addSubview(lastNameTextField)
         lastNameTextField.snp.makeConstraints { make in
             make.height.equalTo(36 * ratio)
-            make.top.equalTo(titleLabel.snp.bottom).offset(50)
+            make.top.equalTo(addPhotoButton.snp.bottom).offset(20)
             make.left.equalTo(view.snp.centerX).offset(15)
             make.right.equalToSuperview().offset(-30)
         }
@@ -164,10 +184,10 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @objc func registerUser() {
+        guard let profileImage = profileImage else { return }
         let lowerCaseEmail = email.lowercased()
-        var hasFound = false
         
-        let user = AuthProperties(email: lowerCaseEmail, password: password, firstName: firstName, lastName: lastName, profileImage: UIImage(named: "taco")!)
+        let user = AuthProperties(email: lowerCaseEmail, password: password, firstName: firstName, lastName: lastName, profileImage: profileImage)
         
         API.registerUser(user: user) { [weak self] (error, ref) in
             guard let strongSelf = self else { return }
@@ -229,5 +249,26 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
     @objc func popVC() {
         navigationController?.popViewController(animated: true)
     }
+    
+    @objc func addPhoto() {
+        present(imagePicker, animated: true, completion: nil)
+    }
 
+}
+
+extension SignUpVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let profileImage = info [.editedImage] as? UIImage else { return }
+        self.profileImage = profileImage
+        
+
+        addPhotoButton.imageView?.contentMode = .scaleAspectFill
+        addPhotoButton.imageView?.clipsToBounds = true
+        addPhotoButton.layer.borderColor = UIColor.white.cgColor
+        addPhotoButton.layer.borderWidth = 3
+        
+        self.addPhotoButton.setImage(profileImage.withRenderingMode(.alwaysOriginal), for: .normal)
+        
+        dismiss(animated: true, completion: nil)
+    }
 }

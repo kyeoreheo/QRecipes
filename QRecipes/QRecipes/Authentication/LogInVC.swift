@@ -51,7 +51,6 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        //subscribeToShowKeyboardNotifications()
         if keyboardHeight > 0.0 {
               buttonConstraint?.constant =  20 - keyboardHeight
         }
@@ -102,9 +101,11 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
         view.addSubview(warningLabel)
         warningLabel.textColor = .red
         warningLabel.font = UIFont.boldSystemFont(ofSize: 12)
+        warningLabel.numberOfLines = 0
         warningLabel.snp.makeConstraints { make in
             make.top.equalTo(passwordTextField.snp.bottom).offset(8)
             make.left.equalToSuperview().offset(30)
+            make.right.equalToSuperview().offset(-30)
         }
         
         view.addSubview(signInButton)
@@ -116,7 +117,7 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
         signInButton.addTarget(self, action: #selector(logInButton), for: .touchUpInside)
         signInButton.snp.makeConstraints { make in
             make.height.equalTo(60 * ratio)
-            make.top.equalTo(passwordTextField.snp.bottom).offset(30)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(50)
             make.left.equalToSuperview().offset(30)
             make.right.equalToSuperview().offset(-30)
         }
@@ -301,27 +302,31 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
     
     @objc func logInButton() {
         let lowerCaseEmail = email.lowercased()
-        var hasFound = false
         
         if email != "" && password != "" {
-            accounts.forEach {
-                if $0.email == lowerCaseEmail && $0.password == password {
-                    hasFound = true
+            API.logIn(email: lowerCaseEmail, password: password) { [weak self] (result, error) in
+                guard let strongSelf = self else { return }
+                if let error = error {
+                    strongSelf.warningLabel.isHidden = false
+                    strongSelf.warningLabel.text = error.localizedDescription
+                    return
+                }
+                
+                guard let result = result else { return }
+                API.fetchUser(uid: result.user.uid) { response in
+                    User.shared.email = response.email
+                    User.shared.firstName = response.firstName
+                    User.shared.lastName = response.lastName
+                    User.shared.profileImage = response.profileImageUrl
+                    
                     DispatchQueue.main.async {
                         let navigation = UINavigationController(rootViewController: MainTabBar())
                         navigation.modalPresentationStyle = .fullScreen
                         navigation.navigationBar.isHidden = true
-                        self.present(navigation, animated: false, completion: nil)
+                        strongSelf.present(navigation, animated: false, completion: nil)
                     }
                 }
             }
-            if !hasFound {
-                warningLabel.isHidden = false
-                warningLabel.text = "Email or password is incorrect."
-            }
-        } else {
-            warningLabel.isHidden = false
-            warningLabel.text = "Type your email and password."
         }
     }
     

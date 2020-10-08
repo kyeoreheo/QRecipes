@@ -5,6 +5,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class SettingVC: UIViewController {
     
@@ -66,7 +67,7 @@ class SettingVC: UIViewController {
     let nameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = "Dan Zhao"
+        label.text = "User Name"
         label.font = UIFont.boldSystemFont(ofSize: 26)
         label.textColor = .white
         return label
@@ -75,7 +76,7 @@ class SettingVC: UIViewController {
     let emailLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = "zhaodan618@gmail.com"
+        label.text = "Email"
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = .white
         return label
@@ -91,12 +92,18 @@ class SettingVC: UIViewController {
         view.addSubview(containerView)
         containerView.anchor(top: view.topAnchor, left: view.leftAnchor,
                              right: view.rightAnchor, height: 300)
-        
-        
+        fetchUser() 
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    // MARK:- Helpers
+    private func fetchUser() {
+        emailLabel.text = User.shared.email
+        nameLabel.text = User.shared.firstName + " " + User.shared.lastName
+        profileImageView.sd_setImage(with: User.shared.profileImage, completed: nil)
+
     }
     
     // MARK: - Selectors

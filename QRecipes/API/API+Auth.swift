@@ -8,6 +8,27 @@
 
 import Firebase
 
+struct UserInfo {
+    let email: String
+    let firstName: String
+    let lastName: String
+    var profileImageUrl: URL?
+    let uid: String
+
+    init(uid: String, dictionary: [String: AnyObject]) {
+        self.uid = uid
+
+        self.email = dictionary["email"] as? String ?? ""
+        self.firstName = dictionary["firstName"] as? String ?? ""
+        self.lastName = dictionary["lastName"] as? String ?? ""
+
+        if let profileImageUrlString = dictionary["profileImageUrl"] as? String {
+            guard let url = URL(string: profileImageUrlString) else { return }
+            self.profileImageUrl = url
+        }
+    }
+}
+
 struct AuthProperties {
     let email: String
     let password: String
@@ -17,6 +38,10 @@ struct AuthProperties {
 }
 
 extension API {
+    static func logIn(email: String, password: String, completion: AuthDataResultCallback?) {
+        Auth.auth().signIn(withEmail: email, password: password, completion: completion)
+    }
+    
     static func registerUser(user: AuthProperties, completion: @escaping(Error?, DatabaseReference?) -> Void ) {
         guard let imageData = user.profileImage.jpegData(compressionQuality: 0.3) else { return }
 
@@ -42,6 +67,15 @@ extension API {
                     DB_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
                }
            }
+        }
+    }
+    
+    static func fetchUser(uid: String, completion: @escaping(UserInfo) -> Void) {
+        DB_USERS.child(uid).observeSingleEvent(of: .value) { snapshot in
+            guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
+
+            let user = UserInfo(uid: uid, dictionary: dictionary)
+            completion(user)
         }
     }
 }

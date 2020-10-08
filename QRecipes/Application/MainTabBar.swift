@@ -21,6 +21,9 @@ class MainTabBar: UITabBarController {
     
     // MARK: - configures
     func configureTabBar() {
+        tabBar.barTintColor = .white
+        tabBar.tintColor = .orange
+
         let homeTab = barTabView(view: HomeVC(), image: "home")
         let searchTab = barTabView(view: SearchVC(), image: "search")
         let middleTab = QRSacnVC()
@@ -41,7 +44,7 @@ class MainTabBar: UITabBarController {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
         }
     }
-    
+
     // MARK:- Helper
     func barTabView(view: UIViewController, image: String, width: CGFloat = 30, height: CGFloat = 30) -> UINavigationController {
         let tabView = UINavigationController(rootViewController: view)
