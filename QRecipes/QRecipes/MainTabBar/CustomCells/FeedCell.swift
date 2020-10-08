@@ -1,39 +1,44 @@
 //
-//  FavoriteCell.swift
+//  FeedCell.swift
 //  QRecipes
 //
-//  Created by Yiheng Cen Feng on 10/3/20.
+//  Created by Yiheng Cen Feng on 9/27/20.
 //  Copyright © 2020 Kyo. All rights reserved.
 //
 
 import UIKit
 
-class FavoriteCell: UICollectionViewCell {
+class FeedCell: UICollectionViewCell {
     //MARK:- Properties
     lazy var imageView: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
-        img.layer.cornerRadius = 8
         img.image = UIImage(named: "cupcakes")
         return img
     }()
     
-    lazy var titleLabel: UILabel = {
+    lazy var restaurantLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.textColor = .charcoalBlack
+        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.textColor = .black
+        return label
+    }()
+    
+    lazy var recipeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.textColor = .gray
         return label
     }()
     
     lazy var favoriteButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.tintColor = .pumpkinRed
-        button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        button.tintColor = .primeOrange
+        button.setImage(UIImage(systemName: "heart"), for: .normal)
         return button
     }()
     
-    //MARK:- Init
     override init(frame: CGRect){
         super.init(frame: frame)
         configureCell()
@@ -43,28 +48,31 @@ class FavoriteCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK:- Helper
-    private func configureCell() {
+    func configureCell() {
         contentView.backgroundColor = .white
-        contentView.layer.cornerRadius = 6
-
+        
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(8)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-40)
-            make.left.equalTo(contentView.snp.left).offset(8)
-            make.right.equalTo(contentView.snp.right).offset(-8)
+            make.left.right.top.equalToSuperview()
+            make.bottom.equalTo(contentView.snp.bottom).offset(-60)
         }
         
-        contentView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
+        contentView.addSubview(restaurantLabel)
+        restaurantLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(10)
+            make.left.equalTo(contentView).offset(10)
+        }
+        
+        contentView.addSubview(recipeLabel)
+        recipeLabel.snp.makeConstraints { make in
+            make.top.equalTo(restaurantLabel.snp.bottom)
+            make.bottom.equalToSuperview().offset(-10)
             make.left.equalTo(contentView).offset(12)
         }
         
         contentView.addSubview(favoriteButton)
         favoriteButton.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(8)
+            make.top.equalTo(imageView.snp.bottom).offset(10)
             make.right.equalTo(contentView).offset(-12)
         }
     }
