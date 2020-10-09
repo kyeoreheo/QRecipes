@@ -41,6 +41,8 @@
 		4A2A77BBB02A59AA291EF584 /* Pods_QRecipes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23171396F957630F02FB16F /* Pods_QRecipes.framework */; };
 		C20FE50E2525B00C003BDA99 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */; };
 		C20FE51A252FC752003BDA99 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C20FE519252FC751003BDA99 /* GoogleService-Info.plist */; };
+		C622172E2530D96A0066CB9F /* API+Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C622172D2530D96A0066CB9F /* API+Recipe.swift */; };
+		C62217302530DA2A0066CB9F /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C622172F2530DA2A0066CB9F /* Recipe.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +84,8 @@
 		C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		C20FE519252FC751003BDA99 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C23171396F957630F02FB16F /* Pods_QRecipes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QRecipes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C622172D2530D96A0066CB9F /* API+Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Recipe.swift"; sourceTree = "<group>"; };
+		C622172F2530DA2A0066CB9F /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,8 +176,10 @@
 				3172181A25085DA300EDF3DB /* BackEndTestVC.swift */,
 				3113CB1E250AEA5200C147FF /* QRAPI.swift */,
 				31D3ED0F252F6838000CA905 /* API.swift */,
+				C622172D2530D96A0066CB9F /* API+Recipe.swift */,
 				31D3ED12252F6847000CA905 /* API+Auth.swift */,
 				31D3ED50252FA721000CA905 /* User.swift */,
+				C622172F2530DA2A0066CB9F /* Recipe.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -346,6 +352,7 @@
 			files = (
 				313C2F7F251062FB004BEB5A /* MainTabBar.swift in Sources */,
 				313C2F83251063CC004BEB5A /* SearchVC.swift in Sources */,
+				C622172E2530D96A0066CB9F /* API+Recipe.swift in Sources */,
 				20C94251252AE748000698E6 /* FavoriteCell.swift in Sources */,
 				313C2F8125106395004BEB5A /* HomeVC.swift in Sources */,
 				317218092508454200EDF3DB /* SplashVC.swift in Sources */,
@@ -372,6 +379,7 @@
 				316B7993251BBBDB00B4E080 /* UIWindowExtension.swift in Sources */,
 				316B7990251BB56100B4E080 /* UILabelExtension.swift in Sources */,
 				313C2F87251063EE004BEB5A /* SettingVC.swift in Sources */,
+				C62217302530DA2A0066CB9F /* Recipe.swift in Sources */,
 				31748918252ADF6F00666CA2 /* SignUpVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

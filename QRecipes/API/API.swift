@@ -10,10 +10,11 @@ import Firebase
 
 let DB_REF = Database.database().reference()
 let DB_USERS = DB_REF.child("users")
-let DB_POST = DB_REF.child("posts")
+let DB_RECIPE = DB_REF.child("recipes")
 
 let ST_REF = Storage.storage().reference()
 let ST_PROFILE_IMAGE = ST_REF.child("profile_image")
+let ST_RECIPE_IMAGE = ST_REF.child("recipe_image")
 
 class API {
     
