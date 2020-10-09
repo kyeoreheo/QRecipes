@@ -13,7 +13,11 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Properties
     let inset: CGFloat = 15.0
     
-    lazy var recipes = [Recipe]()
+    var recipes = [Recipe]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     lazy var titleLabel: UILabel = {
        let label = UILabel()
@@ -79,8 +83,9 @@ extension HomeVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! FeedCell
         
-        cell.restaurantLabel.text = "Yummy Dessert Shop"
-        cell.recipeLabel.text = "Cupcakes"
+        cell.recipe = recipes[indexPath.row]
+        //cell.restaurantLabel.text = "Yummy Dessert Shop"
+        //cell.recipeLabel.text = "Cupcakes"
 
         return cell
     }

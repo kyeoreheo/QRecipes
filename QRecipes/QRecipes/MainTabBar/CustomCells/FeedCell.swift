@@ -7,9 +7,18 @@
 //
 
 import UIKit
+import SDWebImage
 
 class FeedCell: UICollectionViewCell {
     //MARK:- Properties
+    var recipe: Recipe? {
+        didSet {
+            imageView.sd_setImage(with: recipe?.recipeImageUrl, completed: nil)
+            restaurantLabel.text = recipe?.restaurant
+            recipeLabel.text = recipe?.name
+        }
+    }
+    
     lazy var imageView: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill

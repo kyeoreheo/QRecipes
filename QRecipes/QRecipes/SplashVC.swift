@@ -24,7 +24,7 @@ class SplashVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Helpers
     private func presentAuthenticationVC() {
         DispatchQueue.main.async {
-            let navigation = UINavigationController(rootViewController: AuthenticationVC())
+            let navigation = UINavigationController(rootViewController: HomeVC())
             navigation.modalPresentationStyle = .fullScreen
             navigation.navigationBar.isHidden = true
             self.present(navigation, animated: false, completion: nil)
