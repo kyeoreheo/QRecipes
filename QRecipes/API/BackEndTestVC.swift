@@ -17,6 +17,12 @@ class BackEndTestVC: UIViewController {
 
     private let signUp = UIButton()
     
+    private var recipes = [Recipe](){
+        didSet {
+            sampleLable.text = recipes[0].name
+        }
+    }
+    
     //MARK:- LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +49,7 @@ class BackEndTestVC: UIViewController {
         }
         
         view.addSubview(signUp)
-        signUp.addTarget(self, action: #selector(uploadNewRecipe), for: .touchUpInside)
+        signUp.addTarget(self, action: #selector(fetchRecipes), for: .touchUpInside)
         signUp.setTitle("Sign-Up", for: .normal)
         signUp.setTitleColor(.white, for: .normal)
         signUp.backgroundColor = .black
@@ -92,5 +98,10 @@ class BackEndTestVC: UIViewController {
                     print("Uploaded")
                 }
             }
+    }
+    @objc func fetchRecipes() {
+        API.fetchRecipes{ recipes in
+            self.recipes = recipes
+        }
     }
 }

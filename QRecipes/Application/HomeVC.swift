@@ -13,6 +13,8 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Properties
     let inset: CGFloat = 15.0
     
+    lazy var recipes = [Recipe]()
+    
     lazy var titleLabel: UILabel = {
        let label = UILabel()
        label.text = "Trending"
@@ -34,6 +36,7 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         configure()
         configureUI()
+        fetchRecipes()
     }
     
     //MARK:- Helpers
@@ -59,12 +62,18 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate {
             make.left.right.equalToSuperview()
         }
     }
+    
+    private func fetchRecipes() {
+        API.fetchRecipes { recipes in
+            self.recipes = recipes
+        }
+    }
 }
 
 //MARK:- Collection view data source
 extension HomeVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return recipes.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -8,7 +8,7 @@
 
 import Firebase
 
-struct RecipeInfo {
+/*struct RecipeInfo {
     let name: String
     let restaurant: String
     let level: String
@@ -33,7 +33,7 @@ struct RecipeInfo {
             self.recipeImageUrl = url
         }
     }
-}
+}*/
 
 struct newRecipe {
     let name: String
@@ -73,13 +73,16 @@ extension API {
         }
     }
     
-    static func fetchRecipes(completion: @escaping(RecipeInfo) -> Void) {
-        var recipes = [RecipeInfo]()
+    static func fetchRecipes(completion: @escaping([Recipe]) -> Void) {
+        
+        var recipes = [Recipe]()
+        
         DB_RECIPE.observe(.childAdded) { (snapshot) in
-            let dictionary = snapshot.value as? [String : Any] ?? ["":""]
-            let recipe = RecipeInfo(dictionary: dictionary)
+            guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
+            let uid = snapshot.key
+            let recipe = Recipe(uid: uid, dictionary: dictionary)
             recipes.append(recipe)
-            
+            completion(recipes)
         }
     }
     
