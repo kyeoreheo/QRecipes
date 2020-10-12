@@ -10,6 +10,13 @@ import UIKit
 
 class FavoriteCell: UICollectionViewCell {
     //MARK:- Properties
+    var recipe: Recipe? {
+        didSet {
+            imageView.sd_setImage(with: recipe?.recipeImageUrl, completed: nil)
+            titleLabel.text = recipe?.name
+        }
+    }
+    
     lazy var imageView: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill

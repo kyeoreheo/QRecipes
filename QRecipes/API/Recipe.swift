@@ -36,14 +36,4 @@ struct Recipe {
             self.recipeImageUrl = url
         }
     }
-    
-    /*var name = ""
-    var restaurant = ""
-    var level = ""
-    var cookTime = ""
-    var price = ""
-    var tags = [""]
-    var ingrediants = [""]
-    var recipeImageUrl: URL?
-    */
 }

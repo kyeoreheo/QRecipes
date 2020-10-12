@@ -34,6 +34,7 @@ struct AuthProperties {
     let password: String
     let firstName: String
     let lastName: String
+    let favorite: [String]
     let profileImage: UIImage
 }
 
@@ -62,7 +63,8 @@ extension API {
                     let values = ["email": user.email,
                                   "firstName": user.firstName,
                                   "lastName": user.lastName,
-                                  "profileImageUrl": profileImageUrl]
+                                  "favorite": user.favorite,
+                                  "profileImageUrl": profileImageUrl] as [String : AnyObject]
 
                     DB_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
                }

@@ -45,6 +45,7 @@ class FeedCell: UICollectionViewCell {
         let button = UIButton(type: .custom)
         button.tintColor = .primeOrange
         button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.addTarget(self, action: #selector(favorite), for: .touchUpInside)
         return button
     }()
     
@@ -85,4 +86,17 @@ class FeedCell: UICollectionViewCell {
             make.right.equalTo(contentView).offset(-12)
         }
     }
+    
+    @objc func favorite(){
+        API.setFavorite(recipe: recipe!) { [weak self] (error, ref) in
+            guard let strongSelf = self else { return }
+            if error != nil {
+                print("Error: failed to set favorite")
+            } else {
+                strongSelf.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            }
+        }
+    }
 }
+
+

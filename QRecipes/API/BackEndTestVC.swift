@@ -17,12 +17,6 @@ class BackEndTestVC: UIViewController {
 
     private let signUp = UIButton()
     
-    private var recipes = [Recipe](){
-        didSet {
-            sampleLable.text = recipes[0].name
-        }
-    }
-    
     //MARK:- LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,8 +43,8 @@ class BackEndTestVC: UIViewController {
         }
         
         view.addSubview(signUp)
-        signUp.addTarget(self, action: #selector(fetchRecipes), for: .touchUpInside)
-        signUp.setTitle("Sign-Up", for: .normal)
+        signUp.addTarget(self, action: #selector(uploadNewRecipe), for: .touchUpInside)
+        signUp.setTitle("upload new recipe", for: .normal)
         signUp.setTitleColor(.white, for: .normal)
         signUp.backgroundColor = .black
         signUp.titleLabel?.font = UIFont.systemFont(ofSize: 20)
@@ -81,14 +75,14 @@ class BackEndTestVC: UIViewController {
     
     @objc func uploadNewRecipe(){
         let recipe = newRecipe(
-                        name: "Warm Caramel Banana",
-                        restaurant: "AAA Kitchen",
-                        level: "1",
-                        cookTime: "15 MIN",
-                        price: "$8",
-                        tags: ["Banana", "Caramel", "Dessert"],
-                        ingrediants: ["Banana", "Sour cream", "Caremel sause"],
-                        recipeImage: UIImage(named: "banana")!)
+                        name: "Pasta pesto",
+                        restaurant: "Jay's restaurant",
+                        level: "3",
+                        cookTime: "25 MIN",
+                        price: "$14",
+                        tags: ["Italian", "Pasta", "Noodle"],
+                        ingrediants: ["Bacon", "Garlic", "Parmesan cheese"],
+                        recipeImage: UIImage(named: "Pasta-pesto")!)
             
         API.uploadRecipe(recipe: recipe) { [weak self] (error, ref) in
                 guard let strongSelf = self else { return }
@@ -98,10 +92,5 @@ class BackEndTestVC: UIViewController {
                     print("Uploaded")
                 }
             }
-    }
-    @objc func fetchRecipes() {
-        API.fetchRecipes{ recipes in
-            self.recipes = recipes
-        }
     }
 }
