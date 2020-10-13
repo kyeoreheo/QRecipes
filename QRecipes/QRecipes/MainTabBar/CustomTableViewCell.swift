@@ -1,7 +1,7 @@
 //  CustomTableViewCell.swift
 //  QRecipes
 //
-//  Created by Dannyyyyyyy Zhao on 10/1/20.
+//  Created by Dan Zhao on 10/1/20.
 //  Copyright © 2020 Kyo. All rights reserved.
 //
 
@@ -28,15 +28,14 @@ class CustomTableViewCell: UITableViewCell {
     lazy var nameLbl : UILabel = {
        let lbl = UILabel()
         //lbl.textAlignment = .right
-        lbl.font = UIFont.boldSystemFont(ofSize: 12)
+        lbl.font = UIFont.boldSystemFont(ofSize: 15)
         return lbl
     }()
     
     lazy var restaurantLbl : UILabel = {
        let lbl = UILabel()
         //lbl.textAlignment = .left
-        lbl.font = UIFont.boldSystemFont(ofSize: 12)
-        //lbl.font = UIFont.boldSystemFont(ofSize: 18)
+        lbl.font = UIFont.boldSystemFont(ofSize: 15)
         return lbl
     }()
     
@@ -47,18 +46,19 @@ class CustomTableViewCell: UITableViewCell {
     }
     override func layoutSubviews() {
         backView.backgroundColor = UIColor.clear
-        backgroundColor = UIColor.clear
+        backgroundColor = UIColor.white
         backView.layer.cornerRadius = 5
         backView.clipsToBounds = true
     }
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        contentView.addSubview(backView)
-        backView.addSubview(userImage)
-        backView.addSubview(nameLbl)
-        backView.addSubview(restaurantLbl)
-    }
+    
+//    override func setSelected(_ selected: Bool, animated: Bool) {
+//        super.setSelected(selected, animated: animated)
+//
+//        contentView.addSubview(backView)
+//        backView.addSubview(userImage)
+//        backView.addSubview(nameLbl)
+//        backView.addSubview(restaurantLbl)
+//    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -89,14 +89,14 @@ class CustomTableViewCell: UITableViewCell {
             make.width.equalTo(110)
             make.top.equalTo(contentView.snp.top).offset(20)
             make.bottom.equalTo(contentView.snp.bottom).offset(-50)
-            make.left.equalTo(contentView.snp.left).offset(170)
+            make.left.equalTo(contentView.snp.left).offset(160)
             make.right.equalTo(contentView.snp.right).offset(10)
         }
         restaurantLbl.snp.makeConstraints { make in
             make.width.equalTo(110)
             make.top.equalTo(contentView.snp.top).offset(70)
             make.bottom.equalTo(contentView.snp.bottom).offset(-30)
-            make.left.equalTo(contentView.snp.left).offset(170)
+            make.left.equalTo(contentView.snp.left).offset(160)
             make.right.equalTo(contentView.snp.right).offset(10)
         }
         
