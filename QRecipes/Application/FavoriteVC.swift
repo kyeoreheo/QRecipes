@@ -69,7 +69,7 @@ class FavoriteVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func fetchFavorites() {
-        API.fetchRecipes{ recipes in
+        API.fetchFavoriteRecipes{ recipes in
             self.favoriteRecipes = recipes
         }
     }

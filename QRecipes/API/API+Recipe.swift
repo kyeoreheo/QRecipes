@@ -63,19 +63,22 @@ extension API {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        DB_USERS.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+        DB_USERS.child(uid).observe(DataEventType.value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let favoriteUid = value?["favorite"] as? [String] ?? [""]
                 
             var favoriteRecipes = [Recipe]()
-            
-            for uid in 1..<favoriteUid.count {
-                DB_RECIPE.queryEqual(toValue: uid).observeSingleEvent(of: .value, with: { (snapshot) in
-                    let dictionary = snapshot.value as! [String: AnyObject]
-                    let recipe = Recipe(uid: favoriteUid[uid], dictionary: dictionary)
-                    favoriteRecipes.append(recipe)
-                    completion(favoriteRecipes)
-                })
+            if favoriteUid.count != 1 {
+                DB_RECIPE.observe(.childAdded) { (snapshot) in
+                    guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
+                    let uid = snapshot.key
+                    if favoriteUid.contains(uid)
+                    {
+                        let recipe = Recipe(uid: uid, dictionary: dictionary)
+                        favoriteRecipes.append(recipe)
+                        completion(favoriteRecipes)
+                    }
+                }
             }
         })
     }
@@ -88,16 +91,13 @@ extension API {
             var favorites = value?["favorite"] as? [String] ?? [""]
             let recipeUid = recipe.uid
             favorites.append(recipeUid)
-            let updates = ["favorite": favorites]
+            //remove duplication
+            let set = Set(favorites)
+            let duplicationRemovedArray = Array(set)
+            let updates = ["favorite": duplicationRemovedArray]
             DB_USERS.child(uid).updateChildValues(updates, withCompletionBlock: completion)
           }) { (error) in
             print(error.localizedDescription)
         }
-        
-        /*let recipeUid = recipe.uid
-        favorites.append(recipeUid)
-        let updates = ["favorite": favorites]
-        DB_USERS.child(uid).updateChildValues(updates, withCompletionBlock: completion)
-         */
     }
 }
