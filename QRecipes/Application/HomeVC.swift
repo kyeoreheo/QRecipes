@@ -59,6 +59,13 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate {
             make.left.right.equalToSuperview()
         }
     }
+    
+    // MARK: - Navigation and pass data
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("Selected Row \(indexPath.row)")
+        let vc = RestaurantOverviewVC()
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 //MARK:- Collection view data source
