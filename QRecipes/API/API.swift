@@ -10,7 +10,7 @@ import Firebase
 
 let DB_REF = Database.database().reference()
 let DB_USERS = DB_REF.child("users")
-let DB_POST = DB_REF.child("posts")
+let DB_POST = DB_REF.child("posts") //recipe
 
 let ST_REF = Storage.storage().reference()
 let ST_PROFILE_IMAGE = ST_REF.child("profile_image")
@@ -18,4 +18,3 @@ let ST_PROFILE_IMAGE = ST_REF.child("profile_image")
 class API {
     
 }
-

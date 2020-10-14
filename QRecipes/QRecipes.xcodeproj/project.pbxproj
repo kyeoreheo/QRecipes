@@ -19,6 +19,7 @@
 		313C2F85251063E1004BEB5A /* FavoriteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F84251063E1004BEB5A /* FavoriteVC.swift */; };
 		313C2F87251063EE004BEB5A /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F86251063EE004BEB5A /* SettingVC.swift */; };
 		313C2F892510643C004BEB5A /* QRScanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F882510643C004BEB5A /* QRScanVC.swift */; };
+		3142F1A42534ABDC001048FB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3142F1A32534ABDC001048FB /* GoogleService-Info.plist */; };
 		314DCC51250863E400011BAD /* FrontEndTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314DCC50250863E400011BAD /* FrontEndTestVC.swift */; };
 		316B798B251BB0D000B4E080 /* AuthenticationVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316B798A251BB0D000B4E080 /* AuthenticationVM.swift */; };
 		316B7990251BB56100B4E080 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316B798F251BB56100B4E080 /* UILabelExtension.swift */; };
@@ -40,7 +41,6 @@
 		31D3ED51252FA721000CA905 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D3ED50252FA721000CA905 /* User.swift */; };
 		4A2A77BBB02A59AA291EF584 /* Pods_QRecipes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23171396F957630F02FB16F /* Pods_QRecipes.framework */; };
 		C20FE50E2525B00C003BDA99 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */; };
-		C20FE51A252FC752003BDA99 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C20FE519252FC751003BDA99 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +56,7 @@
 		313C2F84251063E1004BEB5A /* FavoriteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavoriteVC.swift; path = Application/FavoriteVC.swift; sourceTree = SOURCE_ROOT; };
 		313C2F86251063EE004BEB5A /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingVC.swift; path = Application/SettingVC.swift; sourceTree = SOURCE_ROOT; };
 		313C2F882510643C004BEB5A /* QRScanVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QRScanVC.swift; path = QRecipes/MainTabBar/QRSScanVC/QRScanVC.swift; sourceTree = SOURCE_ROOT; };
+		3142F1A32534ABDC001048FB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		314DCC50250863E400011BAD /* FrontEndTestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrontEndTestVC.swift; sourceTree = "<group>"; };
 		316B798A251BB0D000B4E080 /* AuthenticationVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationVM.swift; sourceTree = "<group>"; };
 		316B798F251BB56100B4E080 /* UILabelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
@@ -80,7 +81,6 @@
 		59433B390CDEE59F0FA6D4B0 /* Pods-QRecipes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.release.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.release.xcconfig"; sourceTree = "<group>"; };
 		637B5E3B9B20F801C5601BAC /* Pods-QRecipes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.debug.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.debug.xcconfig"; sourceTree = "<group>"; };
 		C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
-		C20FE519252FC751003BDA99 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C23171396F957630F02FB16F /* Pods_QRecipes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QRecipes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -200,7 +200,7 @@
 				317218042508454200EDF3DB /* AppDelegate.swift */,
 				317218062508454200EDF3DB /* SceneDelegate.swift */,
 				3172180A2508454200EDF3DB /* Main.storyboard */,
-				C20FE519252FC751003BDA99 /* GoogleService-Info.plist */,
+				3142F1A32534ABDC001048FB /* GoogleService-Info.plist */,
 				3172180F2508454400EDF3DB /* LaunchScreen.storyboard */,
 				317218122508454400EDF3DB /* Info.plist */,
 				313C2F8A251065A4004BEB5A /* Extensions */,
@@ -289,7 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				317218112508454400EDF3DB /* LaunchScreen.storyboard in Resources */,
-				C20FE51A252FC752003BDA99 /* GoogleService-Info.plist in Resources */,
+				3142F1A42534ABDC001048FB /* GoogleService-Info.plist in Resources */,
 				3172180E2508454400EDF3DB /* Assets.xcassets in Resources */,
 				3172180C2508454200EDF3DB /* Main.storyboard in Resources */,
 			);

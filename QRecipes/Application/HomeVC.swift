@@ -12,7 +12,7 @@ import SnapKit
 class HomeVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Properties
     let inset: CGFloat = 15.0
-    
+        
     lazy var titleLabel: UILabel = {
        let label = UILabel()
        label.text = "Trending"
