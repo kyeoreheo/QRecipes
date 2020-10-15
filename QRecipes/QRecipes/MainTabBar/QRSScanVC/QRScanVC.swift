@@ -52,6 +52,12 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
         processBar.isHidden = false
         timerLable.isHidden = false
         setTimer(every: 0.1)
+        
+        #if DEBUG
+        dismiss(animated: true) {
+            MainTabBar.shared.presentRestaurantOverviewVC()
+        }
+        #endif
     }
     
     // MARK:- Configures
@@ -126,7 +132,6 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
             make.top.equalTo(validationLabel.snp.bottom).offset(8)
             make.centerX.equalToSuperview()
         }
-        
     }
     
     // MARK:- Helpers

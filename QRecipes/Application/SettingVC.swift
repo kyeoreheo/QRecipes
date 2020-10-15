@@ -1,65 +1,49 @@
+//  SettingVC.swift
+//  QRecipes
+
 //  Created by kyo on 9/14/20.
 //  Copyright © 2020 Kyo. All rights reserved.
 //
 
 import UIKit
+import SnapKit
+import SDWebImage
 
-class SettingVC: UIViewController {
+class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     
     // MARK: - Properties
     let tableView = UITableView()
     
+    let columns: CGFloat = 3.0
+    let inset: CGFloat = 8.0
+    
     lazy var containerView: UIView = {
         let view = UIView()
         
-        
         view.backgroundColor = .orange
-        
-        view.addSubview(profileImageView)
-        profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        profileImageView.anchor(top: view.topAnchor, paddingTop: 88,
-                                width: 100, height: 100)
-        profileImageView.layer.cornerRadius = 100 / 2
-        
-        view.addSubview(messageButton)
-        messageButton.anchor(top: view.topAnchor, left: view.leftAnchor,
-                             paddingTop: 64, paddingLeft: 32, width: 32, height: 32)
-        
-        view.addSubview(logoutButton)
-        logoutButton.anchor(top: view.topAnchor, right: view.rightAnchor,
-                             paddingTop: 64, paddingRight: 32, width: 32, height: 32)
-        
-        view.addSubview(nameLabel)
-        nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        nameLabel.anchor(top: profileImageView.bottomAnchor, paddingTop: 12)
-        
-        view.addSubview(emailLabel)
-        emailLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        emailLabel.anchor(top: nameLabel.bottomAnchor, paddingTop: 4)
-        
         return view
     }()
     
     let profileImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image =  #imageLiteral(resourceName: "avatar")
+        iv.image = #imageLiteral(resourceName: "avatar")
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.layer.borderWidth = 3
         iv.layer.borderColor = UIColor.white.cgColor
         return iv
     }()
-    
     let messageButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(  #imageLiteral(resourceName: "envelope").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "envelope").withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(handleService), for: .touchUpInside)
         return button
     }()
     
     let logoutButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(  #imageLiteral(resourceName: "logout-512").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "logout-512").withRenderingMode(.alwaysOriginal), for: .normal)
+        //button.setImage(UIImage(systemName: "star.fill"), for: .normal)
         button.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
         return button
     }()
@@ -70,6 +54,7 @@ class SettingVC: UIViewController {
         label.text = "Dan Zhao"
         label.font = UIFont.boldSystemFont(ofSize: 22)
         label.textColor = .white
+        
         return label
     }()
     
@@ -79,120 +64,138 @@ class SettingVC: UIViewController {
         label.text = "zhaodan618@gmail.com"
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .white
+        
         return label
     }()
     
+    lazy var collectionView: UICollectionView = {
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        cv.backgroundColor = .backgroundGray
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.register(SettingCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        return cv
+    } ()
     // MARK: - Lifecycle
-    
+    lazy var dayExpireLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Days"
+        label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 28)
+        return label
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureTableView()
-        
-        //view.backgroundColor = .blue
+        configure()
+        configureUI()
+        fetchUser()
+    }
+    
+    private func configure() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+    }
+    private func configureUI(){
+        view.backgroundColor = .orange
         
         view.addSubview(containerView)
-        
-        containerView.anchor(top: view.topAnchor, left: view.leftAnchor,
-                             right: view.rightAnchor, height: 280)
- 
-        //containerView.pin(to: view)
+        containerView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.right.equalToSuperview()
+            make.height.equalTo(view.frame.height * 0.4)
+            
+        }
+        view.addSubview(profileImageView)
+        profileImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(88)
+            make.height.equalTo(100)
+            make.width.equalTo(100)
+            make.left.equalToSuperview().offset(140)
+            profileImageView.layer.cornerRadius = 100 / 2
+        }
+        view.addSubview(messageButton)
+        messageButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(64)
+            make.height.equalTo(32)
+            make.width.equalTo(32)
+            make.left.equalToSuperview().offset(32)
+        }
+        view.addSubview(logoutButton)
+        logoutButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(64)
+            make.height.equalTo(32)
+            make.width.equalTo(32)
+            make.right.equalToSuperview().offset(-32)
+        }
+        view.addSubview(nameLabel)
+        nameLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(200)
+            make.left.right.equalToSuperview().offset(5)
+        }
+        view.addSubview(emailLabel)
+        emailLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(240)
+            make.left.right.equalToSuperview().offset(5)
+        }
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(containerView.snp.bottom)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.left.right.equalToSuperview()
+        }
     }
+//    @objc func deleteItem(sender: UIButton!) {
+//        let indexPath = IndexPath(row: sender.tag, section: 0)
+//        self.collectionView.deleteItems(at: [indexPath])
+//        self.collectionView.reloadData()
+//    }
     
-    func configureTableView(){
-        view.addSubview(tableView)
-        
-        setTableViewDelegates()
-        //tableView.rowHeight = 100
-//        tableView.anchor(top: view.topAnchor, left: view.leftAnchor,
-//        right: view.rightAnchor, height: 280)
-        tableView.pin(to: view)
-        
+    func fetchUser() {
+        if User.shared.profileImage != nil &&
+           User.shared.firstName != "" &&
+           User.shared.lastName != "" &&
+           User.shared.email != "" {
+            profileImageView.sd_setImage(with: User.shared.profileImage, completed: nil)
+            nameLabel.text = "\(User.shared.firstName) \(User.shared.lastName)"
+            emailLabel.text = User.shared.email
+        }
     }
-    func setTableViewDelegates(){
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-    
-
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    // MARK: - Selectors
     
     @objc func handleService() {
         print("Contact to the customer service here..")
     }
-    
+
     @objc func handleLogout() {
         print("Logging out..")
     }
+
 }
-/*
-extension UIColor {
-    static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
-        return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
+//MARK:- Collection view data source
+extension SettingVC: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return 27
     }
     
-    static let mainBlue = UIColor.rgb(red: 0, green: 150, blue: 255)
-}
-*/
-extension UIView {
-    
-    func anchor(top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, paddingTop: CGFloat? = 0,
-                paddingLeft: CGFloat? = 0, paddingBottom: CGFloat? = 0, paddingRight: CGFloat? = 0, width: CGFloat? = nil, height: CGFloat? = nil) {
+     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SettingCollectionViewCell
         
-        translatesAutoresizingMaskIntoConstraints = false
-        
-        if let top = top {
-            topAnchor.constraint(equalTo: top, constant: paddingTop!).isActive = true
-        }
-        
-        if let left = left {
-            leftAnchor.constraint(equalTo: left, constant: paddingLeft!).isActive = true
-        }
-        
-        if let bottom = bottom {
-            if let paddingBottom = paddingBottom {
-                bottomAnchor.constraint(equalTo: bottom, constant: -paddingBottom).isActive = true
-            }
-        }
-        
-        if let right = right {
-            if let paddingRight = paddingRight {
-                rightAnchor.constraint(equalTo: right, constant: -paddingRight).isActive = true
-            }
-        }
-        
-        if let width = width {
-            widthAnchor.constraint(equalToConstant: width).isActive = true
-        }
-        
-        if let height = height {
-            heightAnchor.constraint(equalToConstant: height).isActive = true
-        }
+        cell.dayExpireLabel.text = "ExpireDay"
+        return cell
     }
- 
-    func pin(to superView: UIView){
-        translatesAutoresizingMaskIntoConstraints = false
-        topAnchor.constraint(equalTo: superView.topAnchor).isActive = true
-        leadingAnchor.constraint(equalTo: superView.leadingAnchor).isActive = true
-        trailingAnchor.constraint(equalTo: superView.trailingAnchor).isActive = true
-        bottomAnchor.constraint(equalTo: superView.bottomAnchor).isActive = true
-    }
-   
-}
-extension SettingVC: UITableViewDelegate,UITableViewDataSource{
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
-    }
-    
-    
 }
 
+//MARK:- Collection view layout
+extension SettingVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (collectionView.frame.width / columns) - (inset*1.5)
+        return CGSize(width: width, height: width)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return inset
+    }
+}

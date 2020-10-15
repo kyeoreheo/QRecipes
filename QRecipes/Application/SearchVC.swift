@@ -23,7 +23,6 @@ class UserModal {
 class SearchVC: UIViewController{
     //MARK:- Properties
     //private let sampleLable = UILabel()
-    //let topLabel = UILabel()
     let navBar = UINavigationBar() //remove
     //let searchController = UISearchController(searchResultsController: nil)
     let searchBar = UISearchBar()
@@ -47,15 +46,13 @@ class SearchVC: UIViewController{
         userArr.append(UserModal(userImage:  #imageLiteral(resourceName: "chicken-nuggets"), name: "Recipe: Chicken Nugget", restaurant: "Restaurant: McDonald"))
         userArr.append(UserModal(userImage:  #imageLiteral(resourceName: "shushi"), name: "Recipe: Shushi", restaurant: "Restaurant: Tobiko"))
         userArr.append(UserModal(userImage:  #imageLiteral(resourceName: "taco"), name: "Recipe: Taco", restaurant: "Restaurant: La Espiga"))
-        //navigationItem.searchController = searchController
-        //searchController.searchBar.delegate = self
-        //setupTableView()
-        //tableView.translatesAutoresizingMaskIntoConstraints = false
+        
     }
 
     func setTableView() {
+        
         tableView.frame = self.view.frame
-        tableView.backgroundColor = UIColor.clear
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorColor = UIColor.clear
@@ -71,12 +68,7 @@ class SearchVC: UIViewController{
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             make.right.equalTo(view)
         }
-//      tableView.translatesAutoresizingMaskIntoConstraints = false
-//      tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-//
-//      tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-//      tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-//      tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+
     }
     
     

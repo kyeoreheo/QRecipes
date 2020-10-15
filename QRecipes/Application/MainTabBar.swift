@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 
 class MainTabBar: UITabBarController {
+    static let shared = MainTabBar()
     let qrButton = AuthenticationVM().logoView(logoSize: 60)
     
     // MARK: - Lifecycle
@@ -58,5 +59,10 @@ class MainTabBar: UITabBarController {
         let qrScanVC = QRSacnVC()
         qrScanVC.modalPresentationStyle = .popover
         present(qrScanVC, animated: true, completion: nil)
+    }
+    
+    @objc func presentRestaurantOverviewVC() {
+        let vc = RestaurantOverviewVC(isInPurchaseFlow: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
