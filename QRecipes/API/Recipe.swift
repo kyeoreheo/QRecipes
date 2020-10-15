@@ -36,4 +36,5 @@ struct Recipe {
             self.recipeImageUrl = url
         }
     }
+   
 }

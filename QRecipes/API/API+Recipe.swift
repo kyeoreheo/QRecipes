@@ -39,7 +39,7 @@ extension API {
                               "price": recipe.price,
                               "tags": recipe.tags,
                               "ingrediants": recipe.ingrediants,
-                              "recipeImageUrl": recipeImageUrl] as [String : Any]
+                              "recipeImageUrl": recipeImageUrl] as [String : AnyObject]
                 
                 DB_RECIPE.childByAutoId().setValue(values, withCompletionBlock: completion)
            }
@@ -100,4 +100,22 @@ extension API {
             print(error.localizedDescription)
         }
     }
+    
+    /*static func isFavorite(recipe: Recipe, completion: @escaping(Error?, DatabaseReference?) -> Void) {
+        var favorite = true
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        DB_USERS.child(uid).observe(DataEventType.value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let favoriteUid = value?["favorite"] as? [String] ?? [""]
+           
+            let uid = recipe.uid
+            if favoriteUid.contains(uid) {
+                return favorite
+            }
+            else {
+                fa
+            }
+        })
+    }*/
 }

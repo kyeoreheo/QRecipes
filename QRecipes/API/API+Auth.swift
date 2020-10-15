@@ -12,6 +12,7 @@ struct UserInfo {
     let email: String
     let firstName: String
     let lastName: String
+    let favorite: [String]
     var profileImageUrl: URL?
     let uid: String
 
@@ -21,7 +22,7 @@ struct UserInfo {
         self.email = dictionary["email"] as? String ?? ""
         self.firstName = dictionary["firstName"] as? String ?? ""
         self.lastName = dictionary["lastName"] as? String ?? ""
-
+        self.favorite = dictionary["favorite"] as? [String] ?? [""]
         if let profileImageUrlString = dictionary["profileImageUrl"] as? String {
             guard let url = URL(string: profileImageUrlString) else { return }
             self.profileImageUrl = url
@@ -73,11 +74,13 @@ extension API {
     }
     
     static func fetchUser(uid: String, completion: @escaping(UserInfo) -> Void) {
-        DB_USERS.child(uid).observeSingleEvent(of: .value) { snapshot in
+        
+        DB_USERS.child(uid).observe(DataEventType.value, with: { (snapshot) in
             guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
 
             let user = UserInfo(uid: uid, dictionary: dictionary)
             completion(user)
-        }
+            
+        })
     }
 }
