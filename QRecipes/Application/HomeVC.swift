@@ -13,6 +13,12 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Properties
     let inset: CGFloat = 15.0
     
+    var recipes = [Recipe]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
     lazy var titleLabel: UILabel = {
        let label = UILabel()
        label.text = "Trending"
@@ -34,6 +40,7 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         configure()
         configureUI()
+        fetchRecipes()
     }
     
     //MARK:- Helpers
@@ -61,6 +68,12 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     // MARK: - Navigation and pass data
+    func fetchRecipes() {
+        API.fetchRecipes { recipes in
+            self.recipes = recipes
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Selected Row \(indexPath.row)")
         let vc = RestaurantOverviewVC()
@@ -71,14 +84,13 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate {
 //MARK:- Collection view data source
 extension HomeVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return recipes.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! FeedCell
         
-        cell.restaurantLabel.text = "Yummy Dessert Shop"
-        cell.recipeLabel.text = "Cupcakes"
+        cell.recipe = recipes[indexPath.row]
 
         return cell
     }
