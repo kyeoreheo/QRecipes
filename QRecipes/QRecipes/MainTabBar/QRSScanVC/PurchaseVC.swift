@@ -122,7 +122,7 @@ class PurchaseVC: UIViewController {
         }
         
         view.addSubview(venmoButton)
-        venmoButton.setImage(UIImage(named: "venmo"), for: .normal)
+        venmoButton.setImage(UIImage(named: "Venmo"), for: .normal)
         venmoButton.imageView?.contentMode = .scaleAspectFit
         venmoButton.addTarget(self, action: #selector(selectedPayMethod), for: .touchUpInside)
         venmoButton.snp.makeConstraints { make in
