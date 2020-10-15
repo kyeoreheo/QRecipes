@@ -320,7 +320,7 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
                     User.shared.profileImage = response.profileImageUrl
                     
                     DispatchQueue.main.async {
-                        let navigation = UINavigationController(rootViewController: MainTabBar())
+                        let navigation = UINavigationController(rootViewController: MainTabBar.shared)
                         navigation.modalPresentationStyle = .fullScreen
                         navigation.navigationBar.isHidden = true
                         strongSelf.present(navigation, animated: false, completion: nil)

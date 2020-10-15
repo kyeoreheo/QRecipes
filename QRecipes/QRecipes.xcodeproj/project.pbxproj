@@ -35,7 +35,10 @@
 		317218112508454400EDF3DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3172180F2508454400EDF3DB /* LaunchScreen.storyboard */; };
 		3172181B25085DA300EDF3DB /* BackEndTestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3172181A25085DA300EDF3DB /* BackEndTestVC.swift */; };
 		31748918252ADF6F00666CA2 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31748917252ADF6F00666CA2 /* SignUpVC.swift */; };
-		3182DDCB2537551A004C488E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3182DDCA2537551A004C488E /* GoogleService-Info.plist */; };
+		3182DDCE253755F4004C488E /* QRGuideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182DDCD253755F4004C488E /* QRGuideVC.swift */; };
+		3182DDD325377BE7004C488E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3182DDD225377BE7004C488E /* GoogleService-Info.plist */; };
+		3182DDD625377CA6004C488E /* PurchaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182DDD525377CA6004C488E /* PurchaseVC.swift */; };
+		3182DDDA2538BBA9004C488E /* FinishedPurchaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182DDD92538BBA9004C488E /* FinishedPurchaseVC.swift */; };
 		3184D1AC25241B4500D3D75A /* LogInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3184D1AB25241B4500D3D75A /* LogInVC.swift */; };
 		31BAFF04251AAB9F0055A354 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BAFF03251AAB9F0055A354 /* CustomView.swift */; };
 		31D3ED10252F6838000CA905 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D3ED0F252F6838000CA905 /* API.swift */; };
@@ -77,7 +80,10 @@
 		317218122508454400EDF3DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3172181A25085DA300EDF3DB /* BackEndTestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackEndTestVC.swift; sourceTree = "<group>"; };
 		31748917252ADF6F00666CA2 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
-		3182DDCA2537551A004C488E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3182DDCD253755F4004C488E /* QRGuideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRGuideVC.swift; sourceTree = "<group>"; };
+		3182DDD225377BE7004C488E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3182DDD525377CA6004C488E /* PurchaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseVC.swift; sourceTree = "<group>"; };
+		3182DDD92538BBA9004C488E /* FinishedPurchaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedPurchaseVC.swift; sourceTree = "<group>"; };
 		3184D1AB25241B4500D3D75A /* LogInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInVC.swift; sourceTree = "<group>"; };
 		31BAFF03251AAB9F0055A354 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		31D3ED0F252F6838000CA905 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -138,6 +144,8 @@
 				316B7999251BEC1400B4E080 /* QRScanVM.swift */,
 				313C2F882510643C004BEB5A /* QRScanVC.swift */,
 				316B799E251BEDDE00B4E080 /* ProgressBar.swift */,
+				3182DDD525377CA6004C488E /* PurchaseVC.swift */,
+				3182DDD92538BBA9004C488E /* FinishedPurchaseVC.swift */,
 			);
 			path = QRSScanVC;
 			sourceTree = "<group>";
@@ -196,6 +204,7 @@
 				313C2F86251063EE004BEB5A /* SettingVC.swift */,
 				C20FE523253543F7003BDA99 /* settingCollectionViewCell.swift */,
 				20470FBB253579CE00F2B070 /* RestaurantOverviewVC.swift */,
+				3182DDCD253755F4004C488E /* QRGuideVC.swift */,
 				20C9424F252AE748000698E6 /* CustomCells */,
 				316B7998251BEC0100B4E080 /* QRSScanVC */,
 			);
@@ -209,7 +218,7 @@
 				317218042508454200EDF3DB /* AppDelegate.swift */,
 				317218062508454200EDF3DB /* SceneDelegate.swift */,
 				3172180A2508454200EDF3DB /* Main.storyboard */,
-				3182DDCA2537551A004C488E /* GoogleService-Info.plist */,
+				3182DDD225377BE7004C488E /* GoogleService-Info.plist */,
 				3172180F2508454400EDF3DB /* LaunchScreen.storyboard */,
 				317218122508454400EDF3DB /* Info.plist */,
 				313C2F8A251065A4004BEB5A /* Extensions */,
@@ -298,7 +307,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				317218112508454400EDF3DB /* LaunchScreen.storyboard in Resources */,
-				3182DDCB2537551A004C488E /* GoogleService-Info.plist in Resources */,
+				3182DDD325377BE7004C488E /* GoogleService-Info.plist in Resources */,
 				3172180E2508454400EDF3DB /* Assets.xcassets in Resources */,
 				3172180C2508454200EDF3DB /* Main.storyboard in Resources */,
 			);
@@ -357,6 +366,7 @@
 				313C2F83251063CC004BEB5A /* SearchVC.swift in Sources */,
 				20C94251252AE748000698E6 /* FavoriteCell.swift in Sources */,
 				205EC2022535FEFD0098CFE9 /* RecipeCell.swift in Sources */,
+				3182DDDA2538BBA9004C488E /* FinishedPurchaseVC.swift in Sources */,
 				313C2F8125106395004BEB5A /* HomeVC.swift in Sources */,
 				317218092508454200EDF3DB /* SplashVC.swift in Sources */,
 				316B799A251BEC1400B4E080 /* QRScanVM.swift in Sources */,
@@ -366,6 +376,7 @@
 				31D3ED51252FA721000CA905 /* User.swift in Sources */,
 				31306598251068C400491E44 /* CreaditVC.swift in Sources */,
 				C20FE50E2525B00C003BDA99 /* CustomTableViewCell.swift in Sources */,
+				3182DDD625377CA6004C488E /* PurchaseVC.swift in Sources */,
 				313C2F85251063E1004BEB5A /* FavoriteVC.swift in Sources */,
 				316B798B251BB0D000B4E080 /* AuthenticationVM.swift in Sources */,
 				3184D1AC25241B4500D3D75A /* LogInVC.swift in Sources */,
@@ -383,6 +394,7 @@
 				313C2F892510643C004BEB5A /* QRScanVC.swift in Sources */,
 				316B7993251BBBDB00B4E080 /* UIWindowExtension.swift in Sources */,
 				316B7990251BB56100B4E080 /* UILabelExtension.swift in Sources */,
+				3182DDCE253755F4004C488E /* QRGuideVC.swift in Sources */,
 				313C2F87251063EE004BEB5A /* SettingVC.swift in Sources */,
 				31748918252ADF6F00666CA2 /* SignUpVC.swift in Sources */,
 			);

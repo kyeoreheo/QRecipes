@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SDWebImage
 
 class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     
@@ -86,6 +87,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         super.viewDidLoad()
         configure()
         configureUI()
+        fetchUser()
     }
     
     private func configure() {
@@ -146,6 +148,18 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
 //        self.collectionView.deleteItems(at: [indexPath])
 //        self.collectionView.reloadData()
 //    }
+    
+    func fetchUser() {
+        if User.shared.profileImage != nil &&
+           User.shared.firstName != "" &&
+           User.shared.lastName != "" &&
+           User.shared.email != "" {
+            profileImageView.sd_setImage(with: User.shared.profileImage, completed: nil)
+            nameLabel.text = "\(User.shared.firstName) \(User.shared.lastName)"
+            emailLabel.text = User.shared.email
+        }
+    }
+    
     @objc func handleService() {
         print("Contact to the customer service here..")
     }

@@ -112,8 +112,18 @@ class RestaurantOverviewVC: UIViewController {
         tv.register(RecipeCell.self, forCellReuseIdentifier: "cell")
         return tv
     } ()
+    private let isInPurchaseFlow: Bool
     
     //MARK:- LifeCycles
+    init(isInPurchaseFlow: Bool = false) {
+        self.isInPurchaseFlow = isInPurchaseFlow
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
@@ -145,7 +155,12 @@ class RestaurantOverviewVC: UIViewController {
         view.addSubview(infoView)
         infoView.snp.makeConstraints { make in
             make.size.equalTo(150)
-            make.top.equalTo(imageView.snp.bottom).offset(-75)
+            if isInPurchaseFlow {
+                make.top.equalTo(backButton.snp.bottom).offset(10)
+
+            } else {
+                make.top.equalTo(imageView.snp.bottom).offset(-75)
+            }
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
@@ -227,6 +242,17 @@ extension RestaurantOverviewVC: UITableViewDataSource{
     // Deselect row
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        if !isInPurchaseFlow {
+            guard let locationText = locationLabel.text
+            else { return }
+            let qrScanVC = QRGuideVC(location: locationText)
+            qrScanVC.modalPresentationStyle = .popover
+            present(qrScanVC, animated: true, completion: nil)
+        } else {
+            let purchaseVC = PurchaseVC(itemName: "pasta", payAmount: 12)
+            navigationController?.pushViewController(purchaseVC, animated: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -237,6 +263,10 @@ extension RestaurantOverviewVC: UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! RecipeCell
 
         cell.recipeLabel.text = "Pasta"
+        
+        if isInPurchaseFlow {
+            cell.showPurchaseUI()
+        }
         
         return cell
     }
