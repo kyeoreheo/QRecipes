@@ -8,8 +8,12 @@
 
 import UIKit
 
+
+
 class RecipeCell: UITableViewCell {
     //MARK:- Properties
+    private let ratio = SplashVC.shared.ratio
+
     var recipeImage: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
@@ -25,6 +29,9 @@ class RecipeCell: UITableViewCell {
         label.textColor = .white
         return label
     }()
+    
+    private let purchaseButton = UIButton()
+    private let payAmountLabel = UIButton()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -49,5 +56,38 @@ class RecipeCell: UITableViewCell {
             make.bottom.equalTo(recipeImage).offset(-10)
             make.right.equalTo(recipeImage).offset(-10)
         }
+    }
+    
+    func showPurchaseUI() {
+        recipeImage.addSubview(purchaseButton)
+        purchaseButton.setTitle("Purchase", for: .normal)
+        purchaseButton.backgroundColor = .primeOrange
+        purchaseButton.layer.cornerRadius = 10
+        purchaseButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12 * ratio)
+        purchaseButton.setTitleColor(.white, for: .normal)
+        purchaseButton.addTarget(self, action: #selector(presentPurchaseVC), for: .touchUpInside)
+        purchaseButton.snp.makeConstraints { make in
+            make.height.equalTo(30 * ratio)
+            make.width.equalTo(80 * ratio)
+            make.bottom.equalToSuperview().offset(-10)
+            make.left.equalToSuperview().offset(10)
+        }
+        
+        recipeImage.addSubview(payAmountLabel)
+        payAmountLabel.setTitle("$12", for: .normal)
+        payAmountLabel.backgroundColor = .primeOrange
+        payAmountLabel.layer.cornerRadius = 10
+        payAmountLabel.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15 * ratio)
+        payAmountLabel.setTitleColor(.white, for: .normal)
+        payAmountLabel.isUserInteractionEnabled = false
+        payAmountLabel.snp.makeConstraints { make in
+            make.width.height.equalTo(30 * ratio)
+            make.top.equalToSuperview().offset(10)
+            make.right.equalToSuperview().offset(-10)
+        }
+    }
+    
+    @objc func presentPurchaseVC() {
+        
     }
 }
