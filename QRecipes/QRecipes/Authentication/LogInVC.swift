@@ -317,6 +317,8 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
                     User.shared.email = response.email
                     User.shared.firstName = response.firstName
                     User.shared.lastName = response.lastName
+                    User.shared.favorite = response.favorite
+                    User.shared.purchased = response.purchased
                     User.shared.profileImage = response.profileImageUrl
                     
                     DispatchQueue.main.async {

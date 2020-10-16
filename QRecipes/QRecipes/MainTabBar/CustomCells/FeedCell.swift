@@ -7,9 +7,21 @@
 //
 
 import UIKit
+import SDWebImage
 
 class FeedCell: UICollectionViewCell {
     //MARK:- Properties
+    var recipe: Recipe? {
+        didSet {
+            imageView.sd_setImage(with: recipe?.recipeImageUrl, completed: nil)
+            restaurantLabel.text = recipe?.restaurant
+            recipeLabel.text = recipe?.name
+            isFavorite()
+        }
+    }
+    
+    var favIsOn = false
+    
     lazy var imageView: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
@@ -36,6 +48,7 @@ class FeedCell: UICollectionViewCell {
         let button = UIButton(type: .custom)
         button.tintColor = .primeOrange
         button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         return button
     }()
     
@@ -76,4 +89,51 @@ class FeedCell: UICollectionViewCell {
             make.right.equalTo(contentView).offset(-12)
         }
     }
+    
+    @objc func buttonPressed() {
+        favIsOn = !favIsOn
+        if favIsOn {
+            setFavorite()
+        }
+        else {
+            unsetFavorite()
+        }
+    }
+    func isFavorite() -> Void {
+        let favoriteUid = User.shared.favorite
+        
+        guard let uid = recipe?.uid else { return }
+        if favoriteUid.contains(uid) {
+            favIsOn = true
+            self.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        }
+        else {
+            favIsOn = false
+            self.favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        }
+    }
+    
+    @objc func setFavorite(){
+        API.setFavorite(recipe: recipe!) { [weak self] (error, ref) in
+            guard let strongSelf = self else { return }
+            if error != nil {
+                print("Error: failed to set favorite")
+            } else {
+                strongSelf.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            }
+        }
+    }
+    
+    @objc func unsetFavorite(){
+        API.unsetFavorite(recipe: recipe!) { [weak self] (error, ref) in
+            guard let strongSelf = self else { return }
+            if error != nil {
+                print("Error: failed to unset favorite")
+            } else {
+                strongSelf.favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            }
+        }
+    }
 }
+
+

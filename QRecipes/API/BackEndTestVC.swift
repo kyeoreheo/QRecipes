@@ -43,8 +43,8 @@ class BackEndTestVC: UIViewController {
         }
         
         view.addSubview(signUp)
-        signUp.addTarget(self, action: #selector(createNewAccount), for: .touchUpInside)
-        signUp.setTitle("Sign-Up", for: .normal)
+        signUp.addTarget(self, action: #selector(uploadNewRecipe), for: .touchUpInside)
+        signUp.setTitle("upload new recipe", for: .normal)
         signUp.setTitleColor(.white, for: .normal)
         signUp.backgroundColor = .black
         signUp.titleLabel?.font = UIFont.systemFont(ofSize: 20)
@@ -73,4 +73,24 @@ class BackEndTestVC: UIViewController {
         }
     }
     
+    @objc func uploadNewRecipe(){
+        let recipe = newRecipe(
+                        name: "Pasta pesto",
+                        restaurant: "Jay's restaurant",
+                        level: "3",
+                        cookTime: "25 MIN",
+                        price: "$14",
+                        tags: ["Italian", "Pasta", "Noodle"],
+                        ingrediants: ["Bacon", "Garlic", "Parmesan cheese"],
+                        recipeImage: UIImage(named: "Pasta-pesto")!)
+            
+        API.uploadRecipe(recipe: recipe) { [weak self] (error, ref) in
+                guard let strongSelf = self else { return }
+                if let error = error {
+                    print("failed to upload new recipe")
+                } else {
+                    print("Uploaded")
+                }
+            }
+    }
 }

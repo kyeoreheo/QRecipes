@@ -14,6 +14,12 @@ class FavoriteVC: UIViewController, UIGestureRecognizerDelegate {
     let columns: CGFloat = 2.0
     let inset: CGFloat = 8.0
 
+    var favoriteRecipes = [Recipe]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Favorites"
@@ -35,6 +41,7 @@ class FavoriteVC: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         configure()
         configureUI()
+        fetchFavorites()
     }
     
     //MARK:- Helpers
@@ -61,6 +68,12 @@ class FavoriteVC: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    private func fetchFavorites() {
+        API.fetchFavoriteRecipes{ recipes in
+            self.favoriteRecipes = recipes
+        }
+    }
+    
     // Delete an item from collection view
     @objc func deleteItem(sender: UIButton!) {
         let indexPath = IndexPath(row: sender.tag, section: 0)
@@ -72,14 +85,15 @@ class FavoriteVC: UIViewController, UIGestureRecognizerDelegate {
 //MARK:- Collection view data source
 extension FavoriteVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return favoriteRecipes.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! FavoriteCell
         
-        cell.titleLabel.text = "Cupcakes"
-        cell.favoriteButton.tag = indexPath.item
+        cell.recipe = favoriteRecipes[indexPath.row]
+        //cell.titleLabel.text = "Cupcakes"
+        //cell.favoriteButton.tag = indexPath.item
         cell.favoriteButton.addTarget(self, action: #selector(deleteItem), for: .touchUpInside)
         
         return cell

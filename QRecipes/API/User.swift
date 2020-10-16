@@ -12,5 +12,7 @@ class User {
     var email = ""
     var firstName = ""
     var lastName = ""
+    var favorite = [""]
+    var purchased = [""]
     var profileImage: URL?
 }
