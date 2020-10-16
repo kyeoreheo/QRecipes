@@ -101,21 +101,20 @@ extension API {
         }
     }
     
-    /*static func isFavorite(recipe: Recipe, completion: @escaping(Error?, DatabaseReference?) -> Void) {
-        var favorite = true
+    static func unsetFavorite(recipe: Recipe, completion: @escaping(Error?, DatabaseReference?) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        DB_USERS.child(uid).observe(DataEventType.value, with: { (snapshot) in
+        DB_USERS.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            let favoriteUid = value?["favorite"] as? [String] ?? [""]
-           
-            let uid = recipe.uid
-            if favoriteUid.contains(uid) {
-                return favorite
+            var favorites = value?["favorite"] as? [String] ?? [""]
+            let recipeUid = recipe.uid
+            if let index = favorites.firstIndex(of: recipeUid) {
+                favorites.remove(at: index)
             }
-            else {
-                fa
-            }
-        })
-    }*/
+            let updates = ["favorite": favorites]
+            DB_USERS.child(uid).updateChildValues(updates, withCompletionBlock: completion)
+          }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
 }

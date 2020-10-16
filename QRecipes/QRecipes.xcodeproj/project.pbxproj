@@ -47,6 +47,8 @@
 		4A2A77BBB02A59AA291EF584 /* Pods_QRecipes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23171396F957630F02FB16F /* Pods_QRecipes.framework */; };
 		C20FE50E2525B00C003BDA99 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */; };
 		C20FE524253543F7003BDA99 /* settingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20FE523253543F7003BDA99 /* settingCollectionViewCell.swift */; };
+		C6CA107A253953E3003DBB40 /* API+Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA1079253953E3003DBB40 /* API+Recipe.swift */; };
+		C6CA107D25395402003DBB40 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA107C25395402003DBB40 /* Recipe.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +96,8 @@
 		C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		C20FE523253543F7003BDA99 /* settingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingCollectionViewCell.swift; sourceTree = "<group>"; };
 		C23171396F957630F02FB16F /* Pods_QRecipes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QRecipes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6CA1079253953E3003DBB40 /* API+Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "API+Recipe.swift"; sourceTree = "<group>"; };
+		C6CA107C25395402003DBB40 /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,7 +192,9 @@
 				3113CB1E250AEA5200C147FF /* QRAPI.swift */,
 				31D3ED0F252F6838000CA905 /* API.swift */,
 				31D3ED12252F6847000CA905 /* API+Auth.swift */,
+				C6CA1079253953E3003DBB40 /* API+Recipe.swift */,
 				31D3ED50252FA721000CA905 /* User.swift */,
+				C6CA107C25395402003DBB40 /* Recipe.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -382,7 +388,9 @@
 				3184D1AC25241B4500D3D75A /* LogInVC.swift in Sources */,
 				3172181B25085DA300EDF3DB /* BackEndTestVC.swift in Sources */,
 				317218052508454200EDF3DB /* AppDelegate.swift in Sources */,
+				C6CA107A253953E3003DBB40 /* API+Recipe.swift in Sources */,
 				313C2F7D251060BD004BEB5A /* UIColorExtension.swift in Sources */,
+				C6CA107D25395402003DBB40 /* Recipe.swift in Sources */,
 				314DCC51250863E400011BAD /* FrontEndTestVC.swift in Sources */,
 				20470FBC253579CE00F2B070 /* RestaurantOverviewVC.swift in Sources */,
 				316B799F251BEDDE00B4E080 /* ProgressBar.swift in Sources */,
@@ -529,6 +537,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";

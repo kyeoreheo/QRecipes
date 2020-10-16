@@ -16,11 +16,11 @@ class FeedCell: UICollectionViewCell {
             imageView.sd_setImage(with: recipe?.recipeImageUrl, completed: nil)
             restaurantLabel.text = recipe?.restaurant
             recipeLabel.text = recipe?.name
-            updateFavorite()
+            isFavorite()
         }
     }
     
-    var favorite = false
+    var favIsOn = false
     
     lazy var imageView: UIImageView = {
         let img = UIImageView()
@@ -47,14 +47,8 @@ class FeedCell: UICollectionViewCell {
     lazy var favoriteButton: UIButton = {
         let button = UIButton(type: .custom)
         button.tintColor = .primeOrange
-        if favorite {
-            button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            button.addTarget(self, action: #selector(unsetFavorite), for: .touchUpInside)
-        }
-        else {
-            button.setImage(UIImage(systemName: "heart"), for: .normal)
-            button.addTarget(self, action: #selector(setFavorite), for: .touchUpInside)
-        }
+        button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         return button
     }()
     
@@ -96,18 +90,29 @@ class FeedCell: UICollectionViewCell {
         }
     }
     
-    func updateFavorite() -> Void {
-        
+    @objc func buttonPressed() {
+        favIsOn = !favIsOn
+        if favIsOn {
+            setFavorite()
+        }
+        else {
+            unsetFavorite()
+        }
+    }
+    func isFavorite() -> Void {
         let favoriteUid = User.shared.favorite
         
         guard let uid = recipe?.uid else { return }
+        print("\(User.shared.firstName)'s favorite: \(favoriteUid)")
+        print("uid: \(recipe!.uid)")
         if favoriteUid.contains(uid) {
-            self.favorite = true
+            favIsOn = true
+            self.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         }
         else {
-            self.favorite = false
+            favIsOn = false
+            self.favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
         }
-        favoriteButton.setNeedsDisplay()
     }
     
     @objc func setFavorite(){
@@ -122,12 +127,12 @@ class FeedCell: UICollectionViewCell {
     }
     
     @objc func unsetFavorite(){
-        API.setFavorite(recipe: recipe!) { [weak self] (error, ref) in
+        API.unsetFavorite(recipe: recipe!) { [weak self] (error, ref) in
             guard let strongSelf = self else { return }
             if error != nil {
-                print("Error: failed to set favorite")
+                print("Error: failed to unset favorite")
             } else {
-                strongSelf.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                strongSelf.favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
             }
         }
     }

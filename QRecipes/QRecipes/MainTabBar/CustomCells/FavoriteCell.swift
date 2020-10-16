@@ -37,6 +37,7 @@ class FavoriteCell: UICollectionViewCell {
         let button = UIButton(type: .custom)
         button.tintColor = .pumpkinRed
         button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        button.addTarget(self, action: #selector(unsetFavorite), for: .touchUpInside)
         return button
     }()
     
@@ -73,6 +74,17 @@ class FavoriteCell: UICollectionViewCell {
         favoriteButton.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(8)
             make.right.equalTo(contentView).offset(-12)
+        }
+    }
+    
+    @objc func unsetFavorite(){
+        API.unsetFavorite(recipe: recipe!) { [weak self] (error, ref) in
+            guard let strongSelf = self else { return }
+            if error != nil {
+                print("Error: failed to unset favorite")
+            } else {
+                strongSelf.favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            }
         }
     }
 }

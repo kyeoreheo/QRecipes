@@ -12,7 +12,7 @@ struct UserInfo {
     let email: String
     let firstName: String
     let lastName: String
-    let favorite: [String]
+    var favorite: [String]
     var profileImageUrl: URL?
     let uid: String
 
