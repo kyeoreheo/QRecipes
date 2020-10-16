@@ -49,6 +49,8 @@
 		C20FE524253543F7003BDA99 /* settingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20FE523253543F7003BDA99 /* settingCollectionViewCell.swift */; };
 		C6CA107A253953E3003DBB40 /* API+Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA1079253953E3003DBB40 /* API+Recipe.swift */; };
 		C6CA107D25395402003DBB40 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA107C25395402003DBB40 /* Recipe.swift */; };
+		C6CA109525398067003DBB40 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA109425398067003DBB40 /* Restaurant.swift */; };
+		C6CA109825398114003DBB40 /* API+Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA109725398114003DBB40 /* API+Restaurant.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +100,8 @@
 		C23171396F957630F02FB16F /* Pods_QRecipes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QRecipes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6CA1079253953E3003DBB40 /* API+Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "API+Recipe.swift"; sourceTree = "<group>"; };
 		C6CA107C25395402003DBB40 /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
+		C6CA109425398067003DBB40 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
+		C6CA109725398114003DBB40 /* API+Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Restaurant.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,8 +197,10 @@
 				31D3ED0F252F6838000CA905 /* API.swift */,
 				31D3ED12252F6847000CA905 /* API+Auth.swift */,
 				C6CA1079253953E3003DBB40 /* API+Recipe.swift */,
+				C6CA109725398114003DBB40 /* API+Restaurant.swift */,
 				31D3ED50252FA721000CA905 /* User.swift */,
 				C6CA107C25395402003DBB40 /* Recipe.swift */,
+				C6CA109425398067003DBB40 /* Restaurant.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -382,6 +388,7 @@
 				31D3ED51252FA721000CA905 /* User.swift in Sources */,
 				31306598251068C400491E44 /* CreaditVC.swift in Sources */,
 				C20FE50E2525B00C003BDA99 /* CustomTableViewCell.swift in Sources */,
+				C6CA109525398067003DBB40 /* Restaurant.swift in Sources */,
 				3182DDD625377CA6004C488E /* PurchaseVC.swift in Sources */,
 				313C2F85251063E1004BEB5A /* FavoriteVC.swift in Sources */,
 				316B798B251BB0D000B4E080 /* AuthenticationVM.swift in Sources */,
@@ -391,6 +398,7 @@
 				C6CA107A253953E3003DBB40 /* API+Recipe.swift in Sources */,
 				313C2F7D251060BD004BEB5A /* UIColorExtension.swift in Sources */,
 				C6CA107D25395402003DBB40 /* Recipe.swift in Sources */,
+				C6CA109825398114003DBB40 /* API+Restaurant.swift in Sources */,
 				314DCC51250863E400011BAD /* FrontEndTestVC.swift in Sources */,
 				20470FBC253579CE00F2B070 /* RestaurantOverviewVC.swift in Sources */,
 				316B799F251BEDDE00B4E080 /* ProgressBar.swift in Sources */,
