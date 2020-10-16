@@ -13,6 +13,7 @@ struct UserInfo {
     let firstName: String
     let lastName: String
     var favorite: [String]
+    var purchased: [String]
     var profileImageUrl: URL?
     let uid: String
 
@@ -23,6 +24,7 @@ struct UserInfo {
         self.firstName = dictionary["firstName"] as? String ?? ""
         self.lastName = dictionary["lastName"] as? String ?? ""
         self.favorite = dictionary["favorite"] as? [String] ?? [""]
+        self.purchased = dictionary["purchased"] as? [String] ?? [""]
         if let profileImageUrlString = dictionary["profileImageUrl"] as? String {
             guard let url = URL(string: profileImageUrlString) else { return }
             self.profileImageUrl = url
@@ -36,6 +38,7 @@ struct AuthProperties {
     let firstName: String
     let lastName: String
     let favorite: [String]
+    let purchased: [String]
     let profileImage: UIImage
 }
 
@@ -65,6 +68,7 @@ extension API {
                                   "firstName": user.firstName,
                                   "lastName": user.lastName,
                                   "favorite": user.favorite,
+                                  "purchased": user.purchased,
                                   "profileImageUrl": profileImageUrl] as [String : AnyObject]
 
                     DB_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)

@@ -103,8 +103,6 @@ class FeedCell: UICollectionViewCell {
         let favoriteUid = User.shared.favorite
         
         guard let uid = recipe?.uid else { return }
-        print("\(User.shared.firstName)'s favorite: \(favoriteUid)")
-        print("uid: \(recipe!.uid)")
         if favoriteUid.contains(uid) {
             favIsOn = true
             self.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
