@@ -44,6 +44,7 @@
 		31D3ED10252F6838000CA905 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D3ED0F252F6838000CA905 /* API.swift */; };
 		31D3ED13252F6847000CA905 /* API+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D3ED12252F6847000CA905 /* API+Auth.swift */; };
 		31D3ED51252FA721000CA905 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D3ED50252FA721000CA905 /* User.swift */; };
+		31F7E6D225395619005BEC64 /* API+Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F7E6D125395619005BEC64 /* API+Recipe.swift */; };
 		4A2A77BBB02A59AA291EF584 /* Pods_QRecipes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23171396F957630F02FB16F /* Pods_QRecipes.framework */; };
 		C20FE50E2525B00C003BDA99 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */; };
 		C20FE524253543F7003BDA99 /* settingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20FE523253543F7003BDA99 /* settingCollectionViewCell.swift */; };
@@ -89,6 +90,7 @@
 		31D3ED0F252F6838000CA905 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		31D3ED12252F6847000CA905 /* API+Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Auth.swift"; sourceTree = "<group>"; };
 		31D3ED50252FA721000CA905 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		31F7E6D125395619005BEC64 /* API+Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Recipe.swift"; sourceTree = "<group>"; };
 		59433B390CDEE59F0FA6D4B0 /* Pods-QRecipes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.release.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.release.xcconfig"; sourceTree = "<group>"; };
 		637B5E3B9B20F801C5601BAC /* Pods-QRecipes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.debug.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.debug.xcconfig"; sourceTree = "<group>"; };
 		C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				3113CB1E250AEA5200C147FF /* QRAPI.swift */,
 				31D3ED0F252F6838000CA905 /* API.swift */,
 				31D3ED12252F6847000CA905 /* API+Auth.swift */,
+				31F7E6D125395619005BEC64 /* API+Recipe.swift */,
 				31D3ED50252FA721000CA905 /* User.swift */,
 			);
 			path = API;
@@ -382,6 +385,7 @@
 				3184D1AC25241B4500D3D75A /* LogInVC.swift in Sources */,
 				3172181B25085DA300EDF3DB /* BackEndTestVC.swift in Sources */,
 				317218052508454200EDF3DB /* AppDelegate.swift in Sources */,
+				31F7E6D225395619005BEC64 /* API+Recipe.swift in Sources */,
 				313C2F7D251060BD004BEB5A /* UIColorExtension.swift in Sources */,
 				314DCC51250863E400011BAD /* FrontEndTestVC.swift in Sources */,
 				20470FBC253579CE00F2B070 /* RestaurantOverviewVC.swift in Sources */,

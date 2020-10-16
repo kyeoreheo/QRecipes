@@ -25,7 +25,6 @@ class SettingCollectionViewCell: UICollectionViewCell {
        label.textColor = .white
        return label
    }()
-
     
     //MARK:- Init
     override init(frame: CGRect){
