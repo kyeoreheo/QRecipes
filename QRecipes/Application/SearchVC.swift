@@ -29,7 +29,15 @@ class SearchVC: UIViewController{
     let tableView = UITableView()
     let lbl = UILabel()
     
-    var userArr = [UserModal]()
+    //Once we fetched, this keeps the all the recipes on database. and never changed. It fetches in here fetchRecipes()
+    var fullRecipes = [Recipe]()
+    //This recipes can be changed based on search key
+    var recipes = [Recipe]() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     //MARK:- LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,21 +46,10 @@ class SearchVC: UIViewController{
         configureNavBar()
         configureSearchBar()
         setTableView()
-        
-        userArr.append(UserModal(userImage: #imageLiteral(resourceName: "salmon"), name: "Recipe: Salmon", restaurant: "Restaurant: Cheesecake Factory"))
-        userArr.append(UserModal(userImage:  #imageLiteral(resourceName: "pasta"), name: "Recipe: Pasta", restaurant: "Restaurant: Oliva Garden"))
-        userArr.append(UserModal(userImage:  #imageLiteral(resourceName: "Boeuf-bourguignon"), name: "Recipe: Boeuf-bourguignon", restaurant: "Restaurant: Le Rivage"))
-        userArr.append(UserModal(userImage:  #imageLiteral(resourceName: "cheese-fries-1"), name: "Recipe: Cheese fries", restaurant: "Restaurant: Shake Shake"))
-        userArr.append(UserModal(userImage:  #imageLiteral(resourceName: "chicken-nuggets"), name: "Recipe: Chicken Nugget", restaurant: "Restaurant: McDonald"))
-        userArr.append(UserModal(userImage:  #imageLiteral(resourceName: "shushi"), name: "Recipe: Shushi", restaurant: "Restaurant: Tobiko"))
-        userArr.append(UserModal(userImage:  #imageLiteral(resourceName: "taco"), name: "Recipe: Taco", restaurant: "Restaurant: La Espiga"))
-        
+        fetchRecipes()
     }
 
     func setTableView() {
-        
-        tableView.frame = self.view.frame
-        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorColor = UIColor.clear
@@ -101,25 +98,39 @@ class SearchVC: UIViewController{
     private func configureUI() {
         view.backgroundColor = .white
     }
+    
+    func fetchRecipes() {
+        API.fetchRecipes { recipes in
+            self.recipes = recipes
+            self.fullRecipes = recipes
+        }
+    }
 }
 
 extension SearchVC: UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange textSearched: String){
-        
+        guard let searchKey = searchBar.text?.lowercased() else { return }
+        if searchKey == "" {
+            recipes = fullRecipes
+        } else {
+            recipes = fullRecipes.filter { recipe in
+                recipe.tags.contains { tag in
+                    tag.contains(searchKey)
+                }
+            }
+        }
     }
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = nil
-        //searchBar.showsCancelButton = false
-        searchBar.resignFirstResponder() // turn off the keyboard
-
+        searchBar.resignFirstResponder()
         searchBar.endEditing(true)
+        recipes = fullRecipes
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
         searchBar.resignFirstResponder()
     }
     
@@ -133,16 +144,19 @@ extension SearchVC: UINavigationBarDelegate {
 }
 extension SearchVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userArr.count
+        return recipes.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as?
         //cell.textLabel?.text = "\(indexPath.row)"
         
         CustomTableViewCell else {fatalError("Unable to create cell")}
-        cell.userImage.image = userArr[indexPath.row].userImage
-        cell.nameLbl.text = userArr[indexPath.row].name
-        cell.restaurantLbl.text = userArr[indexPath.row].restaurant
+        let imageView = UIImageView()
+        imageView.sd_setImage(with: recipes[indexPath.row].recipeImageUrl)
+        cell.userImage.image = imageView.image
+        cell.nameLbl.text = recipes[indexPath.row].name
+        cell.restaurantLbl.text = recipes[indexPath.row].restaurant
+        
         return cell
     }
     
@@ -152,7 +166,7 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource{
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollView.delegate = self
-        scrollView.contentSize = CGSize(width:self.view.frame.size.width, height: 1000)
+        //scrollView.contentSize = CGSize(width:self.view.frame.size.width, height: 1000)
         searchBar.resignFirstResponder()
     }
 }
