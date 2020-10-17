@@ -143,11 +143,6 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
             make.left.right.equalToSuperview()
         }
     }
-//    @objc func deleteItem(sender: UIButton!) {
-//        let indexPath = IndexPath(row: sender.tag, section: 0)
-//        self.collectionView.deleteItems(at: [indexPath])
-//        self.collectionView.reloadData()
-//    }
     
     func fetchUser() {
         if User.shared.profileImage != nil &&
