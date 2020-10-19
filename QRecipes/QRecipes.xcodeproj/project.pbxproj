@@ -9,8 +9,11 @@
 /* Begin PBXBuildFile section */
 		20470FBC253579CE00F2B070 /* RestaurantOverviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20470FBB253579CE00F2B070 /* RestaurantOverviewVC.swift */; };
 		205EC2022535FEFD0098CFE9 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205EC2012535FEFD0098CFE9 /* RecipeCell.swift */; };
+		20C229A5253BF21300D19032 /* RecipeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C229A4253BF21300D19032 /* RecipeDetailVC.swift */; };
 		20C94251252AE748000698E6 /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C94250252AE748000698E6 /* FavoriteCell.swift */; };
 		20ECFA1D2520466B00EEE280 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20ECFA1C2520466B00EEE280 /* FeedCell.swift */; };
+		20FDFCA2253D4BA800CE35C7 /* IngredientsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FDFCA1253D4BA800CE35C7 /* IngredientsVC.swift */; };
+		20FDFCA4253D4BC600CE35C7 /* InstructionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FDFCA3253D4BC600CE35C7 /* InstructionsVC.swift */; };
 		3113CB1F250AEA5200C147FF /* QRAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3113CB1E250AEA5200C147FF /* QRAPI.swift */; };
 		31306598251068C400491E44 /* CreaditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31306597251068C400491E44 /* CreaditVC.swift */; };
 		313C2F7B25105426004BEB5A /* AuthenticationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313C2F7A25105426004BEB5A /* AuthenticationVC.swift */; };
@@ -54,8 +57,11 @@
 /* Begin PBXFileReference section */
 		20470FBB253579CE00F2B070 /* RestaurantOverviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantOverviewVC.swift; sourceTree = "<group>"; };
 		205EC2012535FEFD0098CFE9 /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
+		20C229A4253BF21300D19032 /* RecipeDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailVC.swift; sourceTree = "<group>"; };
 		20C94250252AE748000698E6 /* FavoriteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
 		20ECFA1C2520466B00EEE280 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
+		20FDFCA1253D4BA800CE35C7 /* IngredientsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsVC.swift; sourceTree = "<group>"; };
+		20FDFCA3253D4BC600CE35C7 /* InstructionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsVC.swift; sourceTree = "<group>"; };
 		3113CB1E250AEA5200C147FF /* QRAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRAPI.swift; sourceTree = "<group>"; };
 		31306597251068C400491E44 /* CreaditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreaditVC.swift; sourceTree = "<group>"; };
 		313C2F7A25105426004BEB5A /* AuthenticationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationVC.swift; sourceTree = "<group>"; };
@@ -112,12 +118,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		20C229A6253BF22000D19032 /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				3182DDCD253755F4004C488E /* QRGuideVC.swift */,
+				20C229A4253BF21300D19032 /* RecipeDetailVC.swift */,
+				20FDFCA1253D4BA800CE35C7 /* IngredientsVC.swift */,
+				20FDFCA3253D4BC600CE35C7 /* InstructionsVC.swift */,
+				20470FBB253579CE00F2B070 /* RestaurantOverviewVC.swift */,
+			);
+			path = VCs;
+			sourceTree = "<group>";
+		};
 		20C9424F252AE748000698E6 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
 				20ECFA1C2520466B00EEE280 /* FeedCell.swift */,
 				20C94250252AE748000698E6 /* FavoriteCell.swift */,
 				205EC2012535FEFD0098CFE9 /* RecipeCell.swift */,
+				C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */,
+				C20FE523253543F7003BDA99 /* settingCollectionViewCell.swift */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -205,12 +225,9 @@
 				313C2F7E251062FB004BEB5A /* MainTabBar.swift */,
 				313C2F8025106395004BEB5A /* HomeVC.swift */,
 				313C2F82251063CC004BEB5A /* SearchVC.swift */,
-				C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */,
 				313C2F84251063E1004BEB5A /* FavoriteVC.swift */,
 				313C2F86251063EE004BEB5A /* SettingVC.swift */,
-				C20FE523253543F7003BDA99 /* settingCollectionViewCell.swift */,
-				20470FBB253579CE00F2B070 /* RestaurantOverviewVC.swift */,
-				3182DDCD253755F4004C488E /* QRGuideVC.swift */,
+				20C229A6253BF22000D19032 /* VCs */,
 				20C9424F252AE748000698E6 /* CustomCells */,
 				316B7998251BEC0100B4E080 /* QRSScanVC */,
 			);
@@ -378,8 +395,10 @@
 				316B799A251BEC1400B4E080 /* QRScanVM.swift in Sources */,
 				31BAFF04251AAB9F0055A354 /* CustomView.swift in Sources */,
 				C20FE524253543F7003BDA99 /* settingCollectionViewCell.swift in Sources */,
+				20FDFCA2253D4BA800CE35C7 /* IngredientsVC.swift in Sources */,
 				31D3ED10252F6838000CA905 /* API.swift in Sources */,
 				31D3ED51252FA721000CA905 /* User.swift in Sources */,
+				20FDFCA4253D4BC600CE35C7 /* InstructionsVC.swift in Sources */,
 				31306598251068C400491E44 /* CreaditVC.swift in Sources */,
 				C20FE50E2525B00C003BDA99 /* CustomTableViewCell.swift in Sources */,
 				3182DDD625377CA6004C488E /* PurchaseVC.swift in Sources */,
@@ -401,6 +420,7 @@
 				3113CB1F250AEA5200C147FF /* QRAPI.swift in Sources */,
 				313C2F892510643C004BEB5A /* QRScanVC.swift in Sources */,
 				316B7993251BBBDB00B4E080 /* UIWindowExtension.swift in Sources */,
+				20C229A5253BF21300D19032 /* RecipeDetailVC.swift in Sources */,
 				316B7990251BB56100B4E080 /* UILabelExtension.swift in Sources */,
 				3182DDCE253755F4004C488E /* QRGuideVC.swift in Sources */,
 				313C2F87251063EE004BEB5A /* SettingVC.swift in Sources */,
