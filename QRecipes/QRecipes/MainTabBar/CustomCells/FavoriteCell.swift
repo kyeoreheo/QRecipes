@@ -21,7 +21,6 @@ class FavoriteCell: UICollectionViewCell {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
-        img.layer.cornerRadius = 8
         img.image = UIImage(named: "cupcakes")
         return img
     }()
@@ -55,25 +54,31 @@ class FavoriteCell: UICollectionViewCell {
     private func configureCell() {
         contentView.backgroundColor = .white
         contentView.layer.cornerRadius = 6
+        contentView.layer.shadowColor = UIColor.lightGray.cgColor
+        contentView.layer.shadowOpacity = 0.5
+        contentView.layer.shadowOffset = .zero
+        contentView.layer.shadowRadius = 4
 
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(8)
+            make.top.equalTo(contentView.snp.top)
             make.bottom.equalTo(contentView.snp.bottom).offset(-40)
-            make.left.equalTo(contentView.snp.left).offset(8)
-            make.right.equalTo(contentView.snp.right).offset(-8)
+            make.left.equalTo(contentView.snp.left)
+            make.right.equalTo(contentView.snp.right)
+        }
+        
+        contentView.addSubview(favoriteButton)
+        favoriteButton.snp.makeConstraints { make in
+            make.size.equalTo(20)
+            make.top.equalTo(imageView.snp.bottom).offset(8)
+            make.right.equalTo(contentView).offset(-10)
         }
         
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(10)
             make.left.equalTo(contentView).offset(12)
-        }
-        
-        contentView.addSubview(favoriteButton)
-        favoriteButton.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(8)
-            make.right.equalTo(contentView).offset(-12)
+            make.right.lessThanOrEqualTo(favoriteButton.snp.left).offset(-5)
         }
     }
     
