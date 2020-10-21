@@ -68,17 +68,15 @@ extension API {
             let favoriteUid = value?["favorite"] as? [String] ?? [""]
                 
             var favoriteRecipes = [Recipe]()
-            if favoriteUid.count != 1 {
-                DB_RECIPE.observe(.childAdded) { (snapshot) in
-                    guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
-                    let uid = snapshot.key
-                    if favoriteUid.contains(uid)
-                    {
-                        let recipe = Recipe(uid: uid, dictionary: dictionary)
-                        favoriteRecipes.append(recipe)
-                        completion(favoriteRecipes)
-                    }
+            DB_RECIPE.observe(.childAdded) { (snapshot) in
+                guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
+                let uid = snapshot.key
+                if favoriteUid.contains(uid)
+                {
+                    let recipe = Recipe(uid: uid, dictionary: dictionary)
+                    favoriteRecipes.append(recipe)
                 }
+            completion(favoriteRecipes)
             }
         })
     }
