@@ -92,9 +92,7 @@ extension FavoriteVC: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! FavoriteCell
         
         cell.recipe = favoriteRecipes[indexPath.row]
-        //cell.titleLabel.text = "Cupcakes"
-        //cell.favoriteButton.tag = indexPath.item
-        cell.favoriteButton.addTarget(self, action: #selector(deleteItem), for: .touchUpInside)
+        //cell.favoriteButton.addTarget(self, action: #selector(deleteItem), for: .touchUpInside)
         
         return cell
     }

@@ -83,7 +83,7 @@ class FavoriteCell: UICollectionViewCell {
             if error != nil {
                 print("Error: failed to unset favorite")
             } else {
-                strongSelf.favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
+                
             }
         }
     }
