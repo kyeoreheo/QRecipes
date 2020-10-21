@@ -163,7 +163,14 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         print("Logging out..")
     }
 
+    // Navigation
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("Selected Row \(indexPath.row)")
+        let vc = RecipeDetailVC()
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
+
 //MARK:- Collection view data source
 extension SettingVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

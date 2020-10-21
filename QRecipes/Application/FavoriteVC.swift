@@ -12,7 +12,7 @@ import SnapKit
 class FavoriteVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Properties
     let columns: CGFloat = 2.0
-    let inset: CGFloat = 8.0
+    let inset: CGFloat = 15.0
 
     var favoriteRecipes = [Recipe]() {
         didSet {
@@ -30,7 +30,7 @@ class FavoriteVC: UIViewController, UIGestureRecognizerDelegate {
     
     lazy var collectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        cv.backgroundColor = .backgroundGray
+        cv.backgroundColor = .white
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(FavoriteCell.self, forCellWithReuseIdentifier: "cell")
         return cv
