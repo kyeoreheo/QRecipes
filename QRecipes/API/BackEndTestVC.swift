@@ -85,13 +85,13 @@ class BackEndTestVC: UIViewController {
                         recipeImage: UIImage(named: "Pasta-pesto")!)
             
         API.uploadRecipe(recipe: recipe) { [weak self] (error, ref) in
-                guard let strongSelf = self else { return }
-                if let error = error {
-                    print("failed to upload new recipe")
-                } else {
-                    print("Uploaded")
-                }
+            guard let strongSelf = self else { return }
+            if let error = error {
+                print("failed to upload new recipe")
+            } else {
+                print("Uploaded")
             }
+        }
     }
     
     @objc func uploadNewRestaurant(){
