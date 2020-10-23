@@ -55,7 +55,7 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
         
         #if DEBUG
         dismiss(animated: true) {
-            MainTabBar.shared.presentRestaurantOverviewVC()
+            MainTabBar.shared.presentRecipeInfoViewVC()
         }
         #endif
     }

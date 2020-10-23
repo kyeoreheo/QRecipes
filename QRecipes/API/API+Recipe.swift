@@ -19,8 +19,35 @@ struct newRecipe {
     var recipeImage: UIImage
 }
 
-    
+struct RestaurantResponse {
+    let name: String
+    let address: String
+    let phone: String
+    let recipes: [newRecipe]
+    let restaurantImageUrl: String
+}
+
 extension API {
+    static func generateRestaurant(image: UIImage, recipes: [newRecipe], completion: @escaping(Error?, DatabaseReference?) -> Void) {
+        guard let imageData = image.jpegData(compressionQuality: 0.3) else { return }
+        let filename = NSUUID().uuidString
+        let storageRef = ST_RESTAURANT_IMAGE.child(filename)
+        storageRef.putData(imageData, metadata: nil) { (meta, error) in
+            storageRef.downloadURL { (url, error) in
+                guard let restaurantImageUrl = url?.absoluteString else {
+                    return
+                }
+                let values = ["name": "name",
+                              "address": "address",
+                              "phone": "phone",
+                              "recipes": ["abc", "abc"],
+                              "restaurantImageUrl": restaurantImageUrl] as [String : AnyObject]
+                
+                DB_RESTAURANT.childByAutoId().setValue(values, withCompletionBlock: completion)
+           }
+        }
+        
+    }
     
     static func uploadRecipe(recipe: newRecipe, completion: @escaping(Error?, DatabaseReference?) -> Void ) {
         guard let imageData = recipe.recipeImage.jpegData(compressionQuality: 0.3) else { return }
