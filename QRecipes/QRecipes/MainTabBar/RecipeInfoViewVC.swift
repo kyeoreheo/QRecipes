@@ -1,15 +1,19 @@
 //
-//  RestaurantOverviewVC.swift
+//  RecipeInfoViewVC.swift
 //  QRecipes
 //
-//  Created by Yiheng Cen Feng on 10/13/20.
+//  Created by Dan Zhao on 10/19/20.
 //  Copyright © 2020 Kyo. All rights reserved.
 //
 
 import UIKit
 import SnapKit
 
-class RestaurantOverviewVC: UIViewController {
+class RecipeInfoViewVC: UIViewController {
+    
+    //private let frame = UIView()
+    private let qrButton = UIButton()
+    private let ratio = SplashVC.shared.ratio
     //MARK:- Properties
     var backButton: UIButton = {
         let button = UIButton()
@@ -20,11 +24,11 @@ class RestaurantOverviewVC: UIViewController {
         return button
     }()
     
-    var imageView: UIImageView = {
+    var restarantImageView: UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
-        img.image = UIImage(named: "cupcakes")
+        img.image = UIImage(named: "pasta-restaurant")
         return img
     }()
     
@@ -39,12 +43,12 @@ class RestaurantOverviewVC: UIViewController {
         return view
     }()
     
-    var favoriteButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.tintColor = .pumpkinRed
-        button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        return button
-    }()
+//    var favoriteButton: UIButton = {
+//        let button = UIButton(type: .custom)
+//        button.tintColor = .pumpkinRed
+//        button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+//        return button
+//    }()
     
     var locationIcon: UIButton = {
         let button = UIButton(type: .custom)
@@ -62,7 +66,7 @@ class RestaurantOverviewVC: UIViewController {
     
     var restaurantLabel: UILabel = {
         let label = UILabel()
-        label.text = "Yummy Dessert Shop"
+        label.text = "La Pasta"
         label.textColor = .black
         label.font = UIFont(name:"Helvetica", size: 22)
         label.numberOfLines = 0
@@ -88,9 +92,35 @@ class RestaurantOverviewVC: UIViewController {
     
     var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Top Picks"
+        label.text = "Recipe's Detail"
         label.textColor = .charcoalBlack
         label.font = UIFont.boldSystemFont(ofSize: 18)
+        return label
+    }()
+    var cookTimeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Cook Time: 30 mins"
+        label.textColor = .darkGray
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.textAlignment = NSTextAlignment.center
+        //label.textAlignment = .center
+        return label
+    }()
+    var cookDifficultyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Difficulty: Easy"
+        label.textAlignment = .center
+        label.textColor = .darkGray
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        
+        return label
+    }()
+    var spicyLevelLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Spicy Level: Medium spicy"
+        label.textColor = .darkGray
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.textAlignment = .center
         return label
     }()
     
@@ -105,13 +135,28 @@ class RestaurantOverviewVC: UIViewController {
         return view
     }()
     
-    var tableView: UITableView = {
-        let tv = UITableView()
-        tv.backgroundColor = .white
-        tv.layer.cornerRadius = 8
-        tv.register(RecipeCell.self, forCellReuseIdentifier: "cell")
-        return tv
-    } ()
+//    var tableView: UITableView = {
+//        let tv = UITableView()
+//        tv.backgroundColor = .white
+//        tv.layer.cornerRadius = 8
+//        tv.separatorColor = UIColor.clear
+//        tv.register(RecipeCell.self, forCellReuseIdentifier: "cell")
+//        return tv
+//    } ()
+    var recipeImageView: UIImageView = {
+        let rimg = UIImageView()
+        rimg.contentMode = .scaleAspectFill
+        rimg.clipsToBounds = true
+        rimg.layer.cornerRadius = 8
+        rimg.backgroundColor = .white
+        rimg.layer.shadowColor = UIColor.lightGray.cgColor
+        rimg.layer.shadowOpacity = 0.5
+        rimg.layer.shadowOffset = .zero
+        rimg.layer.shadowRadius = 4
+        rimg.image = UIImage(named: "pasta")
+        return rimg
+    }()
+    
     private let isInPurchaseFlow: Bool
     
     //MARK:- LifeCycles
@@ -126,21 +171,21 @@ class RestaurantOverviewVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configure()
+        //configure()
         configureUI()
     }
     
     //MARK:- Helpers
-    private func configure() {
-        tableView.delegate = self
-        tableView.dataSource = self
-    }
-    
+//    private func configure() {
+//        tableView.delegate = self
+//        tableView.dataSource = self
+//    }
+//
     private func configureUI() {
         view.backgroundColor = .backgroundGray
         
-        view.addSubview(imageView)
-        imageView.snp.makeConstraints { make in
+        view.addSubview(restarantImageView)
+        restarantImageView.snp.makeConstraints { make in
             make.height.equalTo(view.frame.height*0.4)
             make.left.right.top.equalToSuperview()
         }
@@ -159,24 +204,24 @@ class RestaurantOverviewVC: UIViewController {
                 make.top.equalTo(backButton.snp.bottom).offset(10)
 
             } else {
-                make.top.equalTo(imageView.snp.bottom).offset(-75)
+                make.top.equalTo(restarantImageView.snp.bottom).offset(-95)
             }
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
 
-        infoView.addSubview(favoriteButton)
-        favoriteButton.snp.makeConstraints { make in
-            make.size.equalTo(40)
-            make.top.equalTo(infoView).offset(10)
-            make.right.equalTo(infoView).offset(-20)
-        }
+//        infoView.addSubview(favoriteButton)
+//        favoriteButton.snp.makeConstraints { make in
+//            make.size.equalTo(40)
+//            make.top.equalTo(infoView).offset(10)
+//            make.right.equalTo(infoView).offset(-20)
+//        }
         
         infoView.addSubview(restaurantLabel)
         restaurantLabel.snp.makeConstraints { make in
             make.top.equalTo(infoView).offset(20)
             make.left.equalTo(infoView).offset(20)
-            make.right.equalTo(favoriteButton.snp.left)
+            //make.right.equalTo(favoriteButton.snp.left)
         }
         
         infoView.addSubview(locationIcon)
@@ -224,56 +269,57 @@ class RestaurantOverviewVC: UIViewController {
             make.left.equalTo(infoView).offset(10)
         }
         
-        contentView.addSubview(tableView)
-        tableView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-10)
+        contentView.addSubview(recipeImageView)
+        recipeImageView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+           // make.bottom.equalTo(contentView.snp.bottom).offset(-10)
             make.left.equalTo(contentView).offset(10)
             make.right.equalTo(contentView).offset(-10)
+            make.height.equalTo(100)
+        }
+        contentView.addSubview(cookTimeLabel)
+        cookTimeLabel.snp.makeConstraints { make in
+            make.top.equalTo(recipeImageView.snp.bottom).offset(15)
+            make.left.equalTo(contentView).offset(30)
+            make.right.equalTo(contentView).offset(-30)
+        }
+        contentView.addSubview(cookDifficultyLabel)
+        cookDifficultyLabel.snp.makeConstraints { make in
+            make.top.equalTo(recipeImageView.snp.bottom).offset(40)
+            make.left.equalTo(contentView).offset(30)
+            make.right.equalTo(contentView).offset(-30)
+        }
+        contentView.addSubview(spicyLevelLabel)
+        spicyLevelLabel.snp.makeConstraints { make in
+            make.top.equalTo(recipeImageView.snp.bottom).offset(65)
+            make.left.equalTo(contentView).offset(30)
+            make.right.equalTo(contentView).offset(-30)
+        }
+        
+        
+        view.addSubview(qrButton)
+        qrButton.setTitle("Phurchase", for: .normal)
+        qrButton.backgroundColor = .primeOrange
+        qrButton.layer.cornerRadius = 10
+        qrButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18 * ratio)
+        qrButton.setTitleColor(.white, for: .normal)
+        qrButton.addTarget(self, action: #selector(presentQRButton), for: .touchUpInside)
+        qrButton.snp.makeConstraints { make in
+            make.height.equalTo(40 * ratio)
+            make.bottom.equalTo(contentView).offset(-20)
+            make.left.equalToSuperview().offset(30)
+            make.right.equalToSuperview().offset(-30)
         }
     }
-    
+    //MARK:- Selectors
+    @objc func presentQRButton() {
+        dismiss(animated: true) {
+            MainTabBar.shared.presentQRScanVC()
+        }
+    }
     @objc func popVC() {
         navigationController?.popViewController(animated: true)
     }
 }
 
-extension RestaurantOverviewVC: UITableViewDataSource{
-    // Deselect row
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        if !isInPurchaseFlow {
-            guard let locationText = locationLabel.text
-            else { return }
-            let qrScanVC = QRGuideVC(location: locationText)
-            qrScanVC.modalPresentationStyle = .popover
-            present(qrScanVC, animated: true, completion: nil)
-        } else {
-            let purchaseVC = PurchaseVC(itemName: "pasta", payAmount: 12)
-            navigationController?.pushViewController(purchaseVC, animated: true)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! RecipeCell
 
-        cell.recipeLabel.text = "Pasta"
-        
-        if isInPurchaseFlow {
-            cell.showPurchaseUI()
-        }
-        
-        return cell
-    }
-}
-
-extension RestaurantOverviewVC: UITableViewDelegate{
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
-    }
-}

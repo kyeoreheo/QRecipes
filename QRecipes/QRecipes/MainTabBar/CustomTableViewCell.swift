@@ -28,6 +28,7 @@ class CustomTableViewCell: UITableViewCell {
     lazy var nameLbl : UILabel = {
        let lbl = UILabel()
         //lbl.textAlignment = .right
+        lbl.textColor = .darkGray
         lbl.font = UIFont.boldSystemFont(ofSize: 15)
         return lbl
     }()
@@ -35,6 +36,7 @@ class CustomTableViewCell: UITableViewCell {
     lazy var restaurantLbl : UILabel = {
        let lbl = UILabel()
         //lbl.textAlignment = .left
+        lbl.textColor = .darkGray
         lbl.font = UIFont.boldSystemFont(ofSize: 15)
         return lbl
     }()
@@ -50,15 +52,7 @@ class CustomTableViewCell: UITableViewCell {
         backView.layer.cornerRadius = 5
         backView.clipsToBounds = true
     }
-    
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        contentView.addSubview(backView)
-//        backView.addSubview(userImage)
-//        backView.addSubview(nameLbl)
-//        backView.addSubview(restaurantLbl)
-//    }
+
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

@@ -67,7 +67,11 @@ class FavoriteVC: UIViewController, UIGestureRecognizerDelegate {
             make.left.right.equalToSuperview()
         }
     }
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("Selected Row \(indexPath.row)")
+        let vc = RecipeInfoViewVC()
+        navigationController?.pushViewController(vc, animated: true)
+    }
     private func fetchFavorites() {
         API.fetchFavoriteRecipes{ recipes in
             self.favoriteRecipes = recipes

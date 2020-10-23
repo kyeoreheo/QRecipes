@@ -47,8 +47,8 @@ class RecipeCell: UITableViewCell {
         
         contentView.addSubview(recipeImage)
         recipeImage.snp.makeConstraints { make in
-            make.left.top.equalToSuperview().offset(10)
-            make.right.bottom.equalToSuperview().offset(-10)
+            make.left.top.equalToSuperview().offset(20)
+            make.right.bottom.equalToSuperview().offset(-20)
         }
     
         contentView.addSubview(recipeLabel)
