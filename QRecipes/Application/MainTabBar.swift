@@ -61,8 +61,8 @@ class MainTabBar: UITabBarController {
         present(qrScanVC, animated: true, completion: nil)
     }
     
-    @objc func presentRestaurantOverviewVC() {
-        let vc = RestaurantOverviewVC(isInPurchaseFlow: true)
+    @objc func presentRecipeInfoViewVC() {
+        let vc = RecipeInfoViewVC(isInPurchaseFlow: true)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
