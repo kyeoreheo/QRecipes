@@ -11,10 +11,19 @@ import SnapKit
 
 class RecipeInfoViewVC: UIViewController {
     
-    //private let frame = UIView()
-    private let qrButton = UIButton()
-    private let ratio = SplashVC.shared.ratio
     //MARK:- Properties
+    var recipe: Recipe? {
+        didSet {
+            recipeImageView.sd_setImage(with: recipe?.recipeImageUrl, completed: nil)
+            restaurantLabel.text = recipe?.restaurant
+            titleLabel.text = recipe?.name
+            cookTimeLabel.text = "Cook Time: " + recipe!.cookTime
+            cookDifficultyLabel.text = "Difficulty: " + recipe!.level
+        }
+    }
+  
+    private let ratio = SplashVC.shared.ratio
+    
     var backButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
@@ -49,6 +58,17 @@ class RecipeInfoViewVC: UIViewController {
 //        button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
 //        return button
 //    }()
+    
+    var purchaseButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .primeOrange
+        button.layer.cornerRadius = 10
+        button.setTitle("Purchase", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(pressPurchaseButton), for: .touchUpInside)
+        return button
+    }()
     
     var locationIcon: UIButton = {
         let button = UIButton(type: .custom)
@@ -97,6 +117,7 @@ class RecipeInfoViewVC: UIViewController {
         label.font = UIFont.boldSystemFont(ofSize: 18)
         return label
     }()
+    
     var cookTimeLabel: UILabel = {
         let label = UILabel()
         label.text = "Cook Time: 30 mins"
@@ -106,15 +127,16 @@ class RecipeInfoViewVC: UIViewController {
         //label.textAlignment = .center
         return label
     }()
+    
     var cookDifficultyLabel: UILabel = {
         let label = UILabel()
         label.text = "Difficulty: Easy"
         label.textAlignment = .center
         label.textColor = .darkGray
         label.font = UIFont.boldSystemFont(ofSize: 15)
-        
         return label
     }()
+    
     var spicyLevelLabel: UILabel = {
         let label = UILabel()
         label.text = "Spicy Level: Medium spicy"
@@ -135,14 +157,6 @@ class RecipeInfoViewVC: UIViewController {
         return view
     }()
     
-//    var tableView: UITableView = {
-//        let tv = UITableView()
-//        tv.backgroundColor = .white
-//        tv.layer.cornerRadius = 8
-//        tv.separatorColor = UIColor.clear
-//        tv.register(RecipeCell.self, forCellReuseIdentifier: "cell")
-//        return tv
-//    } ()
     var recipeImageView: UIImageView = {
         let rimg = UIImageView()
         rimg.contentMode = .scaleAspectFill
@@ -171,16 +185,10 @@ class RecipeInfoViewVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //configure()
         configureUI()
     }
     
     //MARK:- Helpers
-//    private func configure() {
-//        tableView.delegate = self
-//        tableView.dataSource = self
-//    }
-//
     private func configureUI() {
         view.backgroundColor = .backgroundGray
         
@@ -296,27 +304,21 @@ class RecipeInfoViewVC: UIViewController {
             make.right.equalTo(contentView).offset(-30)
         }
         
-        
-        view.addSubview(qrButton)
-        qrButton.setTitle("Phurchase", for: .normal)
-        qrButton.backgroundColor = .primeOrange
-        qrButton.layer.cornerRadius = 10
-        qrButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18 * ratio)
-        qrButton.setTitleColor(.white, for: .normal)
-        qrButton.addTarget(self, action: #selector(presentQRButton), for: .touchUpInside)
-        qrButton.snp.makeConstraints { make in
-            make.height.equalTo(40 * ratio)
+        view.addSubview(purchaseButton)
+        purchaseButton.snp.makeConstraints { make in
+            make.height.equalTo(45 * ratio)
             make.bottom.equalTo(contentView).offset(-20)
-            make.left.equalToSuperview().offset(30)
-            make.right.equalToSuperview().offset(-30)
+            make.left.equalToSuperview().offset(50)
+            make.right.equalToSuperview().offset(-50)
         }
     }
+    
     //MARK:- Selectors
-    @objc func presentQRButton() {
-        dismiss(animated: true) {
-            MainTabBar.shared.presentQRScanVC()
-        }
+    @objc func pressPurchaseButton() {
+        let vc = PurchaseVC(itemName: titleLabel.text!, payAmount: 7)
+        navigationController?.pushViewController(vc, animated: true)
     }
+    
     @objc func popVC() {
         navigationController?.popViewController(animated: true)
     }
