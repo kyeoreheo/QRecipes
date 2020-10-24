@@ -9,6 +9,16 @@ import UIKit
 
 class SettingCollectionViewCell: UICollectionViewCell {
     
+    var recipe: Recipe? {
+        didSet {
+            imageView.sd_setImage(with: recipe?.recipeImageUrl, completed: nil)
+            
+            let expirationDate = Date().stringToDate(String: recipe?.expirationDate ?? "")
+            let leftDays = Int(expirationDate.timeIntervalSince(Date()) / 86400)
+            dayExpireLabel.text = "\(leftDays) days"
+        }
+    }
+    
     //MARK:- Properties
     let imageView: UIImageView = {
         let img = UIImageView()
@@ -22,7 +32,7 @@ class SettingCollectionViewCell: UICollectionViewCell {
     let dayExpireLabel: UILabel = {
        let label = UILabel()
        label.font = UIFont.boldSystemFont(ofSize: 14)
-       label.textColor = .white
+       label.textColor = .red
        return label
    }()
 

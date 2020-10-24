@@ -16,6 +16,7 @@ struct newRecipe {
     let price: String
     let tags: [String]
     let ingrediants: [String]
+    var expirationDate: String
     var recipeImage: UIImage
 }
 
@@ -39,6 +40,7 @@ extension API {
                               "price": recipe.price,
                               "tags": recipe.tags,
                               "ingrediants": recipe.ingrediants,
+                              "expirationDate": recipe.expirationDate,
                               "recipeImageUrl": recipeImageUrl] as [String : AnyObject]
                 
                 DB_RECIPE.childByAutoId().setValue(values, withCompletionBlock: completion)
@@ -81,6 +83,34 @@ extension API {
         })
     }
     
+    static func fetchPurchasedRecipes(completion: @escaping([Recipe]) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        DB_USERS.child(uid).observe(DataEventType.value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let purchasedUid = value?["purchased"] as? [String] ?? [""]
+                
+            var purchasedRecipes = [Recipe]()
+            DB_RECIPE.observe(.childAdded) { (snapshot) in
+                guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
+                let uid = snapshot.key
+                if purchasedUid.contains(uid)
+                {
+                    let recipe = Recipe(uid: uid, dictionary: dictionary)
+                    
+                    let now = Date()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    if dateFormatter.date(from: recipe.expirationDate)! > now
+                    {
+                        purchasedRecipes.append(recipe)
+                    }
+                }
+                completion(purchasedRecipes)
+            }
+        })
+    }
+    
     static func setFavorite(recipe: Recipe, completion: @escaping(Error?, DatabaseReference?) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
@@ -114,5 +144,30 @@ extension API {
           }) { (error) in
             print(error.localizedDescription)
         }
+    }
+    
+    static func purchaseRecipe(recipe: Recipe, completion: @escaping(Error?, DatabaseReference?) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        DB_USERS.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            var purchased = value?["purchased"] as? [String] ?? [""]
+            let recipeUid = recipe.uid
+            purchased.append(recipeUid)
+            //remove duplication
+            //in case, a user purhcase a recipe that he/she purchased before
+            let set = Set(purchased)
+            let duplicationRemovedArray = Array(set)
+            let updates = ["purchased": duplicationRemovedArray]
+            DB_USERS.child(uid).updateChildValues(updates, withCompletionBlock: completion)
+          }) { (error) in
+            print(error.localizedDescription)
+        }
+        
+        //add 7 days to expiration date
+        let expirationDate = Date().addingTimeInterval(7*86400)
+        let format = expirationDate.getFormattedDate(format: "yyyy-MM-dd HH:mm:ss")
+        let update = ["expirationDate": format]
+        DB_RECIPE.child(recipe.uid).updateChildValues(update, withCompletionBlock: completion)
     }
 }

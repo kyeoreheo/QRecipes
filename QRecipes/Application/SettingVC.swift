@@ -17,6 +17,12 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     let columns: CGFloat = 3.0
     let inset: CGFloat = 8.0
     
+    var purchasedRecipes = [Recipe]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
     lazy var containerView: UIView = {
         let view = UIView()
         
@@ -88,6 +94,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         configure()
         configureUI()
         fetchUser()
+        fetchPurchasedRecipes()
     }
     
     private func configure() {
@@ -155,6 +162,12 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         }
     }
     
+    func fetchPurchasedRecipes() {
+        API.fetchPurchasedRecipes { recipes in
+            self.purchasedRecipes = recipes
+        }
+    }
+    
     @objc func handleService() {
         print("Contact to the customer service here..")
     }
@@ -175,13 +188,14 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
 extension SettingVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 27
+        return purchasedRecipes.count
     }
     
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SettingCollectionViewCell
         
-        cell.dayExpireLabel.text = "ExpireDay"
+        //cell.dayExpireLabel.text = "ExpireDay"
+        cell.recipe = purchasedRecipes[indexPath.row]
         return cell
     }
 }

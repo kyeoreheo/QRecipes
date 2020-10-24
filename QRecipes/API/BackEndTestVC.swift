@@ -43,8 +43,8 @@ class BackEndTestVC: UIViewController {
         }
         
         view.addSubview(signUp)
-        signUp.addTarget(self, action: #selector(uploadNewRestaurant), for: .touchUpInside)
-        signUp.setTitle("upload new recipe", for: .normal)
+        signUp.addTarget(self, action: #selector(uploadNewRecipe), for: .touchUpInside)
+        signUp.setTitle("test", for: .normal)
         signUp.setTitleColor(.white, for: .normal)
         signUp.backgroundColor = .black
         signUp.titleLabel?.font = UIFont.systemFont(ofSize: 20)
@@ -74,15 +74,19 @@ class BackEndTestVC: UIViewController {
     }
     
     @objc func uploadNewRecipe(){
+        let date = Date()
+        let format = date.getFormattedDate(format: "yyyy-MM-dd HH:mm:ss")
+        
         let recipe = newRecipe(
-                        name: "Pasta pesto",
-                        restaurant: "Jay's restaurant",
-                        level: "3",
-                        cookTime: "25 MIN",
-                        price: "$14",
-                        tags: ["Italian", "Pasta", "Noodle"],
-                        ingrediants: ["Bacon", "Garlic", "Parmesan cheese"],
-                        recipeImage: UIImage(named: "Pasta-pesto")!)
+                        name: "Pumkin Curry",
+                        restaurant: "ABC restaurant",
+                        level: "easy",
+                        cookTime: "30 MIN",
+                        price: "$11",
+                        tags: ["Indian", "Curry", "Pumkin", "Chicken", "Rice", "Naan"],
+                        ingrediants: ["Pumkin", "Chicken", "Coconut milk", "Masala", "Ginger"],
+                        expirationDate: format,
+                        recipeImage: UIImage(named: "pumkin curry")!)
             
         API.uploadRecipe(recipe: recipe) { [weak self] (error, ref) in
                 guard let strongSelf = self else { return }
@@ -110,5 +114,20 @@ class BackEndTestVC: UIViewController {
                     print("Uploaded")
                 }
             }
+    }
+    
+}
+
+extension Date {
+   func getFormattedDate(format: String) -> String {
+        let dateformat = DateFormatter()
+        dateformat.dateFormat = format
+        return dateformat.string(from: self)
+    }
+    
+    func stringToDate(String: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return dateFormatter.date(from: String)!
     }
 }
