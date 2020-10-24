@@ -11,10 +11,20 @@ import SnapKit
 
 class RecipeInfoViewVC: UIViewController {
     
-    //private let frame = UIView()
+    //MARK:- Properties
+    var recipe: Recipe? {
+        didSet {
+            recipeImageView.sd_setImage(with: recipe?.recipeImageUrl, completed: nil)
+            restaurantLabel.text = recipe?.restaurant
+            titleLabel.text = recipe?.name
+            cookTimeLabel.text = "Cook Time: " + recipe!.cookTime
+            cookDifficultyLabel.text = "Difficulty: " + recipe!.level
+        }
+    }
+  
     private let qrButton = UIButton()
     private let ratio = SplashVC.shared.ratio
-    //MARK:- Properties
+    
     var backButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
@@ -97,6 +107,7 @@ class RecipeInfoViewVC: UIViewController {
         label.font = UIFont.boldSystemFont(ofSize: 18)
         return label
     }()
+    
     var cookTimeLabel: UILabel = {
         let label = UILabel()
         label.text = "Cook Time: 30 mins"
@@ -135,14 +146,6 @@ class RecipeInfoViewVC: UIViewController {
         return view
     }()
     
-//    var tableView: UITableView = {
-//        let tv = UITableView()
-//        tv.backgroundColor = .white
-//        tv.layer.cornerRadius = 8
-//        tv.separatorColor = UIColor.clear
-//        tv.register(RecipeCell.self, forCellReuseIdentifier: "cell")
-//        return tv
-//    } ()
     var recipeImageView: UIImageView = {
         let rimg = UIImageView()
         rimg.contentMode = .scaleAspectFill
@@ -171,16 +174,10 @@ class RecipeInfoViewVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //configure()
         configureUI()
     }
     
     //MARK:- Helpers
-//    private func configure() {
-//        tableView.delegate = self
-//        tableView.dataSource = self
-//    }
-//
     private func configureUI() {
         view.backgroundColor = .backgroundGray
         
