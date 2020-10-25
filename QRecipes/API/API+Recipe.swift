@@ -111,6 +111,22 @@ extension API {
         })
     }
     
+    static func fetchCertainRecipes(uid: [String], completion: @escaping([Recipe]) ->
+                                Void) {
+        var recipes = [Recipe]()
+        
+        DB_RECIPE.observe(.childAdded) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
+            let recipeUid = snapshot.key
+            if uid.contains(recipeUid)
+            {
+                let recipe = Recipe(uid: recipeUid, dictionary: dictionary)
+                recipes.append(recipe)
+            }
+            completion(recipes)
+        }
+    }
+    
     static func setFavorite(recipe: Recipe, completion: @escaping(Error?, DatabaseReference?) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
