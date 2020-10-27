@@ -40,7 +40,11 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         configure()
         configureUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         fetchRecipes()
+        super.viewDidAppear(animated)
     }
     
     //MARK:- Helpers
