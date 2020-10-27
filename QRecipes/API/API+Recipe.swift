@@ -32,43 +32,42 @@ extension API {
         guard let imageData = image.jpegData(compressionQuality: 0.3) else { return }
         let filename = NSUUID().uuidString
         let storageRef = ST_RESTAURANT_IMAGE.child(filename)
-        storageRef.putData(imageData, metadata: nil) { (meta, error) in
-            storageRef.downloadURL { (url, error) in
-                guard let restaurantImageUrl = url?.absoluteString else {
-                    return
-                }
-                let values = ["name": "name",
-                              "address": "address",
-                              "phone": "phone",
-                              "recipes": ["abc", "abc"],
-                              "restaurantImageUrl": restaurantImageUrl] as [String : AnyObject]
-                
-                DB_RESTAURANT.childByAutoId().setValue(values, withCompletionBlock: completion)
+        storageRef.putData(imageData, metadata: nil) { meta, error in
+            storageRef.downloadURL { url, error in
+            guard let restaurantImageUrl = url?.absoluteString
+            else { return }
+            let values = ["name": "name",
+                          "address": "address",
+                          "phone": "phone",
+                          "recipes": ["abc", "abc"],
+                          "restaurantImageUrl": restaurantImageUrl] as [String : AnyObject]
+            
+            DB_RESTAURANT.childByAutoId().setValue(values, withCompletionBlock: completion)
            }
         }
-        
     }
     
     static func uploadRecipe(recipe: newRecipe, completion: @escaping(Error?, DatabaseReference?) -> Void ) {
-        guard let imageData = recipe.recipeImage.jpegData(compressionQuality: 0.3) else { return }
+        guard let imageData = recipe.recipeImage.jpegData(compressionQuality: 0.3)
+        else { return }
 
         let filename = NSUUID().uuidString
         let storageRef = ST_RECIPE_IMAGE.child(filename)
-        storageRef.putData(imageData, metadata: nil) { (meta, error) in
+        storageRef.putData(imageData, metadata: nil) { meta, error in
             storageRef.downloadURL { (url, error) in
-                guard let recipeImageUrl = url?.absoluteString else {
-                    return
-                }
-                let values = ["name": recipe.name,
-                              "restaurant": recipe.restaurant,
-                              "level": recipe.level,
-                              "cookTime": recipe.cookTime,
-                              "price": recipe.price,
-                              "tags": recipe.tags,
-                              "ingrediants": recipe.ingrediants,
-                              "recipeImageUrl": recipeImageUrl] as [String : AnyObject]
-                
-                DB_RECIPE.childByAutoId().setValue(values, withCompletionBlock: completion)
+            guard let recipeImageUrl = url?.absoluteString else {
+                return
+            }
+            let values = ["name": recipe.name,
+                          "restaurant": recipe.restaurant,
+                          "level": recipe.level,
+                          "cookTime": recipe.cookTime,
+                          "price": recipe.price,
+                          "tags": recipe.tags,
+                          "ingrediants": recipe.ingrediants,
+                          "recipeImageUrl": recipeImageUrl] as [String : AnyObject]
+            
+            DB_RECIPE.childByAutoId().setValue(values, withCompletionBlock: completion)
            }
         }
     }
@@ -77,7 +76,7 @@ extension API {
         
         var recipes = [Recipe]()
         
-        DB_RECIPE.observe(.childAdded) { (snapshot) in
+        DB_RECIPE.observe(.childAdded) { snapshot in
             guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
             let uid = snapshot.key
             let recipe = Recipe(uid: uid, dictionary: dictionary)
@@ -138,7 +137,7 @@ extension API {
             }
             let updates = ["favorite": favorites]
             DB_USERS.child(uid).updateChildValues(updates, withCompletionBlock: completion)
-          }) { (error) in
+          }) { error in
             print(error.localizedDescription)
         }
     }
