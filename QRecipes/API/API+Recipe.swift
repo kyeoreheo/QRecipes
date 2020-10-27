@@ -19,14 +19,6 @@ struct newRecipe {
     var recipeImage: UIImage
 }
 
-struct RestaurantResponse {
-    let name: String
-    let address: String
-    let phone: String
-    let recipes: [newRecipe]
-    let restaurantImageUrl: String
-}
-
 extension API {
     static func generateRestaurant(image: UIImage, recipes: [newRecipe], completion: @escaping(Error?, DatabaseReference?) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.3) else { return }

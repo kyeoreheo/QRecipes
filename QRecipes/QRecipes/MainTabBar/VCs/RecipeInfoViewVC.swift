@@ -186,6 +186,7 @@ class RecipeInfoViewVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        fetchRestaurant()
     }
     
     //MARK:- Helpers
@@ -313,9 +314,19 @@ class RecipeInfoViewVC: UIViewController {
         }
     }
     
+    private func fetchRestaurant() {
+        guard let recipe = recipe else { return }
+        API.fetchRestaurant(byName: recipe.restaurant) { [weak self] response in
+            guard let strongSelf = self,
+                  let url = response?.restaurantImageUrl
+            else { return }
+            strongSelf.restarantImageView.sd_setImage(with: url)
+        }
+    }
+    
     //MARK:- Selectors
     @objc func pressPurchaseButton() {
-        let vc = PurchaseVC(itemName: titleLabel.text!, payAmount: 7)
+        let vc = PurchaseVC(itemName: titleLabel.text!, payAmount: "$0")
         navigationController?.pushViewController(vc, animated: true)
     }
     

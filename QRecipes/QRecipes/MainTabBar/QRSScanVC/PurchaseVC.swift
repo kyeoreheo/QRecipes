@@ -25,10 +25,10 @@ class PurchaseVC: UIViewController {
     private let payButton = UIButton()
     
     private let itemName: String
-    private let payAmount: Int
+    private let payAmount: String
     
     //MARK:- LifeCycles
-    init(itemName: String, payAmount: Int) {
+    init(itemName: String, payAmount: String) {
         self.itemName = itemName
         self.payAmount = payAmount
         super.init(nibName: nil, bundle: nil)
@@ -61,7 +61,7 @@ class PurchaseVC: UIViewController {
         }
         
         view.addSubview(titleLabel)
-        titleLabel.text = "\(itemName) $\(payAmount)"
+        titleLabel.text = "\(itemName) \(payAmount)"
         titleLabel.font = UIFont.boldSystemFont(ofSize: 22 * ratio)
         titleLabel.textColor = .darkGray
         titleLabel.snp.makeConstraints { make in

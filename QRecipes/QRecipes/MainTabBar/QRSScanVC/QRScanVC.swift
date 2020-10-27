@@ -27,6 +27,7 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
     //Debug TextLabel
     private let validationLabel = UILabel()
     private let qrCodeLabel = UILabel()
+    private var hadScan = false
 
     enum error: Error {
         case noCameraAvaliable
@@ -54,9 +55,9 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
         setTimer(every: 0.1)
         
         #if DEBUG
-        dismiss(animated: true) {
-            MainTabBar.shared.presentRecipeInfoViewVC()
-        }
+//        dismiss(animated: true) {
+//            MainTabBar.shared.presentRecipeInfoViewVC()
+//        }
         #endif
     }
     
@@ -139,25 +140,25 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
         if metadataObjects.count > 0  {
             let machineReadableCode = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
             if machineReadableCode.type == AVMetadataObject.ObjectType.qr {
-                guard var qrCode = machineReadableCode.stringValue else { return }
+                guard let qrCode = machineReadableCode.stringValue
+                else { return }
                 
-                guard let transformedObject = (videoPreview.layer.sublayers![0] as! AVCaptureVideoPreviewLayer).transformedMetadataObject(for: machineReadableCode) as? AVMetadataMachineReadableCodeObject else {
-                    return
-                }
-//                updateBoundingBox(transformedObject.corners)
-                setupBoundingBox(color: .gray)
+//                guard let transformedObject = (videoPreview.layer.sublayers![0] as! AVCaptureVideoPreviewLayer).transformedMetadataObject(for: machineReadableCode) as? AVMetadataMachineReadableCodeObject
+//                else { return }
 
+                setupBoundingBox(color: .gray)
                 hideBoundingBox(after: 0.25)
                 qrCodeLabel.text = qrCode
                 validationLabel.text = "Invalid code 🥺"
 
-                if (qrCode.count > 2) && qrCode.first == "%" && qrCode.last == "&" {
-                    //} && !hasScanned { need to check this when we are trying to Fetch API
-                    setupBoundingBox(color: .primeOrange)
-                    hasScanned = true
-                    let cleanQRCode = qrCode.dropFirst().dropLast()
-                    validationLabel.text = "Valid Code 😆"
-                    qrCodeLabel.text = String(cleanQRCode)
+                setupBoundingBox(color: .primeOrange)
+                hasScanned = true
+                validationLabel.text = "Valid Code 😆"
+                if !hadScan {
+                    hadScan = true
+                    dismiss(animated: true) {
+                        MainTabBar.shared.presentRecipeInfoViewVC(code: String(qrCode))
+                    }
                 }
             }
         }

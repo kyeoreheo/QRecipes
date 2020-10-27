@@ -61,8 +61,9 @@ class MainTabBar: UITabBarController {
         present(qrScanVC, animated: true, completion: nil)
     }
     
-    @objc func presentRecipeInfoViewVC() {
-        let vc = RestaurantOverviewVC(isInPurchaseFlow: true)
+    func presentRecipeInfoViewVC(code: String) {
+        //let code = "Ramen Heaven" // Noodles Master
+        let vc = RestaurantOverviewVC(isInPurchaseFlow: true, restaurantName: code)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
