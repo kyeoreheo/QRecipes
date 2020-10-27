@@ -68,7 +68,6 @@ class SearchVC: UIViewController{
 
     }
     
-    
     func configureSearchBar(){
         searchBar.searchBarStyle = UISearchBar.Style.prominent
         searchBar.placeholder = " Search..."
@@ -84,6 +83,7 @@ class SearchVC: UIViewController{
             make.right.equalTo(view)
         }
     }
+    
     func configureNavBar() {
         navBar.delegate = self
         navBar.setItems([UINavigationItem(title: "Search")], animated: false)
@@ -95,6 +95,7 @@ class SearchVC: UIViewController{
             make.left.right.equalToSuperview()
         }
     }
+    
     private func configureUI() {
         view.backgroundColor = .white
     }
@@ -134,6 +135,12 @@ extension SearchVC: UISearchBarDelegate{
         searchBar.resignFirstResponder()
     }
     
+    // MARK: - Navigation and pass data
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = RecipeInfoViewVC()
+        vc.recipe = fullRecipes[indexPath.row]
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension SearchVC: UINavigationBarDelegate {
@@ -142,6 +149,7 @@ extension SearchVC: UINavigationBarDelegate {
         return .topAttached
     }
 }
+
 extension SearchVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return recipes.count
