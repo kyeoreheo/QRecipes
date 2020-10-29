@@ -90,7 +90,7 @@ extension API {
                 restauraurntRecipes = recipes
             }
             
-            let restaurant = Restaurant(uid: uid, recipes: restauraurntRecipes, dictionary: dictionary)
+            let restaurant = Restaurant(uid: uid, dictionary: dictionary)
             restaurants.append(restaurant)
             completion(restaurants)
         }

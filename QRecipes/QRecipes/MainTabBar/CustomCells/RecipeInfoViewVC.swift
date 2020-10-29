@@ -10,6 +10,16 @@ import UIKit
 import SnapKit
 
 class RecipeInfoViewVC: UIViewController {
+    //MARK:- Properties
+    var recipe: Recipe? {
+        didSet {
+            recipeImageView.sd_setImage(with: recipe?.recipeImageUrl, completed: nil)
+            restaurantLabel.text = recipe?.restaurant
+            titleLabel.text = recipe?.name
+            cookTimeLabel.text = "Cook Time: " + recipe!.cookTime
+            cookDifficultyLabel.text = "Difficulty: " + recipe!.level
+        }
+    }
     
     //private let frame = UIView()
     private let qrButton = UIButton()
@@ -318,7 +328,7 @@ class RecipeInfoViewVC: UIViewController {
         dismiss(animated: true) {
             MainTabBar.shared.presentQRScanVC()
         }
-
+    }
     
     private func fetchRestaurant() {
         guard let recipe = recipe else { return }
@@ -343,7 +353,7 @@ class RecipeInfoViewVC: UIViewController {
     @objc func popVC() {
         navigationController?.popViewController(animated: true)
     }
-   }
+   
 }
 
 
