@@ -180,6 +180,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Selected Row \(indexPath.row)")
         let vc = RecipeDetailVC()
+        vc.recipe = purchasedRecipes[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
 }

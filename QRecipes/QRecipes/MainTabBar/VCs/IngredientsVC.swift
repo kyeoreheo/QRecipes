@@ -11,6 +11,12 @@ import SnapKit
 
 class IngredientsVC: UIViewController {
     //MARK:- Properties
+    var ingredients : [String]? {
+        didSet{
+            tableView.reloadData()
+        }
+    }
+    
     var listView: UIView = {
            let view = UIView()
            view.layer.cornerRadius = 8
@@ -68,14 +74,14 @@ extension IngredientsVC: UITableViewDataSource, UITableViewDelegate{
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return ingredients?.count ?? 10
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.textColor = .gray
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        cell.textLabel?.text = "ingredient"
+        cell.textLabel?.text = ingredients?[indexPath.row]
         return cell
     }
 }
