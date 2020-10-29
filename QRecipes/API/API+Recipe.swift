@@ -176,13 +176,16 @@ extension API {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         var valid = [""]
-        guard purchaseds != [[""]] else {return valid}
-        for purchased in purchaseds {
-            if dateFormatter.date(from: purchased[1]) ?? Date() > now
-            {
-                valid.append(purchased[0])
+        //guard purchaseds != [[""]] else {return valid}
+        if purchaseds.count > 1 {
+            for purchased in purchaseds {
+                if dateFormatter.date(from: purchased[1]) ?? Date() > now
+                {
+                    valid.append(purchased[0])
+                }
             }
         }
         return valid
+
     }
 }

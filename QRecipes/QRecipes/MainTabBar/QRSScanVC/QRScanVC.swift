@@ -16,7 +16,7 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
     private let timerLable = UILabel()
 
     //Camera frame
-    private var hasScanned = false
+//    private var hasScanned = false
     private let videoPreview = UIView()
     private var qrFrameColor = UIColor()
     private let noCameraPlaceholder = UIImageView()
@@ -26,7 +26,6 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
     
     //Debug TextLabel
     private let validationLabel = UILabel()
-    private let qrCodeLabel = UILabel()
     private var hadScan = false
 
     enum error: Error {
@@ -109,28 +108,18 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
         videoPreview.clipsToBounds = true
         videoPreview.layer.cornerRadius = 24
 
-        videoPreview.frame = CGRect(x: 24,
-                                    y: 50,
-                                    width: view.frame.width - 48,
-                                    height: view.frame.width - 48)
+        videoPreview.frame = CGRect(x: 24, y: 50,
+                             width: view.frame.width - 48,
+                             height: view.frame.width - 48)
         
         view.addSubview(validationLabel)
-        validationLabel.text = "Not scanned yet 🙄"
+        validationLabel.numberOfLines = 0
+        validationLabel.text = "Scan QRcode at the restaurant\nAnd get a 50% off! 😆"
         validationLabel.textColor = .white
         validationLabel.textAlignment = .center
         validationLabel.font = UIFont.boldSystemFont(ofSize: 20)
         validationLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(50)
-            make.centerX.equalToSuperview()
-        }
-        
-        view.addSubview(qrCodeLabel)
-        qrCodeLabel.text = "Not scanned yet 🙄"
-        qrCodeLabel.textColor = .white
-        qrCodeLabel.textAlignment = .center
-        qrCodeLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        qrCodeLabel.snp.makeConstraints { make in
-            make.top.equalTo(validationLabel.snp.bottom).offset(8)
             make.centerX.equalToSuperview()
         }
     }
@@ -148,12 +137,9 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
 
                 setupBoundingBox(color: .gray)
                 hideBoundingBox(after: 0.25)
-                qrCodeLabel.text = qrCode
-                validationLabel.text = "Invalid code 🥺"
-
                 setupBoundingBox(color: .primeOrange)
-                hasScanned = true
-                validationLabel.text = "Valid Code 😆"
+//                hasScanned = true
+                //validationLabel.text = "Valid Code 😆"
                 if !hadScan {
                     hadScan = true
                     dismiss(animated: true) {

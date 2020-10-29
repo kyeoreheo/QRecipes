@@ -336,7 +336,11 @@ class RecipeInfoViewVC: UIViewController {
     
     //MARK:- Selectors
     @objc func pressPurchaseButton() {
-        let vc = PurchaseVC(itemName: titleLabel.text!, payAmount: "$0")
+        guard let restaurantName = recipe?.name,
+              let payAmount = recipe?.price
+        else { return }
+        
+        let vc = PurchaseVC(itemName: restaurantName, payAmount: payAmount)
         navigationController?.pushViewController(vc, animated: true)
     }
     
