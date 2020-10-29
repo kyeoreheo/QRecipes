@@ -78,5 +78,22 @@ extension API {
         }
         //completion(nil)
     }
+    
+    static func fetchAllRestaurants(completion: @escaping([Restaurant]) -> Void) {
+        var restaurants = [Restaurant]()
+        var restauraurntRecipes = [Recipe]()
+        
+        DB_RESTAURANT.observe(.childAdded) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
+            let uid = snapshot.key
+            API.fetchCertainRecipes(uid: dictionary["recipes"] as! [String]) { (recipes) in
+                restauraurntRecipes = recipes
+            }
+            
+            let restaurant = Restaurant(uid: uid, recipes: restauraurntRecipes, dictionary: dictionary)
+            restaurants.append(restaurant)
+            completion(restaurants)
+        }
+    }
 }
     

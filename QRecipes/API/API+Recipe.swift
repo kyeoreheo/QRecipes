@@ -133,4 +133,56 @@ extension API {
             print(error.localizedDescription)
         }
     }
+    
+    static func fetchCertainRecipes(uid: [String], completion: @escaping([Recipe]) -> Void) {
+        var recipes = [Recipe]()
+        
+        DB_RECIPE.observe(.childAdded) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
+            let recipeUid = snapshot.key
+            if uid.contains(recipeUid)
+            {
+                let recipe = Recipe(uid: recipeUid, dictionary: dictionary)
+                recipes.append(recipe)
+            }
+            completion(recipes)
+        }
+    }
+    
+    static func fetchPurchasedRecipes(completion: @escaping([Recipe]) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        DB_USERS.child(uid).observe(DataEventType.value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let purchased = value?["purchased"] as? [[String]] ?? [[]]
+            let validUid = checkValidity(purchaseds: purchased)
+            
+            var purchasedRecipes = [Recipe]()
+            DB_RECIPE.observe(.childAdded) { (snapshot) in
+                guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
+                let uid = snapshot.key
+                if validUid.contains(uid) {
+                    let recipe = Recipe(uid: uid, dictionary: dictionary)
+                    purchasedRecipes.append(recipe)
+                }
+                completion(purchasedRecipes)
+            }
+        })
+    }
+    
+    static func checkValidity(purchaseds: [[String]]) -> [String] {
+        let now = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        var valid = [""]
+        guard purchaseds != [[""]] else {return valid}
+        for purchased in purchaseds {
+            if dateFormatter.date(from: purchased[1]) ?? Date() > now
+            {
+                valid.append(purchased[0])
+            }
+        }
+        return valid
+    }
 }
