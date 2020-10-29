@@ -15,16 +15,8 @@ struct newRecipe {
     let cookTime: String
     let price: String
     let tags: [String]
-    let ingredients: [String]
+    let ingrediants: [String]
     var recipeImage: UIImage
-}
-
-struct RestaurantResponse {
-    let name: String
-    let address: String
-    let phone: String
-    let recipes: [newRecipe]
-    let restaurantImageUrl: String
 }
 
 extension API {
@@ -32,43 +24,42 @@ extension API {
         guard let imageData = image.jpegData(compressionQuality: 0.3) else { return }
         let filename = NSUUID().uuidString
         let storageRef = ST_RESTAURANT_IMAGE.child(filename)
-        storageRef.putData(imageData, metadata: nil) { (meta, error) in
-            storageRef.downloadURL { (url, error) in
-                guard let restaurantImageUrl = url?.absoluteString else {
-                    return
-                }
-                let values = ["name": "name",
-                              "address": "address",
-                              "phone": "phone",
-                              "recipes": ["abc", "abc"],
-                              "restaurantImageUrl": restaurantImageUrl] as [String : AnyObject]
-                
-                DB_RESTAURANT.childByAutoId().setValue(values, withCompletionBlock: completion)
+        storageRef.putData(imageData, metadata: nil) { meta, error in
+            storageRef.downloadURL { url, error in
+            guard let restaurantImageUrl = url?.absoluteString
+            else { return }
+            let values = ["name": "name",
+                          "address": "address",
+                          "phone": "phone",
+                          "recipes": ["abc", "abc"],
+                          "restaurantImageUrl": restaurantImageUrl] as [String : AnyObject]
+            
+            DB_RESTAURANT.childByAutoId().setValue(values, withCompletionBlock: completion)
            }
         }
-        
     }
     
     static func uploadRecipe(recipe: newRecipe, completion: @escaping(Error?, DatabaseReference?) -> Void ) {
-        guard let imageData = recipe.recipeImage.jpegData(compressionQuality: 0.3) else { return }
+        guard let imageData = recipe.recipeImage.jpegData(compressionQuality: 0.3)
+        else { return }
 
         let filename = NSUUID().uuidString
         let storageRef = ST_RECIPE_IMAGE.child(filename)
-        storageRef.putData(imageData, metadata: nil) { (meta, error) in
+        storageRef.putData(imageData, metadata: nil) { meta, error in
             storageRef.downloadURL { (url, error) in
-                guard let recipeImageUrl = url?.absoluteString else {
-                    return
-                }
-                let values = ["name": recipe.name,
-                              "restaurant": recipe.restaurant,
-                              "level": recipe.level,
-                              "cookTime": recipe.cookTime,
-                              "price": recipe.price,
-                              "tags": recipe.tags,
-                              "ingredients": recipe.ingredients,
-                              "recipeImageUrl": recipeImageUrl] as [String : AnyObject]
-                
-                DB_RECIPE.childByAutoId().setValue(values, withCompletionBlock: completion)
+            guard let recipeImageUrl = url?.absoluteString else {
+                return
+            }
+            let values = ["name": recipe.name,
+                          "restaurant": recipe.restaurant,
+                          "level": recipe.level,
+                          "cookTime": recipe.cookTime,
+                          "price": recipe.price,
+                          "tags": recipe.tags,
+                          "ingrediants": recipe.ingrediants,
+                          "recipeImageUrl": recipeImageUrl] as [String : AnyObject]
+            
+            DB_RECIPE.childByAutoId().setValue(values, withCompletionBlock: completion)
            }
         }
     }
@@ -77,7 +68,7 @@ extension API {
         
         var recipes = [Recipe]()
         
-        DB_RECIPE.observe(.childAdded) { (snapshot) in
+        DB_RECIPE.observe(.childAdded) { snapshot in
             guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
             let uid = snapshot.key
             let recipe = Recipe(uid: uid, dictionary: dictionary)
@@ -92,7 +83,7 @@ extension API {
         
         DB_USERS.child(uid).observe(DataEventType.value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            let favoriteUid = value?["favorite"] as? [String] ?? []
+            let favoriteUid = value?["favorite"] as? [String] ?? [""]
                 
             var favoriteRecipes = [Recipe]()
             DB_RECIPE.observe(.childAdded) { (snapshot) in
@@ -106,43 +97,6 @@ extension API {
             completion(favoriteRecipes)
             }
         })
-    }
-    
-    static func fetchPurchasedRecipes(completion: @escaping([Recipe]) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        DB_USERS.child(uid).observe(DataEventType.value, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            let purchased = value?["purchased"] as? [[String]] ?? [[]]
-            let validUid = checkValidity(purchaseds: purchased)
-            
-            var purchasedRecipes = [Recipe]()
-            DB_RECIPE.observe(.childAdded) { (snapshot) in
-                guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
-                let uid = snapshot.key
-                if validUid.contains(uid) {
-                    let recipe = Recipe(uid: uid, dictionary: dictionary)
-                    purchasedRecipes.append(recipe)
-                }
-                completion(purchasedRecipes)
-            }
-        })
-    }
-    
-    static func fetchCertainRecipes(uid: [String], completion: @escaping([Recipe]) ->
-                                Void) {
-        var recipes = [Recipe]()
-        
-        DB_RECIPE.observe(.childAdded) { (snapshot) in
-            guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
-            let recipeUid = snapshot.key
-            if uid.contains(recipeUid)
-            {
-                let recipe = Recipe(uid: recipeUid, dictionary: dictionary)
-                recipes.append(recipe)
-            }
-            completion(recipes)
-        }
     }
     
     static func setFavorite(recipe: Recipe, completion: @escaping(Error?, DatabaseReference?) -> Void) {
@@ -175,29 +129,45 @@ extension API {
             }
             let updates = ["favorite": favorites]
             DB_USERS.child(uid).updateChildValues(updates, withCompletionBlock: completion)
-          }) { (error) in
+          }) { error in
             print(error.localizedDescription)
         }
     }
     
-    static func purchaseRecipe(recipe: Recipe, completion: @escaping(Error?, DatabaseReference?) -> Void) {
+    static func fetchCertainRecipes(uid: [String], completion: @escaping([Recipe]) -> Void) {
+        var recipes = [Recipe]()
+        
+        DB_RECIPE.observe(.childAdded) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
+            let recipeUid = snapshot.key
+            if uid.contains(recipeUid)
+            {
+                let recipe = Recipe(uid: recipeUid, dictionary: dictionary)
+                recipes.append(recipe)
+            }
+            completion(recipes)
+        }
+    }
+    
+    static func fetchPurchasedRecipes(completion: @escaping([Recipe]) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        DB_USERS.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+        DB_USERS.child(uid).observe(DataEventType.value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            var purchased = value?["purchased"] as? [[String]] ?? [[""]]
-            let recipeUid = recipe.uid
-            //add 7 days for expiration date
-            let expirationDate = Date().addingTimeInterval(7*86400)
-            let format = expirationDate.getFormattedDate(format: "yyyy-MM-dd HH:mm:ss")
+            let purchased = value?["purchased"] as? [[String]] ?? [[]]
+            let validUid = checkValidity(purchaseds: purchased)
             
-            purchased.append([recipeUid,format])
-            
-            let updates = ["purchased": purchased]
-            DB_USERS.child(uid).updateChildValues(updates, withCompletionBlock: completion)
-          }) { (error) in
-            print(error.localizedDescription)
-        }
+            var purchasedRecipes = [Recipe]()
+            DB_RECIPE.observe(.childAdded) { (snapshot) in
+                guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
+                let uid = snapshot.key
+                if validUid.contains(uid) {
+                    let recipe = Recipe(uid: uid, dictionary: dictionary)
+                    purchasedRecipes.append(recipe)
+                }
+                completion(purchasedRecipes)
+            }
+        })
     }
     
     static func checkValidity(purchaseds: [[String]]) -> [String] {
@@ -206,13 +176,16 @@ extension API {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         var valid = [""]
-        guard purchaseds != [[""]] else {return valid}
-        for purchased in purchaseds {
-            if dateFormatter.date(from: purchased[1]) ?? Date() > now
-            {
-                valid.append(purchased[0])
+        //guard purchaseds != [[""]] else {return valid}
+        if purchaseds.count > 1 {
+            for purchased in purchaseds {
+                if dateFormatter.date(from: purchased[1]) ?? Date() > now
+                {
+                    valid.append(purchased[0])
+                }
             }
         }
         return valid
+
     }
 }

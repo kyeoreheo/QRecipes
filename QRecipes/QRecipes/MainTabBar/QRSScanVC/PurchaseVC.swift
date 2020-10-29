@@ -25,12 +25,14 @@ class PurchaseVC: UIViewController {
     private let payButton = UIButton()
     
     private let itemName: String
-    private let payAmount: Int
+    private let payAmount: String
+    private let isInPurchaseFlow: Bool
     
     //MARK:- LifeCycles
-    init(itemName: String, payAmount: Int) {
+    init(itemName: String, payAmount: String, isInPurchaseFlow: Bool = false) {
         self.itemName = itemName
         self.payAmount = payAmount
+        self.isInPurchaseFlow = isInPurchaseFlow
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -61,7 +63,12 @@ class PurchaseVC: UIViewController {
         }
         
         view.addSubview(titleLabel)
-        titleLabel.text = "\(itemName) $\(payAmount)"
+        let number = payAmount.replacingOccurrences(of: "$", with: "")
+        if isInPurchaseFlow {
+            titleLabel.text = "\(itemName) \(payAmount) -> \(Int(Int(number)! / 2))"
+        } else {
+            titleLabel.text = "\(itemName) \(payAmount)"
+        }
         titleLabel.font = UIFont.boldSystemFont(ofSize: 22 * ratio)
         titleLabel.textColor = .darkGray
         titleLabel.snp.makeConstraints { make in
