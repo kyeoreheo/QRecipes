@@ -127,7 +127,6 @@
 		20C229A6253BF22000D19032 /* VCs */ = {
 			isa = PBXGroup;
 			children = (
-				C26A360625428698001A331E /* RecipeInfoViewVC.swift */,
 				3182DDCD253755F4004C488E /* QRGuideVC.swift */,
 				20C229A4253BF21300D19032 /* RecipeDetailVC.swift */,
 				20FDFCA1253D4BA800CE35C7 /* IngredientsVC.swift */,
@@ -141,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				20ECFA1C2520466B00EEE280 /* FeedCell.swift */,
+				C26A360625428698001A331E /* RecipeInfoViewVC.swift */,
 				20C94250252AE748000698E6 /* FavoriteCell.swift */,
 				205EC2012535FEFD0098CFE9 /* RecipeCell.swift */,
 				C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */,

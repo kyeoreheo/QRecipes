@@ -22,7 +22,6 @@ class UserModal {
 
 class SearchVC: UIViewController{
     //MARK:- Properties
-    //private let sampleLable = UILabel()
     let navBar = UINavigationBar() //remove
     //let searchController = UISearchController(searchResultsController: nil)
     let searchBar = UISearchBar()
@@ -46,6 +45,7 @@ class SearchVC: UIViewController{
         configureNavBar()
         configureSearchBar()
         setTableView()
+        
         fetchRecipes()
     }
 
@@ -56,9 +56,7 @@ class SearchVC: UIViewController{
         tableView.backgroundColor = UIColor.white
         
         view.addSubview(tableView)
-        
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "Cell")
-        
         tableView.snp.makeConstraints { make in
             make.top.equalTo(searchBar.snp.bottom)
             make.left.equalTo(view)
@@ -72,7 +70,9 @@ class SearchVC: UIViewController{
     func configureSearchBar(){
         searchBar.searchBarStyle = UISearchBar.Style.prominent
         searchBar.placeholder = " Search..."
+        
         searchBar.sizeToFit()
+        //searchBar.backgroundColor = UIColor.white
         searchBar.isTranslucent = false
         searchBar.delegate = self
         searchBar.setShowsCancelButton(true, animated: false)
@@ -87,7 +87,7 @@ class SearchVC: UIViewController{
     func configureNavBar() {
         navBar.delegate = self
         navBar.setItems([UINavigationItem(title: "Search")], animated: false)
-
+        
         view.addSubview(navBar)
         navBar.snp.makeConstraints { make in
             make.height.equalTo(44)

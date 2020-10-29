@@ -11,21 +11,10 @@ import SnapKit
 
 class RecipeInfoViewVC: UIViewController {
     
-    //MARK:- Properties
-    var recipe: Recipe? {
-        didSet {
-            recipeImageView.sd_setImage(with: recipe?.recipeImageUrl, completed: nil)
-            restaurantLabel.text = recipe?.restaurant
-            titleLabel.text = recipe?.name
-            cookTimeLabel.text = "Cook Time: " + recipe!.cookTime
-            cookDifficultyLabel.text = "Difficulty: " + recipe!.level
-        }
-    }
-
-    var favIsOn = false
-  
+    //private let frame = UIView()
+    private let qrButton = UIButton()
     private let ratio = SplashVC.shared.ratio
-    
+    //MARK:- Properties
     var backButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
@@ -54,27 +43,12 @@ class RecipeInfoViewVC: UIViewController {
         return view
     }()
     
-    var favoriteButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.backgroundColor = .backgroundGray
-        button.alpha = 0.9
-        button.layer.cornerRadius = 20
-        button.tintColor = .primeOrange
-        button.setImage(UIImage(systemName: "heart"), for: .normal)
-        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        return button
-    }()
-    
-    var purchaseButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .primeOrange
-        button.layer.cornerRadius = 10
-        button.setTitle("Purchase", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(pressPurchaseButton), for: .touchUpInside)
-        return button
-    }()
+//    var favoriteButton: UIButton = {
+//        let button = UIButton(type: .custom)
+//        button.tintColor = .pumpkinRed
+//        button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+//        return button
+//    }()
     
     var locationIcon: UIButton = {
         let button = UIButton(type: .custom)
@@ -123,7 +97,6 @@ class RecipeInfoViewVC: UIViewController {
         label.font = UIFont.boldSystemFont(ofSize: 18)
         return label
     }()
-    
     var cookTimeLabel: UILabel = {
         let label = UILabel()
         label.text = "Cook Time: 30 mins"
@@ -133,16 +106,15 @@ class RecipeInfoViewVC: UIViewController {
         //label.textAlignment = .center
         return label
     }()
-    
     var cookDifficultyLabel: UILabel = {
         let label = UILabel()
         label.text = "Difficulty: Easy"
         label.textAlignment = .center
         label.textColor = .darkGray
         label.font = UIFont.boldSystemFont(ofSize: 15)
+        
         return label
     }()
-    
     var spicyLevelLabel: UILabel = {
         let label = UILabel()
         label.text = "Spicy Level: Medium spicy"
@@ -163,6 +135,14 @@ class RecipeInfoViewVC: UIViewController {
         return view
     }()
     
+//    var tableView: UITableView = {
+//        let tv = UITableView()
+//        tv.backgroundColor = .white
+//        tv.layer.cornerRadius = 8
+//        tv.separatorColor = UIColor.clear
+//        tv.register(RecipeCell.self, forCellReuseIdentifier: "cell")
+//        return tv
+//    } ()
     var recipeImageView: UIImageView = {
         let rimg = UIImageView()
         rimg.contentMode = .scaleAspectFill
@@ -173,7 +153,7 @@ class RecipeInfoViewVC: UIViewController {
         rimg.layer.shadowOpacity = 0.5
         rimg.layer.shadowOffset = .zero
         rimg.layer.shadowRadius = 4
-        rimg.isUserInteractionEnabled = true
+        rimg.image = UIImage(named: "pasta")
         return rimg
     }()
     
@@ -185,21 +165,22 @@ class RecipeInfoViewVC: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        isFavorite()
-        super.viewDidAppear(animated)
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //configure()
         configureUI()
     }
     
     //MARK:- Helpers
+//    private func configure() {
+//        tableView.delegate = self
+//        tableView.dataSource = self
+//    }
+//
     private func configureUI() {
         view.backgroundColor = .backgroundGray
         
@@ -221,12 +202,20 @@ class RecipeInfoViewVC: UIViewController {
             make.size.equalTo(150)
             if isInPurchaseFlow {
                 make.top.equalTo(backButton.snp.bottom).offset(10)
+
             } else {
                 make.top.equalTo(restarantImageView.snp.bottom).offset(-95)
             }
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
+
+//        infoView.addSubview(favoriteButton)
+//        favoriteButton.snp.makeConstraints { make in
+//            make.size.equalTo(40)
+//            make.top.equalTo(infoView).offset(10)
+//            make.right.equalTo(infoView).offset(-20)
+//        }
         
         infoView.addSubview(restaurantLabel)
         restaurantLabel.snp.makeConstraints { make in
@@ -283,18 +272,11 @@ class RecipeInfoViewVC: UIViewController {
         contentView.addSubview(recipeImageView)
         recipeImageView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(10)
+           // make.bottom.equalTo(contentView.snp.bottom).offset(-10)
             make.left.equalTo(contentView).offset(10)
             make.right.equalTo(contentView).offset(-10)
-            make.height.equalTo(150)
+            make.height.equalTo(100)
         }
-        
-        recipeImageView.addSubview(favoriteButton)
-        favoriteButton.snp.makeConstraints { make in
-            make.size.equalTo(40)
-            make.bottom.equalTo(recipeImageView.snp.bottom).offset(-10)
-            make.right.equalTo(recipeImageView).offset(-10)
-        }
-        
         contentView.addSubview(cookTimeLabel)
         cookTimeLabel.snp.makeConstraints { make in
             make.top.equalTo(recipeImageView.snp.bottom).offset(15)
@@ -314,68 +296,29 @@ class RecipeInfoViewVC: UIViewController {
             make.right.equalTo(contentView).offset(-30)
         }
         
-        view.addSubview(purchaseButton)
-        purchaseButton.snp.makeConstraints { make in
-            make.height.equalTo(45 * ratio)
+        
+        view.addSubview(qrButton)
+        qrButton.setTitle("Phurchase", for: .normal)
+        qrButton.backgroundColor = .primeOrange
+        qrButton.layer.cornerRadius = 10
+        qrButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18 * ratio)
+        qrButton.setTitleColor(.white, for: .normal)
+        qrButton.addTarget(self, action: #selector(presentQRButton), for: .touchUpInside)
+        qrButton.snp.makeConstraints { make in
+            make.height.equalTo(40 * ratio)
             make.bottom.equalTo(contentView).offset(-20)
-            make.left.equalToSuperview().offset(50)
-            make.right.equalToSuperview().offset(-50)
+            make.left.equalToSuperview().offset(30)
+            make.right.equalToSuperview().offset(-30)
         }
     }
-    
     //MARK:- Selectors
-    @objc func pressPurchaseButton() {
-        let vc = PurchaseVC(itemName: titleLabel.text!, payAmount: 7)
-        navigationController?.pushViewController(vc, animated: true)
+    @objc func presentQRButton() {
+        dismiss(animated: true) {
+            MainTabBar.shared.presentQRScanVC()
+        }
     }
-    
     @objc func popVC() {
         navigationController?.popViewController(animated: true)
-    }
-    
-    @objc func buttonPressed() {
-        favIsOn = !favIsOn
-        if favIsOn {
-            setFavorite()
-        }
-        else {
-            unsetFavorite()
-        }
-    }
-    
-    func isFavorite() -> Void {
-        let favoriteUid = User.shared.favorite
-        guard let uid = recipe?.uid else { return }
-        if favoriteUid.contains(uid) {
-            favIsOn = true
-            self.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        }
-        else {
-            favIsOn = false
-            self.favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
-        }
-    }
-    
-    @objc func setFavorite(){
-        API.setFavorite(recipe: recipe!) { [weak self] (error, ref) in
-            guard let strongSelf = self else { return }
-            if error != nil {
-                print("Error: failed to set favorite")
-            } else {
-                strongSelf.favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            }
-        }
-    }
-    
-    @objc func unsetFavorite(){
-        API.unsetFavorite(recipe: recipe!) { [weak self] (error, ref) in
-            guard let strongSelf = self else { return }
-            if error != nil {
-                print("Error: failed to unset favorite")
-            } else {
-                strongSelf.favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
-            }
-        }
     }
 }
 

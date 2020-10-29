@@ -80,6 +80,12 @@ class FavoriteVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     
+    // Delete an item from collection view
+    @objc func deleteItem(sender: UIButton!) {
+        let indexPath = IndexPath(row: sender.tag, section: 0)
+        self.collectionView.deleteItems(at: [indexPath])
+        self.collectionView.reloadData()
+    }
 }
 
 //MARK:- Collection view data source
@@ -92,6 +98,7 @@ extension FavoriteVC: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! FavoriteCell
         
         cell.recipe = favoriteRecipes[indexPath.row]
+        //cell.favoriteButton.addTarget(self, action: #selector(deleteItem), for: .touchUpInside)
         
         return cell
     }

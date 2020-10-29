@@ -62,7 +62,7 @@ class MainTabBar: UITabBarController {
     }
     
     @objc func presentRecipeInfoViewVC() {
-        let vc = RestaurantOverviewVC(isInPurchaseFlow: true)
+        let vc = RecipeInfoViewVC(isInPurchaseFlow: true)
         navigationController?.pushViewController(vc, animated: true)
     }
 }

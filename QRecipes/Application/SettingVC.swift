@@ -17,12 +17,6 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     let columns: CGFloat = 3.0
     let inset: CGFloat = 8.0
     
-    var purchasedRecipes = [Recipe]() {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
-    
     lazy var containerView: UIView = {
         let view = UIView()
         
@@ -32,7 +26,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     
     let profileImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "avatar")
+        iv.image =  #imageLiteral(resourceName: "avatar")
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.layer.borderWidth = 3
@@ -41,18 +35,19 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     }()
     let messageButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "envelope").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage( #imageLiteral(resourceName: "envelope").withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(handleService), for: .touchUpInside)
         return button
     }()
     
-    let logoutButton: UIButton = {
+    lazy var logoutButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "logout-512").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage( #imageLiteral(resourceName: "logout-512").withRenderingMode(.alwaysOriginal), for: .normal)
         //button.setImage(UIImage(systemName: "star.fill"), for: .normal)
         button.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
         return button
     }()
+    //init -> -> -> selecors objc -> values func view didload
     
     let nameLabel: UILabel = {
         let label = UILabel()
@@ -82,19 +77,24 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         return cv
     } ()
     // MARK: - Lifecycle
-    lazy var dayExpireLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Days"
-        label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 28)
-        return label
+//    lazy var dayExpireLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "Days"
+//        label.textColor = .black
+//        label.font = UIFont.boldSystemFont(ofSize: 28)
+//        return label
+//    }()
+    let expirationDayButton: UIButton = {
+        let button = UIButton()
+        
+        return button
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
         configureUI()
         fetchUser()
-        fetchPurchasedRecipes()
     }
     
     private func configure() {
@@ -108,7 +108,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         containerView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.left.right.equalToSuperview()
-            make.height.equalTo(view.frame.height * 0.4)
+            make.height.equalTo(view.frame.height * 0.35)
             
         }
         view.addSubview(profileImageView)
@@ -116,7 +116,10 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
             make.top.equalToSuperview().offset(88)
             make.height.equalTo(100)
             make.width.equalTo(100)
-            make.left.equalToSuperview().offset(140)
+            
+            make.centerX.equalToSuperview()
+            make.centerY.equalTo(containerView)
+            
             profileImageView.layer.cornerRadius = 100 / 2
         }
         view.addSubview(messageButton)
@@ -135,19 +138,22 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         }
         view.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(200)
-            make.left.right.equalToSuperview().offset(5)
+            make.top.equalTo(profileImageView.snp.bottom).offset(20)
+            //make.left.right.equalToSuperview().offset(5)
+            make.centerX.equalToSuperview()
         }
         view.addSubview(emailLabel)
         emailLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(240)
-            make.left.right.equalToSuperview().offset(5)
+            make.top.equalTo(profileImageView.snp.bottom).offset(50)
+            //make.left.right.equalToSuperview().offset(5)
+            make.centerX.equalToSuperview()
         }
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(containerView.snp.bottom)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             make.left.right.equalToSuperview()
+            
         }
     }
     
@@ -159,12 +165,6 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
             profileImageView.sd_setImage(with: User.shared.profileImage, completed: nil)
             nameLabel.text = "\(User.shared.firstName) \(User.shared.lastName)"
             emailLabel.text = User.shared.email
-        }
-    }
-    
-    func fetchPurchasedRecipes() {
-        API.fetchPurchasedRecipes { recipes in
-            self.purchasedRecipes = recipes
         }
     }
     
@@ -188,14 +188,13 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
 extension SettingVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return purchasedRecipes.count
+        return 27
     }
     
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SettingCollectionViewCell
         
         //cell.dayExpireLabel.text = "ExpireDay"
-        cell.recipe = purchasedRecipes[indexPath.row]
         return cell
     }
 }

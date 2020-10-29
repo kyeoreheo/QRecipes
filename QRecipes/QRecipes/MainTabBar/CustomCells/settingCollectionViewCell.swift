@@ -9,16 +9,6 @@ import UIKit
 
 class SettingCollectionViewCell: UICollectionViewCell {
     
-    var recipe: Recipe? {
-        didSet {
-            imageView.sd_setImage(with: recipe?.recipeImageUrl, completed: nil)
-            
-            let expirationDate = Date().stringToDate(String: recipe?.expirationDate ?? "")
-            let leftDays = Int(expirationDate.timeIntervalSince(Date()) / 86400)
-            dayExpireLabel.text = "\(leftDays) days"
-        }
-    }
-    
     //MARK:- Properties
     let imageView: UIImageView = {
         let img = UIImageView()
@@ -29,13 +19,25 @@ class SettingCollectionViewCell: UICollectionViewCell {
         return img
     }()
     
-    let dayExpireLabel: UILabel = {
-       let label = UILabel()
-       label.font = UIFont.boldSystemFont(ofSize: 14)
-       label.textColor = .red
-       return label
-   }()
-
+//    let dayExpireLabel: UILabel = {
+//       let label = UILabel()
+//       label.font = UIFont.boldSystemFont(ofSize: 14)
+//       label.textColor = .white
+//       return label
+//   }()
+        let expirationDayButton: UIButton = {
+           let button = UIButton()
+            
+            button.backgroundColor = .white
+            button.layer.cornerRadius = 10
+            button.setTitle("Expiration", for: .normal)
+            //button.backgroundColor = .primeOrange
+            //button.frame = CGRect(x: 20, y: 20, width: 30, height: 15)
+            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+            button.setTitleColor(.primeOrange, for: .normal)
+            
+            return button
+       }()
     
     //MARK:- Init
     override init(frame: CGRect){
@@ -54,23 +56,28 @@ class SettingCollectionViewCell: UICollectionViewCell {
 
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
-//            make.top.equalTo(contentView.snp.top).offset(8)
-//            make.bottom.equalTo(contentView.snp.bottom).offset(-40)
-//            make.left.equalTo(contentView.snp.left).offset(8)
-//            make.right.equalTo(contentView.snp.right).offset(-8)
+
             make.left.right.top.bottom.equalToSuperview()
-            //make.centerY.equalTo(imageView)
+
             
         }
-        contentView.addSubview(dayExpireLabel)
-        dayExpireLabel.snp.makeConstraints { make in
-            //make.top.equalTo(imageView.snp.center).offset(10)
-            make.left.equalTo(contentView).offset(20)
-            make.right.equalTo(contentView).offset(-20)
-            make.centerY.equalTo(imageView)
-            //make.width.height.equalTo(30)
-        }
-        
+//        contentView.addSubview(dayExpireLabel)
+//        dayExpireLabel.snp.makeConstraints { make in
+//            //make.top.equalTo(imageView.snp.center).offset(10)
+//            make.left.equalTo(contentView).offset(20)
+//            make.right.equalTo(contentView).offset(-20)
+//            make.centerY.equalTo(imageView)
+//            //make.width.height.equalTo(30)
+//        }
+        contentView.addSubview(expirationDayButton)
+                expirationDayButton.snp.makeConstraints { make in
+                    //make.top.equalTo(imageView.snp.center).offset(10)
+                    
+                    make.left.equalTo(contentView).offset(20)
+                    make.right.equalTo(contentView).offset(-20)
+                    make.centerY.equalTo(imageView)
+                    make.width.height.equalTo(30)
+                }
     
     }
 }

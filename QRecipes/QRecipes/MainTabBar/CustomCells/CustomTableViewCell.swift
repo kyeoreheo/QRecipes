@@ -10,31 +10,29 @@ import UIKit
 class CustomTableViewCell: UITableViewCell {
     
     lazy var backView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.orange
-        return view
+        let backView = UIView()
+        backView.backgroundColor = UIColor.clear
+        backView.contentMode = .scaleAspectFill
+        backView.layer.cornerRadius = 10
+        backView.clipsToBounds = true
+        return backView
     }()
     lazy var userImage: UIImageView = {
         let userImage = UIImageView()
         userImage.contentMode = .scaleAspectFill
-        let img = UIImageView()
-        img.contentMode = .scaleAspectFill
-        img.clipsToBounds = true
-        img.layer.cornerRadius = 8
-    
-        img.translatesAutoresizingMaskIntoConstraints = false
-        return img
+        userImage.clipsToBounds = true
+        userImage.layer.cornerRadius = 8
+        userImage.translatesAutoresizingMaskIntoConstraints = false
+        return userImage
     }()
     lazy var nameLbl : UILabel = {
-       let lbl = UILabel()
-        //lbl.textAlignment = .right
+        let lbl = UILabel()
         lbl.font = UIFont.boldSystemFont(ofSize: 15)
         return lbl
     }()
     
     lazy var restaurantLbl : UILabel = {
        let lbl = UILabel()
-        //lbl.textAlignment = .left
         lbl.font = UIFont.boldSystemFont(ofSize: 15)
         return lbl
     }()
@@ -44,21 +42,6 @@ class CustomTableViewCell: UITableViewCell {
         // Initialization code
         configureCell()
     }
-    override func layoutSubviews() {
-        backView.backgroundColor = UIColor.clear
-        backgroundColor = UIColor.white
-        backView.layer.cornerRadius = 5
-        backView.clipsToBounds = true
-    }
-    
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        contentView.addSubview(backView)
-//        backView.addSubview(userImage)
-//        backView.addSubview(nameLbl)
-//        backView.addSubview(restaurantLbl)
-//    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -76,6 +59,7 @@ class CustomTableViewCell: UITableViewCell {
         backView.addSubview(restaurantLbl)
         
         backView.snp.makeConstraints { make in
+            
             make.top.left.right.bottom.equalToSuperview()
         }
         userImage.snp.makeConstraints { make in

@@ -11,8 +11,6 @@ import SnapKit
 
 class RestaurantOverviewVC: UIViewController {
     //MARK:- Properties
-    var restaurants = [Restaurant]()
-    
     var backButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
@@ -130,7 +128,6 @@ class RestaurantOverviewVC: UIViewController {
         super.viewDidLoad()
         configure()
         configureUI()
-        fetchAllRestaurants()
     }
     
     //MARK:- Helpers
@@ -233,12 +230,6 @@ class RestaurantOverviewVC: UIViewController {
             make.bottom.equalTo(contentView.snp.bottom).offset(-10)
             make.left.equalTo(contentView).offset(10)
             make.right.equalTo(contentView).offset(-10)
-        }
-    }
-    
-    func fetchAllRestaurants() {
-        API.fetchAllRestaurants{ restaurants in
-            self.restaurants = restaurants
         }
     }
     
