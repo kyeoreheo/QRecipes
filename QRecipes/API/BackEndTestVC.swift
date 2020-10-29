@@ -84,7 +84,7 @@ class BackEndTestVC: UIViewController {
                         cookTime: "30 MIN",
                         price: "$11",
                         tags: ["Indian", "Curry", "Pumkin", "Chicken", "Rice", "Naan"],
-                        ingredients: ["Pumkin", "Chicken", "Coconut milk", "Masala", "Ginger"],
+                        ingrediants: ["Pumkin", "Chicken", "Coconut milk", "Masala", "Ginger"],
                         recipeImage: UIImage(named: "pumkin curry")!)
             
         API.uploadRecipe(recipe: recipe) { [weak self] (error, ref) in

@@ -31,7 +31,7 @@ class RecipeCell: UITableViewCell {
     }()
     
     private let purchaseButton = UIButton()
-    private let payAmountLabel = UIButton()
+    public let payAmountLabel = UIButton()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -74,7 +74,7 @@ class RecipeCell: UITableViewCell {
         }
         
         recipeImage.addSubview(payAmountLabel)
-        payAmountLabel.setTitle("$12", for: .normal)
+        //payAmountLabel.setTitle("$12", for: .normal)
         payAmountLabel.backgroundColor = .primeOrange
         payAmountLabel.layer.cornerRadius = 10
         payAmountLabel.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15 * ratio)

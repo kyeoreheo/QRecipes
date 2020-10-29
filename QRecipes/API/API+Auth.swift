@@ -53,25 +53,25 @@ extension API {
         let filename = NSUUID().uuidString
         let storageRef = ST_PROFILE_IMAGE.child(filename)
         storageRef.putData(imageData, metadata: nil) { (meta, error) in
-            storageRef.downloadURL { (url, error) in
-                guard let profileImageUrl = url?.absoluteString else { return }
-                Auth.auth().createUser(withEmail: user.email, password: user.password) { (result, error) in
-                    if let error = error {
-                        print("Error is \(error.localizedDescription)")
-                        completion(error, nil)
-                        return
-                    }
+            storageRef.downloadURL { url, error in
+            guard let profileImageUrl = url?.absoluteString else { return }
+            Auth.auth().createUser(withEmail: user.email, password: user.password) { (result, error) in
+                if let error = error {
+                    print("Error is \(error.localizedDescription)")
+                    completion(error, nil)
+                    return
+                }
 
-                    guard let uid = result?.user.uid else { return }
+                guard let uid = result?.user.uid else { return }
 
-                    let values = ["email": user.email,
-                                  "firstName": user.firstName,
-                                  "lastName": user.lastName,
-                                  "favorite": user.favorite,
-                                  "purchased": user.purchased,
-                                  "profileImageUrl": profileImageUrl] as [String : AnyObject]
+                let values = ["email": user.email,
+                              "firstName": user.firstName,
+                              "lastName": user.lastName,
+                              "favorite": user.favorite,
+                              "purchased": user.purchased,
+                              "profileImageUrl": profileImageUrl] as [String : AnyObject]
 
-                    DB_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+                DB_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
                }
            }
         }

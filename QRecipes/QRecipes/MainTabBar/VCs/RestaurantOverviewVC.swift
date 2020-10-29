@@ -11,8 +11,6 @@ import SnapKit
 
 class RestaurantOverviewVC: UIViewController {
     //MARK:- Properties
-    var restaurants = [Restaurant]()
-    
     var backButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
@@ -114,11 +112,20 @@ class RestaurantOverviewVC: UIViewController {
         tv.register(RecipeCell.self, forCellReuseIdentifier: "cell")
         return tv
     } ()
+    
     private let isInPurchaseFlow: Bool
+    private let restaurantName: String
+    private var restaurant: RestaurantResponse?
+    private var recipes = [Recipe]() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     //MARK:- LifeCycles
-    init(isInPurchaseFlow: Bool = false) {
+    init(isInPurchaseFlow: Bool = false, restaurantName: String = "") {
         self.isInPurchaseFlow = isInPurchaseFlow
+        self.restaurantName = restaurantName
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -130,7 +137,8 @@ class RestaurantOverviewVC: UIViewController {
         super.viewDidLoad()
         configure()
         configureUI()
-        fetchAllRestaurants()
+        fetchRestaurant()
+        fetchRecipes()
     }
     
     //MARK:- Helpers
@@ -236,9 +244,23 @@ class RestaurantOverviewVC: UIViewController {
         }
     }
     
-    func fetchAllRestaurants() {
-        API.fetchAllRestaurants{ restaurants in
-            self.restaurants = restaurants
+    private func fetchRestaurant() {
+        API.fetchRestaurant(byName: restaurantName) { [weak self] response in
+            guard let strongSelf = self,
+                  let response = response,
+                  let url = response.restaurantImageUrl
+            else { return }
+            strongSelf.restaurantLabel.text = response.name
+            strongSelf.locationLabel.text = response.address
+            strongSelf.phoneLabel.text = response.phone
+            strongSelf.imageView.sd_setImage(with: url)
+        }
+    }
+    
+    func fetchRecipes() {
+        API.fetchRecipes { [weak self] recipes in
+            guard let strongSelf = self else { return }
+            strongSelf.recipes = recipes.filter { $0.restaurant == strongSelf.restaurantName}
         }
     }
     
@@ -259,20 +281,21 @@ extension RestaurantOverviewVC: UITableViewDataSource{
             qrScanVC.modalPresentationStyle = .popover
             present(qrScanVC, animated: true, completion: nil)
         } else {
-            let purchaseVC = PurchaseVC(itemName: "pasta", payAmount: 12)
+            let purchaseVC = PurchaseVC(itemName: "pasta", payAmount: recipes[indexPath.row].price, isInPurchaseFlow: true)
             navigationController?.pushViewController(purchaseVC, animated: true)
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return recipes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! RecipeCell
 
-        cell.recipeLabel.text = "Pasta"
-        
+        cell.recipeLabel.text = recipes[indexPath.row].name //"Pasta"
+        cell.recipeImage.sd_setImage(with: recipes[indexPath.row].recipeImageUrl)
+        cell.payAmountLabel.setTitle(recipes[indexPath.row].price, for: .normal)
         if isInPurchaseFlow {
             cell.showPurchaseUI()
         }
