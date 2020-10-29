@@ -11,6 +11,19 @@ import SnapKit
 
 class RecipeDetailVC: UIViewController {
     //MARK:- Properties
+    
+    var recipe: Recipe? {
+        didSet {
+            imageView.sd_setImage(with: recipe?.recipeImageUrl, completed: nil)
+            recipeLabel.text = recipe?.name
+            restaurantLabel.text = recipe?.restaurant
+            timeLabel.text = recipe?.cookTime
+            levelLabel.text = recipe?.level
+        
+            IngredientsContainer.ingredients = recipe?.ingredients ?? [""]
+        }
+    }
+    
     var segmentedControl: UISegmentedControl = {
         let control = UISegmentedControl(items: ["Ingredients", "Instructions"])
         control.selectedSegmentIndex = 0

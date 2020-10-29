@@ -17,8 +17,7 @@ struct Recipe {
     let cookTime: String
     let price: String
     let tags: [String]
-    let ingrediants: [String]
-    var expirationDate: String
+    let ingredients: [String]
     var recipeImageUrl: URL?
 
     init(uid: String, dictionary: [String: AnyObject]) {
@@ -30,8 +29,7 @@ struct Recipe {
         self.cookTime = dictionary["cookTime"] as? String ?? ""
         self.price = dictionary["price"] as? String ?? ""
         self.tags = dictionary["tags"] as? [String] ?? [""]
-        self.ingrediants = dictionary["ingrediants"] as? [String] ?? [""]
-        self.expirationDate = dictionary["expirationDate"] as? String ?? ""
+        self.ingredients = dictionary["ingrediants"] as? [String] ?? [""] //typo in db 
         
         if let recipeImageUrlString = dictionary["recipeImageUrl"] as? String {
             guard let url = URL(string: recipeImageUrlString) else { return }
