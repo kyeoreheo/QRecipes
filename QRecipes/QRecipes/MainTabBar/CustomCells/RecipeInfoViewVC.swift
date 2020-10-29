@@ -173,6 +173,7 @@ class RecipeInfoViewVC: UIViewController {
         super.viewDidLoad()
         //configure()
         configureUI()
+        fetchRestaurant()
     }
     
     //MARK:- Helpers
@@ -311,15 +312,38 @@ class RecipeInfoViewVC: UIViewController {
             make.right.equalToSuperview().offset(-30)
         }
     }
+
     //MARK:- Selectors
     @objc func presentQRButton() {
         dismiss(animated: true) {
             MainTabBar.shared.presentQRScanVC()
         }
+
+    
+    private func fetchRestaurant() {
+        guard let recipe = recipe else { return }
+        API.fetchRestaurant(byName: recipe.restaurant) { [weak self] response in
+            guard let strongSelf = self,
+                  let url = response?.restaurantImageUrl
+            else { return }
+            strongSelf.restarantImageView.sd_setImage(with: url)
+        }
+    }
+    
+    //MARK:- Selectors
+    @objc func pressPurchaseButton() {
+        guard let restaurantName = recipe?.name,
+              let payAmount = recipe?.price
+        else { return }
+        
+        let vc = PurchaseVC(itemName: restaurantName, payAmount: payAmount)
+        navigationController?.pushViewController(vc, animated: true)
+
     }
     @objc func popVC() {
         navigationController?.popViewController(animated: true)
     }
+   }
 }
 
 

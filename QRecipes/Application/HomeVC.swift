@@ -77,6 +77,7 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Selected Row \(indexPath.row)")
         let vc = RecipeInfoViewVC()
+
         navigationController?.pushViewController(vc, animated: true)
     }
 }

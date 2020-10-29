@@ -13,7 +13,7 @@ struct UserInfo {
     let firstName: String
     let lastName: String
     var favorite: [String]
-    var purchased: [String]
+    var purchased: [[String]]
     var profileImageUrl: URL?
     let uid: String
 
@@ -24,7 +24,7 @@ struct UserInfo {
         self.firstName = dictionary["firstName"] as? String ?? ""
         self.lastName = dictionary["lastName"] as? String ?? ""
         self.favorite = dictionary["favorite"] as? [String] ?? [""]
-        self.purchased = dictionary["purchased"] as? [String] ?? [""]
+        self.purchased = dictionary["purchased"] as? [[String]] ?? [[""]]
         if let profileImageUrlString = dictionary["profileImageUrl"] as? String {
             guard let url = URL(string: profileImageUrlString) else { return }
             self.profileImageUrl = url
@@ -38,7 +38,7 @@ struct AuthProperties {
     let firstName: String
     let lastName: String
     let favorite: [String]
-    let purchased: [String]
+    let purchased: [[String]]
     let profileImage: UIImage
 }
 
@@ -53,25 +53,25 @@ extension API {
         let filename = NSUUID().uuidString
         let storageRef = ST_PROFILE_IMAGE.child(filename)
         storageRef.putData(imageData, metadata: nil) { (meta, error) in
-            storageRef.downloadURL { (url, error) in
-                guard let profileImageUrl = url?.absoluteString else { return }
-                Auth.auth().createUser(withEmail: user.email, password: user.password) { (result, error) in
-                    if let error = error {
-                        print("Error is \(error.localizedDescription)")
-                        completion(error, nil)
-                        return
-                    }
+            storageRef.downloadURL { url, error in
+            guard let profileImageUrl = url?.absoluteString else { return }
+            Auth.auth().createUser(withEmail: user.email, password: user.password) { (result, error) in
+                if let error = error {
+                    print("Error is \(error.localizedDescription)")
+                    completion(error, nil)
+                    return
+                }
 
-                    guard let uid = result?.user.uid else { return }
+                guard let uid = result?.user.uid else { return }
 
-                    let values = ["email": user.email,
-                                  "firstName": user.firstName,
-                                  "lastName": user.lastName,
-                                  "favorite": user.favorite,
-                                  "purchased": user.purchased,
-                                  "profileImageUrl": profileImageUrl] as [String : AnyObject]
+                let values = ["email": user.email,
+                              "firstName": user.firstName,
+                              "lastName": user.lastName,
+                              "favorite": user.favorite,
+                              "purchased": user.purchased,
+                              "profileImageUrl": profileImageUrl] as [String : AnyObject]
 
-                    DB_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+                DB_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
                }
            }
         }

@@ -43,6 +43,7 @@
 		3182DDD625377CA6004C488E /* PurchaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182DDD525377CA6004C488E /* PurchaseVC.swift */; };
 		3182DDDA2538BBA9004C488E /* FinishedPurchaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3182DDD92538BBA9004C488E /* FinishedPurchaseVC.swift */; };
 		3184D1AC25241B4500D3D75A /* LogInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3184D1AB25241B4500D3D75A /* LogInVC.swift */; };
+		319D1755254B03C900BB343F /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319D1754254B03C900BB343F /* Restaurant.swift */; };
 		31BAFF04251AAB9F0055A354 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BAFF03251AAB9F0055A354 /* CustomView.swift */; };
 		31D3ED10252F6838000CA905 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D3ED0F252F6838000CA905 /* API.swift */; };
 		31D3ED13252F6847000CA905 /* API+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D3ED12252F6847000CA905 /* API+Auth.swift */; };
@@ -53,7 +54,6 @@
 		C26A360725428698001A331E /* RecipeInfoViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26A360625428698001A331E /* RecipeInfoViewVC.swift */; };
 		C6CA107A253953E3003DBB40 /* API+Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA1079253953E3003DBB40 /* API+Recipe.swift */; };
 		C6CA107D25395402003DBB40 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA107C25395402003DBB40 /* Recipe.swift */; };
-		C6CA109525398067003DBB40 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA109425398067003DBB40 /* Restaurant.swift */; };
 		C6CA109825398114003DBB40 /* API+Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA109725398114003DBB40 /* API+Restaurant.swift */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +96,7 @@
 		3182DDD525377CA6004C488E /* PurchaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseVC.swift; sourceTree = "<group>"; };
 		3182DDD92538BBA9004C488E /* FinishedPurchaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedPurchaseVC.swift; sourceTree = "<group>"; };
 		3184D1AB25241B4500D3D75A /* LogInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInVC.swift; sourceTree = "<group>"; };
+		319D1754254B03C900BB343F /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		31BAFF03251AAB9F0055A354 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		31D3ED0F252F6838000CA905 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		31D3ED12252F6847000CA905 /* API+Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Auth.swift"; sourceTree = "<group>"; };
@@ -108,7 +109,6 @@
 		C26A360625428698001A331E /* RecipeInfoViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeInfoViewVC.swift; sourceTree = "<group>"; };
 		C6CA1079253953E3003DBB40 /* API+Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "API+Recipe.swift"; sourceTree = "<group>"; };
 		C6CA107C25395402003DBB40 /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
-		C6CA109425398067003DBB40 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		C6CA109725398114003DBB40 /* API+Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Restaurant.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -223,7 +223,7 @@
 				C6CA109725398114003DBB40 /* API+Restaurant.swift */,
 				31D3ED50252FA721000CA905 /* User.swift */,
 				C6CA107C25395402003DBB40 /* Recipe.swift */,
-				C6CA109425398067003DBB40 /* Restaurant.swift */,
+				319D1754254B03C900BB343F /* Restaurant.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -398,6 +398,7 @@
 				313C2F83251063CC004BEB5A /* SearchVC.swift in Sources */,
 				20C94251252AE748000698E6 /* FavoriteCell.swift in Sources */,
 				205EC2022535FEFD0098CFE9 /* RecipeCell.swift in Sources */,
+				319D1755254B03C900BB343F /* Restaurant.swift in Sources */,
 				3182DDDA2538BBA9004C488E /* FinishedPurchaseVC.swift in Sources */,
 				313C2F8125106395004BEB5A /* HomeVC.swift in Sources */,
 				317218092508454200EDF3DB /* SplashVC.swift in Sources */,
@@ -410,7 +411,6 @@
 				20FDFCA4253D4BC600CE35C7 /* InstructionsVC.swift in Sources */,
 				31306598251068C400491E44 /* CreaditVC.swift in Sources */,
 				C20FE50E2525B00C003BDA99 /* CustomTableViewCell.swift in Sources */,
-				C6CA109525398067003DBB40 /* Restaurant.swift in Sources */,
 				3182DDD625377CA6004C488E /* PurchaseVC.swift in Sources */,
 				313C2F85251063E1004BEB5A /* FavoriteVC.swift in Sources */,
 				316B798B251BB0D000B4E080 /* AuthenticationVM.swift in Sources */,

@@ -48,6 +48,7 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
         configure()
         configureUI()
         generateSampleAccount()
+        //check already login or not
     }
     
     override func viewWillAppear(_ animated: Bool) {
