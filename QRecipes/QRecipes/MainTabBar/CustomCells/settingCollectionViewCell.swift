@@ -9,6 +9,13 @@ import UIKit
 
 class SettingCollectionViewCell: UICollectionViewCell {
     
+    var recipe: Recipe? {
+        didSet {
+            imageView.sd_setImage(with: recipe?.recipeImageUrl, completed: nil)
+            updateExpDateLabel()
+        }
+    }
+    
     //MARK:- Properties
     let imageView: UIImageView = {
         let img = UIImageView()
@@ -22,7 +29,7 @@ class SettingCollectionViewCell: UICollectionViewCell {
     let dayExpireLabel: UILabel = {
        let label = UILabel()
        label.font = UIFont.boldSystemFont(ofSize: 14)
-       label.textColor = .white
+       label.textColor = .red
        return label
    }()
 
@@ -62,5 +69,17 @@ class SettingCollectionViewCell: UICollectionViewCell {
         }
         
     
+    }
+    
+    private func updateExpDateLabel() {
+        var date = Date()
+        let purchaseds = User.shared.purchased
+        for purchased in purchaseds {
+            if purchased[0] == recipe?.uid {
+                date = Date().stringToDate(String: purchased[1])
+            }
+        }
+        let leftDays = Int(date.timeIntervalSince(Date()) / 86400)
+        dayExpireLabel.text = "\(leftDays) days"
     }
 }
