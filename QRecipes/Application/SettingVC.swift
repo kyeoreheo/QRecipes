@@ -213,14 +213,14 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
 extension SettingVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 1
+        return purchasedRecipes.count
     }
     
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SettingCollectionViewCell
         
         //cell.dayExpireLabel.text = "ExpireDay"
-        //cell.recipe = purchasedRecipes[indexPath.row]
+        cell.recipe = purchasedRecipes[indexPath.row]
         return cell
     }
 }
