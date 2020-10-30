@@ -51,13 +51,8 @@ class SettingCollectionViewCell: UICollectionViewCell {
 
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
-//            make.top.equalTo(contentView.snp.top).offset(8)
-//            make.bottom.equalTo(contentView.snp.bottom).offset(-40)
-//            make.left.equalTo(contentView.snp.left).offset(8)
-//            make.right.equalTo(contentView.snp.right).offset(-8)
             make.left.right.top.bottom.equalToSuperview()
-            //make.centerY.equalTo(imageView)
-            
+    
         }
         contentView.addSubview(dayExpireLabel)
         dayExpireLabel.snp.makeConstraints { make in

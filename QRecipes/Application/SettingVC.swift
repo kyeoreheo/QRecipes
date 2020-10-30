@@ -108,7 +108,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         containerView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.left.right.equalToSuperview()
-            make.height.equalTo(view.frame.height * 0.4)
+            make.height.equalTo(view.frame.height * 0.35)
             
         }
         view.addSubview(profileImageView)
