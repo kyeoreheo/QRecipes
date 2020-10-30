@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class MainTabBar: UITabBarController {
+class MainTabBar: UITabBarController, UITabBarControllerDelegate {
     static let shared = MainTabBar()
     let qrButton = AuthenticationVM().logoView(logoSize: 60)
     
@@ -18,6 +18,13 @@ class MainTabBar: UITabBarController {
         super.viewDidLoad()
         configureTabBar()
         configureUI()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.selectedIndex = 0
+        tabBarController?.delegate = self
     }
     
     // MARK: - configures
