@@ -281,7 +281,7 @@ extension RestaurantOverviewVC: UITableViewDataSource{
             qrScanVC.modalPresentationStyle = .popover
             present(qrScanVC, animated: true, completion: nil)
         } else {
-            let purchaseVC = PurchaseVC(itemName: "pasta", payAmount: recipes[indexPath.row].price, isInPurchaseFlow: true)
+            let purchaseVC = PurchaseVC(itemName: "pasta", payAmount: recipes[indexPath.row].price, uid: recipes[indexPath.row].uid, isInPurchaseFlow: true)
             navigationController?.pushViewController(purchaseVC, animated: true)
         }
     }

@@ -154,7 +154,7 @@ extension API {
         
         DB_USERS.child(uid).observe(DataEventType.value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            let purchased = value?["purchased"] as? [[String]] ?? [[]]
+            let purchased = value?["purchased"] as? [String : String] ?? [:]
             let validUid = checkValidity(purchaseds: purchased)
             
             var purchasedRecipes = [Recipe]()
@@ -165,27 +165,49 @@ extension API {
                     let recipe = Recipe(uid: uid, dictionary: dictionary)
                     purchasedRecipes.append(recipe)
                 }
+                print("\(purchasedRecipes.count) recipes fetched")
                 completion(purchasedRecipes)
             }
         })
     }
     
-    static func checkValidity(purchaseds: [[String]]) -> [String] {
+    static func checkValidity(purchaseds: [String:String]) -> [String] {
         let now = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         var valid = [""]
-        //guard purchaseds != [[""]] else {return valid}
-        if purchaseds.count > 1 {
+        
+        if purchaseds.count > 0 {
             for purchased in purchaseds {
-                if dateFormatter.date(from: purchased[1]) ?? Date() > now
+                if dateFormatter.date(from: purchased.value) ?? now > now
                 {
-                    valid.append(purchased[0])
+                    valid.append(purchased.key)
                 }
             }
         }
+        print("\(valid.count) recipes valid")
         return valid
 
+    }
+    
+    static func purhcasRecipe(recipeUid: String, completion: @escaping(Error?, DatabaseReference?) -> Void) {
+        
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        DB_USERS.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            var purchased = value?["purchased"] as? [String:String] ?? [:]
+            
+            let expirationDate = Date().addingTimeInterval(7*86400)
+            let format = expirationDate.getFormattedDate(format: "yyyy-MM-dd HH:mm:ss")
+            
+            purchased[recipeUid] = format
+                    
+            let updates = ["purchased": purchased]
+            DB_USERS.child(uid).updateChildValues(updates, withCompletionBlock: completion)
+            }) { (error) in
+                    print(error.localizedDescription)
+                }
     }
 }

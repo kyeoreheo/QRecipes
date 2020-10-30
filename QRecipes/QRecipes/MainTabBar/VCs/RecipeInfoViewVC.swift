@@ -337,10 +337,11 @@ class RecipeInfoViewVC: UIViewController {
     //MARK:- Selectors
     @objc func pressPurchaseButton() {
         guard let restaurantName = recipe?.name,
-              let payAmount = recipe?.price
+              let payAmount = recipe?.price,
+              let uid = recipe?.uid
         else { return }
         
-        let vc = PurchaseVC(itemName: restaurantName, payAmount: payAmount)
+        let vc = PurchaseVC(itemName: restaurantName, payAmount: payAmount, uid: uid)
         navigationController?.pushViewController(vc, animated: true)
     }
     
