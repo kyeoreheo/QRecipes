@@ -82,13 +82,19 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         return cv
     } ()
     // MARK: - Lifecycle
-    lazy var dayExpireLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Days"
-        label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 28)
-        return label
+//    lazy var dayExpireLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "Days"
+//        label.textColor = .black
+//        label.font = UIFont.boldSystemFont(ofSize: 28)
+//        return label
+//    }()
+    let expirationDayButton: UIButton = {
+        let button = UIButton()
+        
+        return button
     }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
@@ -116,7 +122,10 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
             make.top.equalToSuperview().offset(88)
             make.height.equalTo(100)
             make.width.equalTo(100)
-            make.left.equalToSuperview().offset(140)
+            
+            make.centerX.equalToSuperview()
+            make.centerY.equalTo(containerView)
+            
             profileImageView.layer.cornerRadius = 100 / 2
         }
         view.addSubview(messageButton)
@@ -135,13 +144,14 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         }
         view.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(200)
-            make.left.right.equalToSuperview().offset(5)
+            make.top.equalTo(profileImageView.snp.bottom).offset(20)
+            make.centerX.equalToSuperview()
         }
         view.addSubview(emailLabel)
         emailLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(240)
-            make.left.right.equalToSuperview().offset(5)
+            make.top.equalTo(profileImageView.snp.bottom).offset(50)
+            
+            make.centerX.equalToSuperview()
         }
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
@@ -189,14 +199,14 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
 extension SettingVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return purchasedRecipes.count
+        return 1
     }
     
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SettingCollectionViewCell
         
         //cell.dayExpireLabel.text = "ExpireDay"
-        cell.recipe = purchasedRecipes[indexPath.row]
+        //cell.recipe = purchasedRecipes[indexPath.row]
         return cell
     }
 }

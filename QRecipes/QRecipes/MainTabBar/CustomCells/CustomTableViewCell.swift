@@ -11,12 +11,9 @@ class CustomTableViewCell: UITableViewCell {
     
     lazy var backView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.orange
         return view
     }()
     lazy var userImage: UIImageView = {
-        let userImage = UIImageView()
-        userImage.contentMode = .scaleAspectFill
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
@@ -45,20 +42,11 @@ class CustomTableViewCell: UITableViewCell {
         configureCell()
     }
     override func layoutSubviews() {
-        backView.backgroundColor = UIColor.clear
-        backgroundColor = UIColor.white
+        backView.backgroundColor = UIColor.white
         backView.layer.cornerRadius = 5
         backView.clipsToBounds = true
     }
     
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        contentView.addSubview(backView)
-//        backView.addSubview(userImage)
-//        backView.addSubview(nameLbl)
-//        backView.addSubview(restaurantLbl)
-//    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
