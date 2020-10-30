@@ -15,4 +15,13 @@ class User {
     var favorite = [""]
     var purchased = [[""]]
     var profileImage: URL?
+    
+    func clear() {
+        User.shared.email = ""
+        User.shared.firstName = ""
+        User.shared.lastName = ""
+        User.shared.favorite = [""]
+        User.shared.purchased = [[""]]
+        User.shared.profileImage = nil
+    }
 }
