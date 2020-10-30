@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import SDWebImage
+import Firebase
 
 class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     
@@ -46,7 +47,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         return button
     }()
     
-    let logoutButton: UIButton = {
+    lazy var logoutButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "logout-512").withRenderingMode(.alwaysOriginal), for: .normal)
         //button.setImage(UIImage(systemName: "star.fill"), for: .normal)
@@ -180,10 +181,23 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     
     @objc func handleService() {
         print("Contact to the customer service here..")
+        MainTabBar.shared.tabBarController?.selectedIndex = 0
     }
 
     @objc func handleLogout() {
-        print("Logging out..")
+        do {
+            try Auth.auth().signOut()
+            User.shared.clear()
+            DispatchQueue.main.async {
+                let navigation = UINavigationController(rootViewController: AuthenticationVC())
+                navigation.modalPresentationStyle = .fullScreen
+                navigation.navigationBar.isHidden = true
+                
+                self.present(navigation, animated: false)
+            }
+        } catch let error {
+            print("------failed to sing out \(error.localizedDescription)")
+        }
     }
 
     // Navigation
