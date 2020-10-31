@@ -165,7 +165,6 @@ extension API {
                     let recipe = Recipe(uid: uid, dictionary: dictionary)
                     purchasedRecipes.append(recipe)
                 }
-                print("\(purchasedRecipes.count) recipes fetched")
                 completion(purchasedRecipes)
             }
         })
@@ -186,7 +185,6 @@ extension API {
                 }
             }
         }
-        print("\(valid.count) recipes valid")
         return valid
 
     }
