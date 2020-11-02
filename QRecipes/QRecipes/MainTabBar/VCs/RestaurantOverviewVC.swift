@@ -39,13 +39,6 @@ class RestaurantOverviewVC: UIViewController {
         return view
     }()
     
-    var favoriteButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.tintColor = .pumpkinRed
-        button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        return button
-    }()
-    
     var locationIcon: UIButton = {
         let button = UIButton(type: .custom)
         button.tintColor = .gray
@@ -175,19 +168,11 @@ class RestaurantOverviewVC: UIViewController {
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
-
-        infoView.addSubview(favoriteButton)
-        favoriteButton.snp.makeConstraints { make in
-            make.size.equalTo(40)
-            make.top.equalTo(infoView).offset(10)
-            make.right.equalTo(infoView).offset(-20)
-        }
         
         infoView.addSubview(restaurantLabel)
         restaurantLabel.snp.makeConstraints { make in
             make.top.equalTo(infoView).offset(20)
             make.left.equalTo(infoView).offset(20)
-            make.right.equalTo(favoriteButton.snp.left)
         }
         
         infoView.addSubview(locationIcon)
