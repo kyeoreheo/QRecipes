@@ -107,11 +107,13 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         super.viewDidLoad()
         configure()
         configureUI()
-        fetchPurchasedRecipes()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         fetchUser()
+        fetchPurchasedRecipes()
     }
+    
     private func configure() {
         collectionView.delegate = self
         collectionView.dataSource = self
