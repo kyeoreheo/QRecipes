@@ -31,6 +31,13 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         return view
     }()
     
+    var contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 15
+        return view
+    }()
+    
     let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "avatar")
@@ -115,7 +122,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         containerView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.left.right.equalToSuperview()
-            make.height.equalTo(view.frame.height * 0.35)
+            make.height.equalTo(view.frame.height * 0.3)
             
         }
         view.addSubview(profileImageView)
@@ -145,18 +152,26 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         }
         view.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(profileImageView.snp.bottom).offset(20)
+            make.top.equalTo(profileImageView.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
         }
         view.addSubview(emailLabel)
         emailLabel.snp.makeConstraints { make in
-            make.top.equalTo(profileImageView.snp.bottom).offset(50)
+            make.top.equalTo(profileImageView.snp.bottom).offset(40)
             
             make.centerX.equalToSuperview()
         }
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
+        
+        view.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
             make.top.equalTo(containerView.snp.bottom)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.left.right.equalToSuperview()
+        }
+        
+        contentView.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(contentView.snp.top).offset(40)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             make.left.right.equalToSuperview()
         }
