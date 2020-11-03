@@ -14,6 +14,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     
     // MARK: - Properties
     let tableView = UITableView()
+    let containerView = UIView()
     
     let columns: CGFloat = 3.0
     let inset: CGFloat = 8.0
@@ -23,14 +24,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
             collectionView.reloadData()
         }
     }
-    
-    lazy var containerView: UIView = {
-        let view = UIView()
-        
-        view.backgroundColor = .orange
-        return view
-    }()
-    
+
     var contentView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -89,20 +83,13 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         cv.register(SettingCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         return cv
     } ()
-    // MARK: - Lifecycle
-//    lazy var dayExpireLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "Days"
-//        label.textColor = .black
-//        label.font = UIFont.boldSystemFont(ofSize: 28)
-//        return label
-//    }()
+
     let expirationDayButton: UIButton = {
         let button = UIButton()
-        
         return button
     }()
 
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
@@ -125,49 +112,46 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         containerView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.left.right.equalToSuperview()
-            make.height.equalTo(view.frame.height * 0.3)
-            
+            make.height.equalTo(view.frame.height * 0.35)
         }
+        
         view.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(88)
-            make.height.equalTo(100)
-            make.width.equalTo(100)
-            
+            make.height.width.equalTo(100)
             make.centerX.equalToSuperview()
             make.centerY.equalTo(containerView)
-            
             profileImageView.layer.cornerRadius = 100 / 2
         }
+        
         view.addSubview(messageButton)
         messageButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(64)
-            make.height.equalTo(32)
-            make.width.equalTo(32)
-            make.left.equalToSuperview().offset(32)
+            make.top.equalToSuperview().offset(40)
+            make.height.width.equalTo(32)
+            make.left.equalToSuperview().offset(20)
         }
+        
         view.addSubview(logoutButton)
         logoutButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(64)
-            make.height.equalTo(32)
-            make.width.equalTo(32)
-            make.right.equalToSuperview().offset(-32)
+            make.top.equalToSuperview().offset(40)
+            make.height.width.equalTo(32)
+            make.right.equalToSuperview().offset(-20)
         }
+        
         view.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(profileImageView.snp.bottom).offset(10)
+            make.top.equalTo(profileImageView.snp.bottom).offset(8)
             make.centerX.equalToSuperview()
         }
+        
         view.addSubview(emailLabel)
         emailLabel.snp.makeConstraints { make in
-            make.top.equalTo(profileImageView.snp.bottom).offset(40)
-            
+            make.top.equalTo(nameLabel.snp.bottom).offset(2)
             make.centerX.equalToSuperview()
         }
         
         view.addSubview(contentView)
         contentView.snp.makeConstraints { make in
-            make.top.equalTo(containerView.snp.bottom)
+            make.top.equalTo(emailLabel.snp.bottom).offset(20)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             make.left.right.equalToSuperview()
         }
