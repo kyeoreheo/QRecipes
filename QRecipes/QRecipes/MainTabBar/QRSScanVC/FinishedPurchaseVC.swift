@@ -18,10 +18,12 @@ class FinishedPurchaseVC: UIViewController {
     private let confirmButton = UIButton()
 
     private let itemName: String
+    private let uid: String
     
     //MARK:- LifeCycles
-    init(itemName: String) {
+    init(itemName: String, uid: String) {
         self.itemName = itemName
+        self.uid = uid
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -35,13 +37,22 @@ class FinishedPurchaseVC: UIViewController {
         configureUI()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        API.purhcasRecipe(recipeUid: uid) { [weak self] error, ref in
+            if error != nil {
+                print("Error: failed to purchase")
+            } else {
+                //self.presentFinishedPurchasedVC()
+            }
+        }
+    }
+    
     //MARK:- Helpers
     private func configure() {
         view.backgroundColor = .white
     }
     
     private func configureUI() {
-        
         view.addSubview(checkImageView)
         checkImageView.image = UIImage(named: "check")
         checkImageView.contentMode = .scaleAspectFit
@@ -89,8 +100,6 @@ class FinishedPurchaseVC: UIViewController {
     }
 
     //MARK:- Selectors
-    @objc func dismissViewButton() {
-        navigationController?.popToRootViewController(animated: true)
+    @objc func dismissViewButton() {        navigationController?.popToRootViewController(animated: true)
     }
-    
 }

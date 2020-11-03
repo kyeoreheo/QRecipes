@@ -192,20 +192,24 @@ extension API {
     static func purhcasRecipe(recipeUid: String, completion: @escaping(Error?, DatabaseReference?) -> Void) {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        DB_USERS.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+
+        DB_USERS.child(uid).observeSingleEvent(of: .value, with: { snapshot in
             let value = snapshot.value as? NSDictionary
             var purchased = value?["purchased"] as? [String:String] ?? [:]
-            
+
             let expirationDate = Date().addingTimeInterval(7*86400)
             let format = expirationDate.getFormattedDate(format: "yyyy-MM-dd HH:mm:ss")
-            
+
             purchased[recipeUid] = format
-                    
+
             let updates = ["purchased": purchased]
             DB_USERS.child(uid).updateChildValues(updates, withCompletionBlock: completion)
-            }) { (error) in
-                    print(error.localizedDescription)
-                }
+        })
+        
     }
 }
+
+//[rootNav] - mainTab  {Home, Search, Fav, Setting}
+//Home -> RamenHaven -> purhcase -> API rootNav(gone) ->  Got it! -> go to Root
+//CameraView -> restaurant info
+

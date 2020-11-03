@@ -190,16 +190,20 @@ class PurchaseVC: UIViewController {
 
     //MARK:- Selectors
     @objc func purchase() {
-        //navigationController?.pushViewController(FinishedPurchaseVC(itemName
-                                                   // : itemName), animated: true)
-        API.purhcasRecipe(recipeUid: uid) { [weak self] (error, ref) in
-            guard let strongSelf = self else { return }
-            if error != nil {
-                print("Error: failed to purchase")
-            } else {
-                strongSelf.navigationController?.pushViewController(FinishedPurchaseVC(itemName: strongSelf.itemName),animated: true)
-            }
-        }
+        presentFinishedPurchasedVC()
+//        API.purhcasRecipe(recipeUid: uid) { error, ref in
+//            print("DEBUG:- ref: \(ref), error: \(error)")
+//            //guard let strongSelf = self else { return }
+//            if error != nil {
+//                print("Error: failed to purchase")
+//            } else {
+//                self.presentFinishedPurchasedVC()
+//            }
+//        }
+    }
+    
+    private func presentFinishedPurchasedVC() {
+        navigationController?.pushViewController(FinishedPurchaseVC(itemName: itemName, uid: uid),animated: true)
     }
 
     @objc func popVC() {
