@@ -55,7 +55,6 @@ class FavoriteVC: UIViewController, UIGestureRecognizerDelegate {
         
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.height.equalTo(44)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.left.equalTo(view).offset(12)
         }
@@ -76,6 +75,7 @@ class FavoriteVC: UIViewController, UIGestureRecognizerDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //print("Selected Row \(indexPath.row)")
         let vc = RecipeInfoViewVC()
+        vc.recipe = favoriteRecipes[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
     

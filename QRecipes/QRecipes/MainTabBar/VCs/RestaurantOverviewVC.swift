@@ -39,13 +39,6 @@ class RestaurantOverviewVC: UIViewController {
         return view
     }()
     
-    var favoriteButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.tintColor = .pumpkinRed
-        button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        return button
-    }()
-    
     var locationIcon: UIButton = {
         let button = UIButton(type: .custom)
         button.tintColor = .gray
@@ -175,19 +168,11 @@ class RestaurantOverviewVC: UIViewController {
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
-
-        infoView.addSubview(favoriteButton)
-        favoriteButton.snp.makeConstraints { make in
-            make.size.equalTo(40)
-            make.top.equalTo(infoView).offset(10)
-            make.right.equalTo(infoView).offset(-20)
-        }
         
         infoView.addSubview(restaurantLabel)
         restaurantLabel.snp.makeConstraints { make in
             make.top.equalTo(infoView).offset(20)
             make.left.equalTo(infoView).offset(20)
-            make.right.equalTo(favoriteButton.snp.left)
         }
         
         infoView.addSubview(locationIcon)
@@ -281,7 +266,7 @@ extension RestaurantOverviewVC: UITableViewDataSource{
             qrScanVC.modalPresentationStyle = .popover
             present(qrScanVC, animated: true, completion: nil)
         } else {
-            let purchaseVC = PurchaseVC(itemName: "pasta", payAmount: recipes[indexPath.row].price, isInPurchaseFlow: true)
+            let purchaseVC = PurchaseVC(itemName: "pasta", payAmount: recipes[indexPath.row].price, uid: recipes[indexPath.row].uid, isInPurchaseFlow: true)
             navigationController?.pushViewController(purchaseVC, animated: true)
         }
     }

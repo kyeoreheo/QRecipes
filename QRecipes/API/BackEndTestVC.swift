@@ -75,7 +75,6 @@ class BackEndTestVC: UIViewController {
     
     @objc func uploadNewRecipe(){
         let date = Date()
-        let format = date.getFormattedDate(format: "yyyy-MM-dd HH:mm:ss")
         
         let recipe = newRecipe(
                         name: "Pumkin Curry",

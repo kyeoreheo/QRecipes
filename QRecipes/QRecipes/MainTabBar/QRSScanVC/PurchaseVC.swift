@@ -26,12 +26,14 @@ class PurchaseVC: UIViewController {
     
     private let itemName: String
     private let payAmount: String
+    private let uid: String
     private let isInPurchaseFlow: Bool
     
     //MARK:- LifeCycles
-    init(itemName: String, payAmount: String, isInPurchaseFlow: Bool = false) {
+    init(itemName: String, payAmount: String, uid: String, isInPurchaseFlow: Bool = false) {
         self.itemName = itemName
         self.payAmount = payAmount
+        self.uid = uid
         self.isInPurchaseFlow = isInPurchaseFlow
         super.init(nibName: nil, bundle: nil)
     }
@@ -188,8 +190,16 @@ class PurchaseVC: UIViewController {
 
     //MARK:- Selectors
     @objc func purchase() {
-        navigationController?.pushViewController(FinishedPurchaseVC(itemName
-                                                    : itemName), animated: true)
+        //navigationController?.pushViewController(FinishedPurchaseVC(itemName
+                                                   // : itemName), animated: true)
+        API.purhcasRecipe(recipeUid: uid) { [weak self] (error, ref) in
+            guard let strongSelf = self else { return }
+            if error != nil {
+                print("Error: failed to purchase")
+            } else {
+                strongSelf.navigationController?.pushViewController(FinishedPurchaseVC(itemName: strongSelf.itemName),animated: true)
+            }
+        }
     }
 
     @objc func popVC() {

@@ -58,7 +58,6 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate {
         
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.height.equalTo(44)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.left.equalTo(view).offset(12)
         }

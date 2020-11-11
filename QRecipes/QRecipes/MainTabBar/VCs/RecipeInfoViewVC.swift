@@ -90,67 +90,65 @@ class RecipeInfoViewVC: UIViewController {
         return button
     }()
     
-    var restaurantLabel: UILabel = {
+    lazy var restaurantLabel: UILabel = {
         let label = UILabel()
-        label.text = "La Pasta"
         label.textColor = .black
-        label.font = UIFont(name:"Helvetica", size: 22)
-        label.numberOfLines = 0
+        label.font = UIFont(name:"Helvetica", size: 18 * ratio)
         return label
     }()
 
-    var locationLabel: UILabel = {
+    lazy var locationLabel: UILabel = {
         let label = UILabel()
         label.text = "13 St Marks Pl, New York, NY 10003"
         label.textColor = .darkGray
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 14 * ratio)
         label.numberOfLines = 0
         return label
     }()
     
-    var phoneLabel: UILabel = {
+    lazy var phoneLabel: UILabel = {
         let label = UILabel()
         label.text = "347-876-5746"
         label.textColor = .darkGray
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 14 * ratio)
         return label
     }()
     
-    var titleLabel: UILabel = {
+    lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Recipe's Detail"
         label.textColor = .charcoalBlack
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: 16 * ratio)
         return label
     }()
     
-    var cookTimeLabel: UILabel = {
+    lazy var cookTimeLabel: UILabel = {
         let label = UILabel()
         label.text = "Cook Time: 30 mins"
         label.textColor = .darkGray
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 14 * ratio)
         label.textAlignment = NSTextAlignment.center
         //label.textAlignment = .center
         return label
     }()
     
-    var cookDifficultyLabel: UILabel = {
+    lazy var cookDifficultyLabel: UILabel = {
         let label = UILabel()
         label.text = "Difficulty: Easy"
         label.textAlignment = .center
         label.textColor = .darkGray
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 14 * ratio)
         return label
     }()
     
-    var spicyLevelLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Spicy Level: Medium spicy"
-        label.textColor = .darkGray
-        label.font = UIFont.boldSystemFont(ofSize: 15)
-        label.textAlignment = .center
-        return label
-    }()
+//    var spicyLevelLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "Spicy Level: Medium spicy"
+//        label.textColor = .darkGray
+//        label.font = UIFont.boldSystemFont(ofSize: 15)
+//        label.textAlignment = .center
+//        return label
+//    }()
     
     var contentView: UIView = {
         let view = UIView()
@@ -206,20 +204,20 @@ class RecipeInfoViewVC: UIViewController {
         
         view.addSubview(restarantImageView)
         restarantImageView.snp.makeConstraints { make in
-            make.height.equalTo(view.frame.height*0.4)
+            make.height.equalTo(view.frame.height * 0.4 * ratio)
             make.left.right.top.equalToSuperview()
         }
         
         view.addSubview(backButton)
         backButton.snp.makeConstraints { make in
-            make.width.height.equalTo(40)
+            make.width.height.equalTo(40 * ratio)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
             make.left.equalToSuperview().offset(10)
         }
         
         view.addSubview(infoView)
         infoView.snp.makeConstraints { make in
-            make.size.equalTo(150)
+            make.size.equalTo(125 * ratio)
             if isInPurchaseFlow {
                 make.top.equalTo(backButton.snp.bottom).offset(10)
             } else {
@@ -228,25 +226,24 @@ class RecipeInfoViewVC: UIViewController {
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
-        
+
         infoView.addSubview(restaurantLabel)
         restaurantLabel.snp.makeConstraints { make in
-            make.top.equalTo(infoView).offset(20)
+            make.top.equalTo(infoView).offset(15)
             make.left.equalTo(infoView).offset(20)
-            //make.right.equalTo(favoriteButton.snp.left)
         }
         
         infoView.addSubview(locationIcon)
         locationIcon.snp.makeConstraints { make in
-            make.size.equalTo(40)
-            make.top.equalTo(restaurantLabel.snp.bottom).offset(15)
+            make.size.equalTo(40 * ratio)
+            make.top.equalTo(restaurantLabel.snp.bottom).offset(5)
             make.left.equalTo(infoView).offset(20)
         }
         
         infoView.addSubview(locationLabel)
         locationLabel.snp.makeConstraints { make in
-            make.height.equalTo(40)
-            make.top.equalTo(restaurantLabel.snp.bottom).offset(15)
+            make.height.equalTo(40 * ratio)
+            make.top.equalTo(restaurantLabel.snp.bottom).offset(5)
             make.left.equalTo(locationIcon.snp.right).offset(10)
             make.right.equalTo(infoView).offset(-20)
         }
@@ -260,7 +257,7 @@ class RecipeInfoViewVC: UIViewController {
         
         infoView.addSubview(phoneLabel)
         phoneLabel.snp.makeConstraints { make in
-            make.height.equalTo(40)
+            make.height.equalTo(40 * ratio)
             make.top.equalTo(locationLabel.snp.bottom)
             make.left.equalTo(phoneIcon.snp.right).offset(10)
             make.right.equalTo(infoView).offset(-20)
@@ -268,57 +265,58 @@ class RecipeInfoViewVC: UIViewController {
         
         view.addSubview(contentView)
         contentView.snp.makeConstraints { make in
-            make.size.equalTo(view.frame.height*0.4)
-            make.top.equalTo(infoView.snp.bottom).offset(20)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+            make.size.equalTo(view.frame.height * 0.4 * ratio)
+            make.top.equalTo(infoView.snp.bottom).offset(12)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-15)
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
         
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView).offset(10)
+            make.height.equalTo(40 * ratio)
+            make.top.equalTo(contentView)
             make.left.equalTo(infoView).offset(10)
         }
         
         contentView.addSubview(recipeImageView)
         recipeImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.height.equalTo(130 * ratio)
+            make.top.equalTo(titleLabel.snp.bottom)
             make.left.equalTo(contentView).offset(10)
             make.right.equalTo(contentView).offset(-10)
-            make.height.equalTo(150)
         }
         
         recipeImageView.addSubview(favoriteButton)
         favoriteButton.snp.makeConstraints { make in
-            make.size.equalTo(40)
+            make.size.equalTo(40 * ratio)
             make.bottom.equalTo(recipeImageView.snp.bottom).offset(-10)
             make.right.equalTo(recipeImageView).offset(-10)
         }
         
         contentView.addSubview(cookTimeLabel)
         cookTimeLabel.snp.makeConstraints { make in
-            make.top.equalTo(recipeImageView.snp.bottom).offset(15)
-            make.left.equalTo(contentView).offset(30)
-            make.right.equalTo(contentView).offset(-30)
+            make.top.equalTo(recipeImageView.snp.bottom).offset(10)
+            make.centerX.equalTo(contentView)
         }
+        
         contentView.addSubview(cookDifficultyLabel)
         cookDifficultyLabel.snp.makeConstraints { make in
-            make.top.equalTo(recipeImageView.snp.bottom).offset(40)
-            make.left.equalTo(contentView).offset(30)
-            make.right.equalTo(contentView).offset(-30)
+            make.top.equalTo(cookTimeLabel.snp.bottom).offset(5)
+            make.centerX.equalTo(contentView)
         }
-        contentView.addSubview(spicyLevelLabel)
-        spicyLevelLabel.snp.makeConstraints { make in
-            make.top.equalTo(recipeImageView.snp.bottom).offset(65)
-            make.left.equalTo(contentView).offset(30)
-            make.right.equalTo(contentView).offset(-30)
-        }
+        
+//        contentView.addSubview(spicyLevelLabel)
+//        spicyLevelLabel.snp.makeConstraints { make in
+//            make.top.equalTo(recipeImageView.snp.bottom).offset(65)
+//            make.centerX.equalTo(contentView)
+//        }
         
         view.addSubview(purchaseButton)
         purchaseButton.snp.makeConstraints { make in
             make.height.equalTo(45 * ratio)
-            make.bottom.equalTo(contentView).offset(-20)
+            make.top.equalTo(cookDifficultyLabel.snp.bottom).offset(10)
+            make.bottom.equalTo(contentView).offset(-18)
             make.left.equalToSuperview().offset(50)
             make.right.equalToSuperview().offset(-50)
         }
@@ -337,10 +335,11 @@ class RecipeInfoViewVC: UIViewController {
     //MARK:- Selectors
     @objc func pressPurchaseButton() {
         guard let restaurantName = recipe?.name,
-              let payAmount = recipe?.price
+              let payAmount = recipe?.price,
+              let uid = recipe?.uid
         else { return }
         
-        let vc = PurchaseVC(itemName: restaurantName, payAmount: payAmount)
+        let vc = PurchaseVC(itemName: restaurantName, payAmount: payAmount, uid: uid)
         navigationController?.pushViewController(vc, animated: true)
     }
     

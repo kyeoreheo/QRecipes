@@ -12,7 +12,7 @@ class SettingCollectionViewCell: UICollectionViewCell {
     var recipe: Recipe? {
         didSet {
             imageView.sd_setImage(with: recipe?.recipeImageUrl, completed: nil)
-            //updateExpDateLabel()
+            updateExpDateLabel()
         }
     }
     
@@ -87,15 +87,15 @@ class SettingCollectionViewCell: UICollectionViewCell {
     
     }
     
-//    private func updateExpDateLabel() {
-//        var date = Date()
-//        let purchaseds = User.shared.purchased
-//        for purchased in purchaseds {
-//            if purchased[0] == recipe?.uid {
-//                date = Date().stringToDate(String: purchased[1])
-//            }
-//        }
-//        let leftDays = Int(date.timeIntervalSince(Date()) / 86400)
-//        dayExpireLabel.text = "\(leftDays) days"
-//    }
+    private func updateExpDateLabel() {
+        var date = Date()
+        let purchaseds = User.shared.purchased 
+        for purchased in purchaseds {
+            if purchased.key == recipe?.uid {
+                date = Date().stringToDate(String: purchased.value)
+            }
+        }
+        let leftDays = Int(date.timeIntervalSince(Date()) / 86400)
+        expirationDayButton.setTitle("\(leftDays) days", for: .normal)
+    }
 }
