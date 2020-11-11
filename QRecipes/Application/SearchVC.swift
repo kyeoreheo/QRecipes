@@ -22,9 +22,9 @@ class UserModal {
 
 class SearchVC: UIViewController{
     //MARK:- Properties
-    //private let sampleLable = UILabel()
+    
     let navBar = UINavigationBar() //remove
-    //let searchController = UISearchController(searchResultsController: nil)
+    
     let searchBar = UISearchBar()
     let tableView = UITableView()
     let lbl = UILabel()
@@ -75,6 +75,8 @@ class SearchVC: UIViewController{
         searchBar.isTranslucent = false
         searchBar.delegate = self
         searchBar.setShowsCancelButton(true, animated: false)
+        // change the dark mode issue for search bar background
+        searchBar.backgroundColor = UIColor.white
         
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in

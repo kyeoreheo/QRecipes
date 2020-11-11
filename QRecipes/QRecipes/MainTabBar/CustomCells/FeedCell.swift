@@ -17,6 +17,7 @@ class FeedCell: UICollectionViewCell {
             restaurantLabel.text = recipe?.restaurant
             recipeLabel.text = recipe?.name
             isFavorite()
+            //didTapCommentButton()
         }
     }
     
@@ -51,6 +52,7 @@ class FeedCell: UICollectionViewCell {
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         return button
     }()
+    
     
     override init(frame: CGRect){
         super.init(frame: frame)
@@ -88,6 +90,7 @@ class FeedCell: UICollectionViewCell {
             make.top.equalTo(imageView.snp.bottom).offset(10)
             make.right.equalTo(contentView).offset(-12)
         }
+        
     }
     
     @objc func buttonPressed() {
@@ -99,6 +102,7 @@ class FeedCell: UICollectionViewCell {
             unsetFavorite()
         }
     }
+    
     func isFavorite() -> Void {
         let favoriteUid = User.shared.favorite
         

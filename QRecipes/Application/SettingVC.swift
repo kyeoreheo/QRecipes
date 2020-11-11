@@ -42,6 +42,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     }()
     let messageButton: UIButton = {
         let button = UIButton(type: .system)
+        //button.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "envelope").withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(handleService), for: .touchUpInside)
         return button
