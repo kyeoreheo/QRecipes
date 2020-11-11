@@ -17,7 +17,7 @@ class FeedCell: UICollectionViewCell {
             restaurantLabel.text = recipe?.restaurant
             recipeLabel.text = recipe?.name
             isFavorite()
-            //didTapCommentButton()
+            
         }
     }
     
@@ -52,7 +52,14 @@ class FeedCell: UICollectionViewCell {
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         return button
     }()
-    
+    lazy var commentButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.tintColor = .primeOrange
+        //button.backgroundColor = UIColor.orange
+        button.setImage(UIImage(systemName: "message"), for: .normal)
+        button.addTarget(self, action: #selector(isTapCommentButton), for: .touchUpInside)
+        return button
+    }()
     
     override init(frame: CGRect){
         super.init(frame: frame)
@@ -90,6 +97,12 @@ class FeedCell: UICollectionViewCell {
             make.top.equalTo(imageView.snp.bottom).offset(10)
             make.right.equalTo(contentView).offset(-12)
         }
+        contentView.addSubview(commentButton)
+        commentButton.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).offset(10)
+            //make.right.equalTo(favoriteButton).offset(-14)
+            make.left.equalTo(favoriteButton).offset(-30)
+        }
         
     }
     
@@ -102,6 +115,10 @@ class FeedCell: UICollectionViewCell {
             unsetFavorite()
         }
     }
+    @objc func isTapCommentButton() {
+        
+    }
+    
     
     func isFavorite() -> Void {
         let favoriteUid = User.shared.favorite

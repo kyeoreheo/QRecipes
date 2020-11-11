@@ -199,7 +199,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
                 self.present(navigation, animated: false)
             }
         } catch let error {
-            print("------failed to sing out \(error.localizedDescription)")
+            print("------failed to sign out \(error.localizedDescription)")
         }
     }
 
