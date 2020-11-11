@@ -26,6 +26,7 @@ class CustomTableViewCell: UITableViewCell {
        let lbl = UILabel()
         //lbl.textAlignment = .right
         lbl.font = UIFont.boldSystemFont(ofSize: 15)
+        lbl.textColor = .black
         return lbl
     }()
     
@@ -33,6 +34,7 @@ class CustomTableViewCell: UITableViewCell {
        let lbl = UILabel()
         //lbl.textAlignment = .left
         lbl.font = UIFont.boldSystemFont(ofSize: 15)
+        lbl.textColor = .orange
         return lbl
     }()
     

@@ -43,6 +43,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     }()
     let messageButton: UIButton = {
         let button = UIButton(type: .system)
+        //button.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "envelope").withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(handleService), for: .touchUpInside)
         return button
@@ -198,7 +199,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
                 self.present(navigation, animated: false)
             }
         } catch let error {
-            print("------failed to sing out \(error.localizedDescription)")
+            print("------failed to sign out \(error.localizedDescription)")
         }
     }
 
