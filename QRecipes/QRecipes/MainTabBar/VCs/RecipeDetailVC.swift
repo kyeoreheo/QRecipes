@@ -26,6 +26,7 @@ class RecipeDetailVC: UIViewController {
     
     var segmentedControl: UISegmentedControl = {
         let control = UISegmentedControl(items: ["Ingredients", "Instructions"])
+        control.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black], for: UIControl.State.normal)
         control.selectedSegmentIndex = 0
         control.addTarget(self, action: #selector(selectionDidChange), for: .valueChanged)
         control.backgroundColor = .white
