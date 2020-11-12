@@ -21,9 +21,13 @@ class RecipeInfoViewVC: UIViewController {
             cookDifficultyLabel.text = "Difficulty: " + recipe!.level
         }
     }
-
+    var scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.contentSize.width = 300;
+        return view
+    }()
+    
     var favIsOn = false
-  
     private let ratio = SplashVC.shared.ratio
     
     var backButton: UIButton = {
@@ -201,7 +205,10 @@ class RecipeInfoViewVC: UIViewController {
     //MARK:- Helpers
     private func configureUI() {
         view.backgroundColor = .backgroundGray
-        
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.top.bottom.left.right.equalToSuperview()
+        }
         view.addSubview(restarantImageView)
         restarantImageView.snp.makeConstraints { make in
             make.height.equalTo(view.frame.height * 0.4 * ratio)

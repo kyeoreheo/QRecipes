@@ -75,9 +75,12 @@ class SearchVC: UIViewController{
         searchBar.isTranslucent = false
         searchBar.delegate = self
         searchBar.setShowsCancelButton(true, animated: false)
-        // change the dark mode issue for search bar background
-        searchBar.backgroundColor = UIColor.white
         
+        // change the dark mode issue for search bar background
+        
+        searchBar.barTintColor = UIColor.white
+        
+        //searchBar.barStyle = .black
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
             make.top.equalTo(navBar.snp.bottom)
@@ -128,6 +131,7 @@ extension SearchVC: UISearchBarDelegate{
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = nil
+        
         searchBar.resignFirstResponder()
         searchBar.endEditing(true)
         recipes = fullRecipes
@@ -144,6 +148,7 @@ extension SearchVC: UISearchBarDelegate{
         navigationController?.pushViewController(vc, animated: true)
     }
 }
+
 
 extension SearchVC: UINavigationBarDelegate {
      //Unified the status bar area with the nav bar
