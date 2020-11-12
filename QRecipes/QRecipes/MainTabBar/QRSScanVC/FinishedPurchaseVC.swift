@@ -63,7 +63,7 @@ class FinishedPurchaseVC: UIViewController {
         }
         
         view.addSubview(bodyLabel)
-        bodyLabel.text = "Thank you for purchasing \(itemName).\nYou can find it in the [Setting Tabs]"
+        bodyLabel.text = "Thank you for purchasing \(itemName).\n\nYou can find it in the [Setting Tabs]"
         bodyLabel.numberOfLines = 0
         bodyLabel.textAlignment = .center
         bodyLabel.font = UIFont.boldSystemFont(ofSize: 18 * ratio)
@@ -71,6 +71,8 @@ class FinishedPurchaseVC: UIViewController {
         bodyLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(30)
             make.centerX.equalToSuperview()
+            make.left.equalTo(view).offset(20)
+            make.right.equalTo(view).offset(-20)
         }
         
         view.addSubview(confirmButton)
