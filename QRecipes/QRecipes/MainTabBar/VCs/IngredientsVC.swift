@@ -79,6 +79,7 @@ extension IngredientsVC: UITableViewDataSource, UITableViewDelegate{
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.backgroundColor = .white
         cell.textLabel?.textColor = .gray
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         cell.textLabel?.text = ingredients?[indexPath.row]
