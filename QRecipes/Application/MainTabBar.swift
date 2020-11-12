@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 
+var mainTabBarNav: UINavigationController?
+
 class MainTabBar: UITabBarController, UITabBarControllerDelegate {
     static let shared = MainTabBar()
     let qrButton = AuthenticationVM().logoView(logoSize: 60)
@@ -18,6 +20,7 @@ class MainTabBar: UITabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
         configureTabBar()
         configureUI()
+
     }
     
     
@@ -25,6 +28,8 @@ class MainTabBar: UITabBarController, UITabBarControllerDelegate {
         super.viewWillAppear(animated)
         self.selectedIndex = 0
         tabBarController?.delegate = self
+        mainTabBarNav = self.navigationController
+        print("DEBUG:- MainTab nav: \(navigationController), mainTabBarNav \(mainTabBarNav)")
     }
     
     // MARK: - configures
@@ -70,6 +75,8 @@ class MainTabBar: UITabBarController, UITabBarControllerDelegate {
     
     func presentRecipeInfoViewVC(code: String) {
         //let code = "Ramen Heaven" // Noodles Master
+        print("DEBUG:- MainTab nav: \(navigationController)")
+
         let vc = RestaurantOverviewVC(isInPurchaseFlow: true, restaurantName: code)
         navigationController?.pushViewController(vc, animated: true)
     }

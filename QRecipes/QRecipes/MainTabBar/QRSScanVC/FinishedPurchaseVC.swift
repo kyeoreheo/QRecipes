@@ -33,6 +33,8 @@ class FinishedPurchaseVC: UIViewController {
         super.viewDidLoad()
         configure()
         configureUI()
+        print("DEBUG:- FinishedPur nav: \(navigationController), mainTabBarNav \(mainTabBarNav)")
+
     }
     
     //MARK:- Helpers
@@ -70,6 +72,8 @@ class FinishedPurchaseVC: UIViewController {
         bodyLabel.textColor = .darkGray
         bodyLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(30)
+            make.left.equalToSuperview().offset(24)
+            make.right.equalToSuperview().offset(-24)
             make.centerX.equalToSuperview()
         }
         

@@ -132,6 +132,8 @@ class RestaurantOverviewVC: UIViewController {
         configureUI()
         fetchRestaurant()
         fetchRecipes()
+        print("DEBUG:- ResstOverView nav: \(navigationController), mainTabBarNav \(mainTabBarNav)")
+
     }
     
     //MARK:- Helpers

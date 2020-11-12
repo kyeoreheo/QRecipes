@@ -40,6 +40,8 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         configure()
         configureUI()
+        print("DEBUG:- HomeVC nav: \(navigationController)")
+
     }
     
     override func viewDidAppear(_ animated: Bool) {

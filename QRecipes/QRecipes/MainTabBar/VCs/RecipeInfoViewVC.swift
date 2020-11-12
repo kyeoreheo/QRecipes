@@ -196,6 +196,8 @@ class RecipeInfoViewVC: UIViewController {
         super.viewDidLoad()
         configureUI()
         fetchRestaurant()
+        print("DEBUG:- ReciptInfo nav: \(navigationController), mainTabBarNav \(mainTabBarNav)")
+
     }
     
     //MARK:- Helpers

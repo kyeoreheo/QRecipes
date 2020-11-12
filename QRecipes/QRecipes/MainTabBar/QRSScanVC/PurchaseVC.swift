@@ -46,6 +46,7 @@ class PurchaseVC: UIViewController {
         super.viewDidLoad()
         configure()
         configureUI()
+        print("DEBUG:- PurchaseVC nav: \(navigationController), mainTabBarNav \(mainTabBarNav)")
     }
     
     //MARK:- Helpers
@@ -194,6 +195,7 @@ class PurchaseVC: UIViewController {
                                                    // : itemName), animated: true)
         API.purhcasRecipe(recipeUid: uid) { [weak self] (error, ref) in
             guard let strongSelf = self else { return }
+            print("DEBUG:- in API nav: \(strongSelf.navigationController), mainTabBarNav \(mainTabBarNav)")
             if error != nil {
                 print("Error: failed to purchase")
             } else {

@@ -73,7 +73,7 @@ extension API {
             if restaurant.name == name {
                 completion(restaurant)
             } else {
-                print("DEBUG:- input \(name) <-> snap \(restaurant.name)")
+                //print("DEBUG:- input \(name) <-> snap \(restaurant.name)")
             }
         }
         //completion(nil)
