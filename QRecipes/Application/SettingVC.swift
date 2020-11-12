@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import SDWebImage
 import Firebase
+import MessageUI
 
 class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     
@@ -45,7 +46,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         let button = UIButton(type: .system)
         //button.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "envelope").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(handleService), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleEmailSupport), for: .touchUpInside)
         return button
     }()
     
@@ -182,9 +183,25 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         }
     }
     
-    @objc func handleService() {
-        print("Contact to the customer service here..")
-        MainTabBar.shared.tabBarController?.selectedIndex = 0
+    @objc func handleEmailSupport() {
+        showEmailComposer()
+    }
+    
+    func showEmailComposer() {
+        guard MFMailComposeViewController.canSendMail() else {
+            let alert = UIAlertController(title: "Access Failed", message: "Mail services are not available on this device.", preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+
+            self.present(alert, animated: true)
+            return
+        }
+        
+        let composer = MFMailComposeViewController()
+        composer.mailComposeDelegate = self
+        composer.setToRecipients(["support@qrecipes.com"])
+        composer.setSubject("App Support")
+        present(composer, animated: true)
     }
 
     @objc func handleLogout() {
@@ -241,5 +258,34 @@ extension SettingVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return inset
+    }
+}
+
+extension SettingVC: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        
+        if let _ = error {
+            controller.dismiss(animated: true)
+            return
+        }
+        
+        switch result {
+        case .cancelled:
+            print("Cancelled")
+        case .failed:
+            let alert = UIAlertController(title: "Email Failed to Send", message: "", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
+        case .saved:
+            print("Saved")
+        case .sent:
+            let alert = UIAlertController(title: "Email Sent Successfully", message: "", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
+        @unknown default:
+            fatalError("Unknown result")
+        }
+        
+        controller.dismiss(animated: true)
     }
 }
