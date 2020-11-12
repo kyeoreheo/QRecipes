@@ -45,7 +45,7 @@ class CustomTableViewCell: UITableViewCell {
     }
     override func layoutSubviews() {
         backView.backgroundColor = UIColor.white
-        backView.layer.cornerRadius = 5
+        //backView.layer.cornerRadius = 5
         backView.clipsToBounds = true
     }
     

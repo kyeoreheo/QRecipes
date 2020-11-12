@@ -41,7 +41,7 @@ class FavoriteCell: UICollectionViewCell {
     }()
     lazy var commentButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.tintColor = .gray
+        button.tintColor = .black
         button.setImage(UIImage(systemName: "message.fill"), for: .normal)
         
         return button
