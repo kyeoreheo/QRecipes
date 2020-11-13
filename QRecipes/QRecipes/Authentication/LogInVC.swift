@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import GoogleSignIn
 
 struct SampleAccount {
     let email: String

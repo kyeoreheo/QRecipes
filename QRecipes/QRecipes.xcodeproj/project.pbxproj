@@ -290,6 +290,7 @@
 				317217FE2508454200EDF3DB /* Frameworks */,
 				317217FF2508454200EDF3DB /* Resources */,
 				BA879D0D6ADED3F2AECB8582 /* [CP] Embed Pods Frameworks */,
+				2028F15FA65A2BF612A315A9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -348,6 +349,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2028F15FA65A2BF612A315A9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QRecipes/Pods-QRecipes-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QRecipes/Pods-QRecipes-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-QRecipes/Pods-QRecipes-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		464B1EE8B435BAF7E80EAF7A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
