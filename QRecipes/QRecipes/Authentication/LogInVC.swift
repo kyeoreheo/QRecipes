@@ -6,16 +6,17 @@
 //  Copyright © 2020 Kyo. All rights reserved.
 //
 
+import Firebase
+import GoogleSignIn
 import UIKit
 import SnapKit
-import GoogleSignIn
 
 struct SampleAccount {
     let email: String
     let password: String
 }
 
-class LogInVC: UIViewController, UIGestureRecognizerDelegate {
+class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate {
     //MARK:- Properties
     private let ratio = SplashVC.shared.ratio
 
@@ -30,7 +31,7 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
     private let forgotPasswordButton = UIButton()
     private let bottomLabel = UILabel()
     private let facebookPlugInButton = UIButton()
-    private let googlePlugInButton = UIButton()
+    private let googlePlugInButton = GIDSignInButton()
     private let signUpLabel = UILabel()
     private let signUpButton = UIButton()
     private let centerDot = UIView()
@@ -49,6 +50,8 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
         configure()
         configureUI()
         generateSampleAccount()
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance().delegate = self
         //check already login or not
     }
     
@@ -216,7 +219,7 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
         }
         
         view.addSubview(googlePlugInButton)
-        googlePlugInButton.setImage(UIImage(named: "google"), for: .normal)
+        //googlePlugInButton.setImage(UIImage(named: "google"), for: .normal)
         googlePlugInButton.snp.makeConstraints { make in
             make.width.height.equalTo(50)
             make.centerY.equalTo(centerDot.snp.centerY)
@@ -336,6 +339,46 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
     
     @objc func presentSignUpVC() {
         navigationController?.pushViewController(SignUpVC(), animated: true)
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?){
+        if let error = error {
+            print(error.localizedDescription)
+            return
+        }
+        guard let auth = user.authentication else { return }
+        let credentials = GoogleAuthProvider.credential(withIDToken: auth.idToken, accessToken: auth.accessToken)
+        Auth.auth().signIn(with: credentials) { (authResult, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                print("\(user.profile.email ?? "" )  Login Successful.")
+                //fetch User Info
+                User.shared.email = user.profile.email
+                User.shared.firstName = user.profile.givenName
+                User.shared.lastName = user.profile.familyName
+                if user.profile.hasImage
+                {
+                    let dimension = round(100 * UIScreen.main.scale)
+                    User.shared.profileImage = user.profile.imageURL(withDimension: UInt(dimension))
+                }
+                //register to DB
+                let user = Auth.auth().currentUser
+                API.writeUserInfoToDB(uid: user!.uid){ [weak self] (error, ref) in
+                    guard let strongSelf = self else { return }
+                    if error != nil {
+                        print("Error: ")
+                    } else {
+                        DispatchQueue.main.async {
+                            let navigation = UINavigationController(rootViewController: MainTabBar.shared)
+                            navigation.modalPresentationStyle = .fullScreen
+                            navigation.navigationBar.isHidden = true
+                            strongSelf.present(navigation, animated: false, completion: nil)
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }
