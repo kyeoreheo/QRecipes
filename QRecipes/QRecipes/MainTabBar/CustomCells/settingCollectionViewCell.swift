@@ -95,7 +95,6 @@ class SettingCollectionViewCell: UICollectionViewCell {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 expirationDate = dateFormatter.date(from: purchased.value)!
-                print("DEBUG:- \(expirationDate)")
             }
         }
         let leftDays = Int(expirationDate.timeIntervalSince(Date()) / 86400)
