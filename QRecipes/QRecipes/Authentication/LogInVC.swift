@@ -362,23 +362,38 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate 
                     let dimension = round(100 * UIScreen.main.scale)
                     User.shared.profileImage = user.profile.imageURL(withDimension: UInt(dimension))
                 }
-                //register to DB
-                let user = Auth.auth().currentUser
-                API.writeUserInfoToDB(uid: user!.uid){ [weak self] (error, ref) in
-                    guard let strongSelf = self else { return }
-                    if error != nil {
-                        print("Error: ")
-                    } else {
-                        DispatchQueue.main.async {
-                            let navigation = UINavigationController(rootViewController: MainTabBar.shared)
-                            navigation.modalPresentationStyle = .fullScreen
-                            navigation.navigationBar.isHidden = true
-                            strongSelf.present(navigation, animated: false, completion: nil)
-                        }
-                    }
+                self.updateUserOrRegister()
+                DispatchQueue.main.async {
+                    let navigation = UINavigationController(rootViewController: MainTabBar.shared)
+                    navigation.modalPresentationStyle = .fullScreen
+                    navigation.navigationBar.isHidden = true
+                    self.present(navigation, animated: false, completion: nil)
                 }
             }
         }
     }
 
+    func updateUserOrRegister(){
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        DB_USERS.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.exists(){
+                let value = snapshot.value as? NSDictionary
+                let favorites = value?["favorite"] as? [String] ?? [""]
+                let purchased = value?["purchased"] as? [String : String] ?? [:]
+                User.shared.favorite = favorites
+                User.shared.purchased = purchased
+            }
+            else{
+                API.writeUserInfoToDB(uid: uid){ [weak self] (error, ref) in
+                guard let strongSelf = self else { return }
+                    if error != nil {
+                        print("Error: ")
+                    }
+                    else {
+                    }
+                }
+            }
+        })
+    }
 }
