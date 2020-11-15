@@ -58,15 +58,22 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
         
         if let token = AccessToken.current, !token.isExpired {
             //User is already logged in with facebook
+            fetchFBUser(accessToken: AccessToken.current!.tokenString){ [weak self] (result) in
+                guard let strongSelf = self else { return }
+                print("A new user is registered")
+                strongSelf.firebaseFBLogin(accessToken: AccessToken.current!.tokenString)
+            }
+            /*fetchFBUser(accessToken: token.tokenString)
             firebaseFBLogin(accessToken: token.tokenString)
             DispatchQueue.main.async {
                 let navigation = UINavigationController(rootViewController: MainTabBar.shared)
                 navigation.modalPresentationStyle = .fullScreen
                 navigation.navigationBar.isHidden = true
                 self.present(navigation, animated: false, completion: nil)
-            }
+            }*/
         }
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         if keyboardHeight > 0.0 {
@@ -412,38 +419,57 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
     }
     
     func firebaseFBLogin(accessToken: String) {
+        //fetch user info from Facebook
+        /*let request = FBSDKLoginKit.GraphRequest(graphPath: "me",
+                                                 parameters: ["fields": "email, first_name, last_name, picture.type(large)"],
+                                                 tokenString: accessToken,
+                                                 version: nil,
+                                                 httpMethod: .get)
+        
+        request.start(completionHandler: {connection, result, error in
+            let info = result as! NSDictionary
+                
+            User.shared.email = info["email"] as? String ?? ""
+            User.shared.firstName = info["first_name"] as? String ?? ""
+            User.shared.lastName = info["last_name"] as? String ?? ""
+            let FBpicutre = ((info["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String
+            User.shared.profileImage = URL(string: FBpicutre!)
+        })*/
+        
         let credential = FacebookAuthProvider.credential(withAccessToken: accessToken)
         Auth.auth().signIn(with: credential, completion: { (user, error) in
                         if (error != nil) {
                             print("Facebook authentication failed")
                         } else {
                             print("Facebook authentication succeed")
-                            //fetch User Info
-                            let request = FBSDKLoginKit.GraphRequest(graphPath: "me",
-                                                                     parameters: ["fields": "email, first_name, last_name, picture.type(large)"],
-                                                                     tokenString: accessToken,
-                                                                     version: nil,
-                                                                     httpMethod: .get)
+                            //chece if first time, then write user into DB
+                            self.RegisterIfFirstTime()
                             DispatchQueue.main.async {
-                                request.start(completionHandler: {connection, result, error in
-                                    let info = result as! NSDictionary
-                                    
-                                    User.shared.email = info["email"] as? String ?? ""
-                                    User.shared.firstName = info["first_name"] as? String ?? ""
-                                    User.shared.lastName = info["last_name"] as? String ?? ""
-                                    let FBpicutre = ((info["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String
-                                    User.shared.profileImage = URL(string: FBpicutre!)
-                                    //print("DEBUG:- FBLogin result: \(info)")
-                                })
-                                //chece if first time, then write user into DB
-                                self.RegisterIfFirstTime()
-                                
                                 let navigation = UINavigationController(rootViewController: MainTabBar.shared)
                                 navigation.modalPresentationStyle = .fullScreen
                                 navigation.navigationBar.isHidden = true
                                 self.present(navigation, animated: false, completion: nil)
                             }
                         }
+        })
+    }
+    func fetchFBUser(accessToken: String, completion: @escaping(NSDictionary?) -> Void) {
+        //fetch user info from Facebook
+        let request = FBSDKLoginKit.GraphRequest(graphPath: "me",
+                                                 parameters: ["fields": "email, first_name, last_name, picture.type(large)"],
+                                                 tokenString: accessToken,
+                                                 version: nil,
+                                                 httpMethod: .get)
+        
+        request.start(completionHandler: {connection, result, error in
+            let info = result as! NSDictionary
+                
+            User.shared.email = info["email"] as? String ?? ""
+            User.shared.firstName = info["first_name"] as? String ?? ""
+            User.shared.lastName = info["last_name"] as? String ?? ""
+            let FBpicutre = ((info["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String
+            User.shared.profileImage = URL(string: FBpicutre!)
+            completion(info)
         })
     }
     
@@ -455,7 +481,11 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
             print("Facebook login cancelled")
         }
         else {
-            firebaseFBLogin(accessToken: AccessToken.current!.tokenString)
+            fetchFBUser(accessToken: AccessToken.current!.tokenString){ [weak self] (result) in
+                guard let strongSelf = self else { return }
+                print("A new user is registered")
+                strongSelf.firebaseFBLogin(accessToken: AccessToken.current!.tokenString)
+            }
             print("Facebook login successed")
         }
     }
