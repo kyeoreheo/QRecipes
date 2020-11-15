@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 import GoogleSignIn
-import FBSDKCoreKit
+import FBSDKLoginKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,15 +30,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
-    func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
       -> Bool {
-        ApplicationDelegate.shared.application(
+        
+        let facebookAuthentication = ApplicationDelegate.shared.application(
             app,
             open: url,
             sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
             annotation: options[UIApplication.OpenURLOptionsKey.annotation]
         )
-      return GIDSignIn.sharedInstance().handle(url)
+      return GIDSignIn.sharedInstance().handle(url) || facebookAuthentication
     }
      
     // MARK: UISceneSession Lifecycle
