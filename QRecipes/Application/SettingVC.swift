@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import SDWebImage
 import Firebase
+import FBSDKLoginKit
 import MessageUI
 
 class SettingVC: UIViewController,UIGestureRecognizerDelegate {
@@ -208,6 +209,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         do {
             try Auth.auth().signOut()
             User.shared.clear()
+            LoginManager().logOut()
             DispatchQueue.main.async {
                 let navigation = UINavigationController(rootViewController: AuthenticationVC())
                 navigation.modalPresentationStyle = .fullScreen

@@ -6,6 +6,9 @@
 //  Copyright © 2020 Kyo. All rights reserved.
 //
 
+import Firebase
+import GoogleSignIn
+import FBSDKLoginKit
 import UIKit
 import SnapKit
 
@@ -14,7 +17,8 @@ struct SampleAccount {
     let password: String
 }
 
-class LogInVC: UIViewController, UIGestureRecognizerDelegate {
+class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate, LoginButtonDelegate {
+    
     //MARK:- Properties
     private let ratio = SplashVC.shared.ratio
 
@@ -28,8 +32,8 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
     private let rememberMeLabel = UILabel()
     private let forgotPasswordButton = UIButton()
     private let bottomLabel = UILabel()
-    private let facebookPlugInButton = UIButton()
-    private let googlePlugInButton = UIButton()
+    private let facebookPlugInButton = FBLoginButton()
+    private let googlePlugInButton = GIDSignInButton()
     private let signUpLabel = UILabel()
     private let signUpButton = UIButton()
     private let centerDot = UIView()
@@ -48,8 +52,28 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
         configure()
         configureUI()
         generateSampleAccount()
-        //check already login or not
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance().delegate = self
+        facebookPlugInButton.delegate = self
+        
+        if let token = AccessToken.current, !token.isExpired {
+            //User is already logged in with facebook
+            fetchFBUser(accessToken: AccessToken.current!.tokenString){ [weak self] (result) in
+                guard let strongSelf = self else { return }
+                print("A new user is registered")
+                strongSelf.firebaseFBLogin(accessToken: AccessToken.current!.tokenString)
+            }
+            /*fetchFBUser(accessToken: token.tokenString)
+            firebaseFBLogin(accessToken: token.tokenString)
+            DispatchQueue.main.async {
+                let navigation = UINavigationController(rootViewController: MainTabBar.shared)
+                navigation.modalPresentationStyle = .fullScreen
+                navigation.navigationBar.isHidden = true
+                self.present(navigation, animated: false, completion: nil)
+            }*/
+        }
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         if keyboardHeight > 0.0 {
@@ -196,7 +220,7 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
         }
         
         view.addSubview(facebookPlugInButton)
-        facebookPlugInButton.setImage(UIImage(named: "facebook"), for: .normal)
+        //facebookPlugInButton.setImage(UIImage(named: "facebook"), for: .normal)
         facebookPlugInButton.snp.makeConstraints { make in
             make.width.height.equalTo(50)
             make.centerY.equalTo(centerDot.snp.centerY)
@@ -215,7 +239,7 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
         }
         
         view.addSubview(googlePlugInButton)
-        googlePlugInButton.setImage(UIImage(named: "google"), for: .normal)
+        //googlePlugInButton.setImage(UIImage(named: "google"), for: .normal)
         googlePlugInButton.snp.makeConstraints { make in
             make.width.height.equalTo(50)
             make.centerY.equalTo(centerDot.snp.centerY)
@@ -336,5 +360,137 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate {
     @objc func presentSignUpVC() {
         navigationController?.pushViewController(SignUpVC(), animated: true)
     }
-
+    
+    func RegisterIfFirstTime(){
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        DB_USERS.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.exists(){
+                let value = snapshot.value as? NSDictionary
+                let favorites = value?["favorite"] as? [String] ?? [""]
+                let purchased = value?["purchased"] as? [String : String] ?? [:]
+                User.shared.favorite = favorites
+                User.shared.purchased = purchased
+            }
+            else{
+                API.writeUserInfoToDB(uid: uid){ [weak self] (error, ref) in
+                    guard self != nil else { return }
+                    if error != nil {
+                        print("Error: ")
+                    }
+                    else {
+                        print("A new user is registered")
+                    }
+                }
+            }
+        })
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?){
+        if let error = error {
+            print(error.localizedDescription)
+            return
+        }
+        guard let auth = user.authentication else { return }
+        let credentials = GoogleAuthProvider.credential(withIDToken: auth.idToken, accessToken: auth.accessToken)
+        Auth.auth().signIn(with: credentials) { (authResult, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                print("\(user.profile.email ?? "" )  Login Successful.")
+                //fetch User Info
+                User.shared.email = user.profile.email
+                User.shared.firstName = user.profile.givenName
+                User.shared.lastName = user.profile.familyName
+                if user.profile.hasImage
+                {
+                    let dimension = round(100 * UIScreen.main.scale)
+                    User.shared.profileImage = user.profile.imageURL(withDimension: UInt(dimension))
+                }
+                self.RegisterIfFirstTime()
+                DispatchQueue.main.async {
+                    let navigation = UINavigationController(rootViewController: MainTabBar.shared)
+                    navigation.modalPresentationStyle = .fullScreen
+                    navigation.navigationBar.isHidden = true
+                    self.present(navigation, animated: false, completion: nil)
+                }
+            }
+        }
+    }
+    
+    func firebaseFBLogin(accessToken: String) {
+        //fetch user info from Facebook
+        /*let request = FBSDKLoginKit.GraphRequest(graphPath: "me",
+                                                 parameters: ["fields": "email, first_name, last_name, picture.type(large)"],
+                                                 tokenString: accessToken,
+                                                 version: nil,
+                                                 httpMethod: .get)
+        
+        request.start(completionHandler: {connection, result, error in
+            let info = result as! NSDictionary
+                
+            User.shared.email = info["email"] as? String ?? ""
+            User.shared.firstName = info["first_name"] as? String ?? ""
+            User.shared.lastName = info["last_name"] as? String ?? ""
+            let FBpicutre = ((info["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String
+            User.shared.profileImage = URL(string: FBpicutre!)
+        })*/
+        
+        let credential = FacebookAuthProvider.credential(withAccessToken: accessToken)
+        Auth.auth().signIn(with: credential, completion: { (user, error) in
+                        if (error != nil) {
+                            print("Facebook authentication failed")
+                        } else {
+                            print("Facebook authentication succeed")
+                            //chece if first time, then write user into DB
+                            self.RegisterIfFirstTime()
+                            DispatchQueue.main.async {
+                                let navigation = UINavigationController(rootViewController: MainTabBar.shared)
+                                navigation.modalPresentationStyle = .fullScreen
+                                navigation.navigationBar.isHidden = true
+                                self.present(navigation, animated: false, completion: nil)
+                            }
+                        }
+        })
+    }
+    func fetchFBUser(accessToken: String, completion: @escaping(NSDictionary?) -> Void) {
+        //fetch user info from Facebook
+        let request = FBSDKLoginKit.GraphRequest(graphPath: "me",
+                                                 parameters: ["fields": "email, first_name, last_name, picture.type(large)"],
+                                                 tokenString: accessToken,
+                                                 version: nil,
+                                                 httpMethod: .get)
+        
+        request.start(completionHandler: {connection, result, error in
+            let info = result as! NSDictionary
+                
+            User.shared.email = info["email"] as? String ?? ""
+            User.shared.firstName = info["first_name"] as? String ?? ""
+            User.shared.lastName = info["last_name"] as? String ?? ""
+            let FBpicutre = ((info["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String
+            User.shared.profileImage = URL(string: FBpicutre!)
+            completion(info)
+        })
+    }
+    
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        if let error = error {
+            print("Facebook login with error: \(error.localizedDescription)")
+        }
+        else if ((result?.isCancelled) != nil && result?.isCancelled == true) {
+            print("Facebook login cancelled")
+        }
+        else {
+            fetchFBUser(accessToken: AccessToken.current!.tokenString){ [weak self] (result) in
+                guard let strongSelf = self else { return }
+                print("A new user is registered")
+                strongSelf.firebaseFBLogin(accessToken: AccessToken.current!.tokenString)
+            }
+            print("Facebook login successed")
+        }
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+        print("User just logged out from his Facebook account")
+    }
 }

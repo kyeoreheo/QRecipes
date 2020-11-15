@@ -41,7 +41,12 @@ class FavoriteVC: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         configure()
         configureUI()
+        //fetchFavorites()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         fetchFavorites()
+        super.viewDidAppear(animated)
     }
     
     //MARK:- Helpers
