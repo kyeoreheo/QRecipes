@@ -219,42 +219,32 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
             make.top.equalTo(bottomLabel.snp.bottom).offset(50)
         }
         
-        view.addSubview(facebookPlugInButton)
-        //facebookPlugInButton.setImage(UIImage(named: "facebook"), for: .normal)
-        facebookPlugInButton.snp.makeConstraints { make in
-            make.width.height.equalTo(50)
-            make.centerY.equalTo(centerDot.snp.centerY)
-            make.right.equalTo(centerDot.snp.left).offset(-15)
-        }
-        
-        let crosssLine3 = UIView()
-        view.addSubview(crosssLine3)
-        crosssLine3.backgroundColor = .gray
-        crosssLine3.alpha = 0.7
-        crosssLine3.snp.makeConstraints { make in
-            make.height.equalTo(2)
-            make.centerY.equalTo(facebookPlugInButton.snp.centerY)
-            make.left.equalTo(facebookPlugInButton.snp.left)
-            make.right.equalTo(facebookPlugInButton.snp.right)
-        }
-        
         view.addSubview(googlePlugInButton)
-        //googlePlugInButton.setImage(UIImage(named: "google"), for: .normal)
         googlePlugInButton.snp.makeConstraints { make in
-            make.width.height.equalTo(50)
-            make.centerY.equalTo(centerDot.snp.centerY)
-            make.left.equalTo(centerDot.snp.left).offset(15)
+            make.height.equalTo(50)
+            make.top.equalTo(bottomLabel.snp.bottom).offset(15)
+            make.right.equalToSuperview().offset(-30)
+            make.left.equalTo(centerDot.snp.right).offset(15)
         }
         
-        let crosssLine4 = UIView()
-        view.addSubview(crosssLine4)
-        crosssLine4.backgroundColor = .gray
-        crosssLine4.alpha = 0.7
-        crosssLine4.snp.makeConstraints { make in
-            make.height.equalTo(2)
-            make.centerY.equalTo(googlePlugInButton.snp.centerY)
-            make.left.equalTo(googlePlugInButton.snp.left)
-            make.right.equalTo(googlePlugInButton.snp.right)
+        let blueBackGround = UIView()
+        view.addSubview(blueBackGround)
+        blueBackGround.layer.cornerRadius = 2
+        blueBackGround.backgroundColor = .fbColor
+        blueBackGround.snp.makeConstraints { make in
+            make.top.equalTo(googlePlugInButton.snp.top).offset(4)
+            make.bottom.equalTo(googlePlugInButton.snp.bottom).offset(-4)
+            make.left.equalToSuperview().offset(30)
+            make.right.equalTo(centerDot.snp.left).offset(-15)
+            make.top.equalTo(bottomLabel.snp.bottom).offset(20)
+        }
+        
+        view.addSubview(facebookPlugInButton)
+        facebookPlugInButton.backgroundColor = .fbColor
+        facebookPlugInButton.snp.makeConstraints { make in
+            make.centerY.equalTo(blueBackGround.snp.centerY)
+            make.left.equalToSuperview().offset(30)
+            make.right.equalTo(centerDot.snp.left).offset(-15)
         }
         
         view.addSubview(signUpLabel)
