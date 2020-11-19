@@ -84,7 +84,7 @@ class FavoriteCell: UICollectionViewCell {
         commentButton.snp.makeConstraints { make in
             make.size.equalTo(20)
             make.top.equalTo(imageView.snp.bottom).offset(8)
-            make.right.equalTo(favoriteButton).offset(-29)
+            make.right.equalTo(favoriteButton).offset(-25)
         }
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in

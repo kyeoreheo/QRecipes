@@ -53,7 +53,7 @@ class SearchVC: UIViewController{
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorColor = UIColor.clear
-        tableView.backgroundColor = UIColor.white
+        //tableView.backgroundColor = UIColor.white
         
         view.addSubview(tableView)
         
@@ -80,7 +80,7 @@ class SearchVC: UIViewController{
         
         searchBar.barTintColor = UIColor.white
         
-        //searchBar.barStyle = .black
+                //searchBar.barStyle = .black
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
             make.top.equalTo(navBar.snp.bottom)

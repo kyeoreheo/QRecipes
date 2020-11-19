@@ -49,6 +49,7 @@
 		31D3ED13252F6847000CA905 /* API+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D3ED12252F6847000CA905 /* API+Auth.swift */; };
 		31D3ED51252FA721000CA905 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D3ED50252FA721000CA905 /* User.swift */; };
 		4A2A77BBB02A59AA291EF584 /* Pods_QRecipes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23171396F957630F02FB16F /* Pods_QRecipes.framework */; };
+		C2011E9225648ECF00B409AB /* ReceiptViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2011E9125648ECF00B409AB /* ReceiptViewVC.swift */; };
 		C20FE50E2525B00C003BDA99 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */; };
 		C20FE524253543F7003BDA99 /* settingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20FE523253543F7003BDA99 /* settingCollectionViewCell.swift */; };
 		C26A360725428698001A331E /* RecipeInfoViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26A360625428698001A331E /* RecipeInfoViewVC.swift */; };
@@ -103,6 +104,7 @@
 		31D3ED50252FA721000CA905 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		59433B390CDEE59F0FA6D4B0 /* Pods-QRecipes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.release.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.release.xcconfig"; sourceTree = "<group>"; };
 		637B5E3B9B20F801C5601BAC /* Pods-QRecipes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.debug.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.debug.xcconfig"; sourceTree = "<group>"; };
+		C2011E9125648ECF00B409AB /* ReceiptViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptViewVC.swift; sourceTree = "<group>"; };
 		C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		C20FE523253543F7003BDA99 /* settingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingCollectionViewCell.swift; sourceTree = "<group>"; };
 		C23171396F957630F02FB16F /* Pods_QRecipes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QRecipes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				C26A360625428698001A331E /* RecipeInfoViewVC.swift */,
+				C2011E9125648ECF00B409AB /* ReceiptViewVC.swift */,
 				3182DDCD253755F4004C488E /* QRGuideVC.swift */,
 				20C229A4253BF21300D19032 /* RecipeDetailVC.swift */,
 				20FDFCA1253D4BA800CE35C7 /* IngredientsVC.swift */,
@@ -424,6 +427,7 @@
 				317218092508454200EDF3DB /* SplashVC.swift in Sources */,
 				316B799A251BEC1400B4E080 /* QRScanVM.swift in Sources */,
 				31BAFF04251AAB9F0055A354 /* CustomView.swift in Sources */,
+				C2011E9225648ECF00B409AB /* ReceiptViewVC.swift in Sources */,
 				C20FE524253543F7003BDA99 /* settingCollectionViewCell.swift in Sources */,
 				20FDFCA2253D4BA800CE35C7 /* IngredientsVC.swift in Sources */,
 				31D3ED10252F6838000CA905 /* API.swift in Sources */,
