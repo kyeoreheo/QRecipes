@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import SDWebImage
 import Firebase
+import GoogleSignIn
 import FBSDKLoginKit
 import MessageUI
 
@@ -210,6 +211,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
             try Auth.auth().signOut()
             User.shared.clear()
             UserDefaults.standard.clear()
+            GIDSignIn.sharedInstance().signOut()
             LoginManager().logOut()
             DispatchQueue.main.async {
                 let navigation = UINavigationController(rootViewController: AuthenticationVC())

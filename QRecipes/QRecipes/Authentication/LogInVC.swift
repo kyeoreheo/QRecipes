@@ -58,12 +58,33 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
         facebookPlugInButton.delegate = self
         
         if isLoggedIn() {
-            //User is already logged in
+            //User is already logged in using Email/Password
             firebaseEmailLogin(email: UserDefaults.standard.getEmail(), password: UserDefaults.standard.getPassword())
         }
         
+        if(GIDSignIn.sharedInstance().hasPreviousSignIn()) {
+            //User is already logged in using Google account
+            GIDSignIn.sharedInstance()?.restorePreviousSignIn()
+            /*guard let auth = GIDSignIn.sharedInstance()?.currentUser.authentication else {return}
+            let credentials = GoogleAuthProvider.credential(withIDToken: auth.idToken, accessToken: auth.accessToken)
+            Auth.auth().signIn(with: credentials) { (authResult, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    print("Login Successful.")
+                    
+                    DispatchQueue.main.async {
+                        let navigation = UINavigationController(rootViewController: MainTabBar.shared)
+                        navigation.modalPresentationStyle = .fullScreen
+                        navigation.navigationBar.isHidden = true
+                        self.present(navigation, animated: false, completion: nil)
+                    }
+                }
+            }*/
+        }
+
         if let token = AccessToken.current, !token.isExpired {
-            //User is already logged in with facebook
+            //User is already logged in using Facebook
             fetchFBUser(accessToken: AccessToken.current!.tokenString){ [weak self] (result) in
                 guard let strongSelf = self else { return }
                 print("A new user is registered")
