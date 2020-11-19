@@ -209,6 +209,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         do {
             try Auth.auth().signOut()
             User.shared.clear()
+            UserDefaults.standard.clear()
             LoginManager().logOut()
             DispatchQueue.main.async {
                 let navigation = UINavigationController(rootViewController: AuthenticationVC())
