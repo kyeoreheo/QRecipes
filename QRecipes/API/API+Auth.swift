@@ -7,6 +7,7 @@
 //
 
 import Firebase
+import FBSDKLoginKit
 
 struct UserInfo {
     let email: String
@@ -83,6 +84,10 @@ extension API {
             guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
 
             let user = UserInfo(uid: uid, dictionary: dictionary)
+            User.shared.email = user.email
+            User.shared.firstName = user.firstName
+            User.shared.lastName = user.lastName
+            User.shared.profileImage = user.profileImageUrl
             completion(user)
             
         })
@@ -99,5 +104,61 @@ extension API {
 
         DB_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
     }
+    
+    static func firebaseFBLogin(accessToken: String) {
+        let credential = FacebookAuthProvider.credential(withAccessToken: accessToken)
+        Auth.auth().signIn(with: credential, completion: { (user, error) in
+                        if (error != nil) {
+                            print("Facebook authentication failed")
+                        } else {
+                            print("Facebook authentication succeed")
+                            //chece if first time, then write user into DB
+                            registerIfFirstTime()
+                        }
+        })
+    }
+    
+    static func fetchFBUser(accessToken: String, completion: @escaping(NSDictionary?) -> Void) {
+        //fetch user info from Facebook
+        let request = FBSDKLoginKit.GraphRequest(graphPath: "me",
+                                                 parameters: ["fields": "email, first_name, last_name, picture.type(large)"],
+                                                 tokenString: accessToken,
+                                                 version: nil,
+                                                 httpMethod: .get)
+        
+        request.start(completionHandler: {connection, result, error in
+            let info = result as! NSDictionary
+                
+            User.shared.email = info["email"] as? String ?? ""
+            User.shared.firstName = info["first_name"] as? String ?? ""
+            User.shared.lastName = info["last_name"] as? String ?? ""
+            let FBpicutre = ((info["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String
+            User.shared.profileImage = URL(string: FBpicutre!)
+            completion(info)
+        })
+    }
+    
+    static func registerIfFirstTime(){
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        DB_USERS.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.exists(){
+                let value = snapshot.value as? NSDictionary
+                let favorites = value?["favorite"] as? [String] ?? [""]
+                let purchased = value?["purchased"] as? [String : String] ?? [:]
+                User.shared.favorite = favorites
+                User.shared.purchased = purchased
+            }
+            else{
+                writeUserInfoToDB(uid: uid) {(error, ref) in
+                if error != nil {
+                    print("Error: ")
+                }
+                else {
+                    print("A new user is registered")
+                }
+                }
+            }
+        })
+    }
 }
-
