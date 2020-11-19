@@ -16,6 +16,7 @@ extension UIColor {
     static let lightlightGray = UIColor(hexString: "#D3D3D3")
     static let backgroundGray = UIColor(hexString: "#F5F5F5")
     static let charcoalBlack = UIColor(hexString: "#424242")
+    static let fbColor = UIColor(hexString: "#1877F2")
     
     convenience init(hexString: String, alpha: CGFloat = 1.0) {
           let hexString: String = hexString.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)

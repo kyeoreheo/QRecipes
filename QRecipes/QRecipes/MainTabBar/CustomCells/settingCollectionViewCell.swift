@@ -73,14 +73,16 @@ class SettingCollectionViewCell: UICollectionViewCell {
     }
     
     private func updateExpDateLabel() {
-        var date = Date()
+        var expirationDate = Date()
         let purchaseds = User.shared.purchased 
         for purchased in purchaseds {
             if purchased.key == recipe?.uid {
-                date = Date().stringToDate(String: purchased.value)
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                expirationDate = dateFormatter.date(from: purchased.value)!
             }
         }
-        let leftDays = Int(date.timeIntervalSince(Date()) / 86400)
+        let leftDays = Int(expirationDate.timeIntervalSince(Date()) / 86400)
         expirationDayButton.setTitle("\(leftDays) days", for: .normal)
     }
 }

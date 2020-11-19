@@ -11,6 +11,8 @@ target 'QRecipes' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+  pod 'GoogleSignIn'
+  pod 'FBSDKLoginKit'
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
   pod 'SnapKit'

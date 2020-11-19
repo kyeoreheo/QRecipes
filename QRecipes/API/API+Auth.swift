@@ -87,4 +87,17 @@ extension API {
             
         })
     }
+    
+    static func writeUserInfoToDB(uid: String, completion: @escaping(Error?, DatabaseReference?) -> Void ) {
+        
+        let values = ["email": User.shared.email,
+                      "firstName": User.shared.firstName,
+                      "lastName": User.shared.lastName,
+                      "favorite": User.shared.favorite,
+                      "purchased": User.shared.purchased,
+                      "profileImageUrl": User.shared.profileImage?.absoluteString] as [String : AnyObject]
+
+        DB_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+    }
 }
+

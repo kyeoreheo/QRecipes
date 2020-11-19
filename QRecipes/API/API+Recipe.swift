@@ -84,6 +84,7 @@ extension API {
         DB_USERS.child(uid).observe(DataEventType.value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let favoriteUid = value?["favorite"] as? [String] ?? [""]
+            User.shared.favorite = favoriteUid
                 
             var favoriteRecipes = [Recipe]()
             DB_RECIPE.observe(.childAdded) { (snapshot) in
@@ -155,6 +156,7 @@ extension API {
         DB_USERS.child(uid).observe(DataEventType.value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let purchased = value?["purchased"] as? [String : String] ?? [:]
+            User.shared.purchased = purchased // update user info when fetch
             let validUid = checkValidity(purchaseds: purchased)
             
             var purchasedRecipes = [Recipe]()
