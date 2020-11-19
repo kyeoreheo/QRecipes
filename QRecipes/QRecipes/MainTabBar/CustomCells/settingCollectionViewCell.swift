@@ -25,21 +25,13 @@ class SettingCollectionViewCell: UICollectionViewCell {
         img.image = UIImage(named: "pasta")
         return img
     }()
-    
-//    let dayExpireLabel: UILabel = {
-//       let label = UILabel()
-//       label.font = UIFont.boldSystemFont(ofSize: 14)
-//       label.textColor = .red
-//       return label
-//   }()
+
     let expirationDayButton: UIButton = {
         let button = UIButton()
          
          button.backgroundColor = .white
          button.layer.cornerRadius = 10
          button.setTitle("Expiration", for: .normal)
-         //button.backgroundColor = .primeOrange
-         //button.frame = CGRect(x: 20, y: 20, width: 30, height: 15)
          button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
          button.setTitleColor(.primeOrange, for: .normal)
          
@@ -67,14 +59,7 @@ class SettingCollectionViewCell: UICollectionViewCell {
             make.left.right.top.bottom.equalToSuperview()
     
         }
-//        contentView.addSubview(dayExpireLabel)
-//        dayExpireLabel.snp.makeConstraints { make in
-//            //make.top.equalTo(imageView.snp.center).offset(10)
-//            make.left.equalTo(contentView).offset(20)
-//            make.right.equalTo(contentView).offset(-20)
-//            make.centerY.equalTo(imageView)
-//            //make.width.height.equalTo(30)
-//        }
+
         contentView.addSubview(expirationDayButton)
         expirationDayButton.snp.makeConstraints { make in
            //make.top.equalTo(imageView.snp.center).offset(10)

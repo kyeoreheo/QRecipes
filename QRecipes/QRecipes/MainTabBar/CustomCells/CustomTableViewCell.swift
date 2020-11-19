@@ -18,7 +18,6 @@ class CustomTableViewCell: UITableViewCell {
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
         img.layer.cornerRadius = 8
-    
         img.translatesAutoresizingMaskIntoConstraints = false
         return img
     }()
