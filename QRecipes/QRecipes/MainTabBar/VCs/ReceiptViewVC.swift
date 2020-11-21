@@ -5,7 +5,7 @@
 //  Created by Dannyyyyyyy Zhao on 11/17/20.
 //  Copyright © 2020 Kyo. All rights reserved.
 //
-/*
+
 import UIKit
 import SnapKit
 
@@ -131,4 +131,4 @@ extension ReceiptViewVC: UITableViewDataSource, UITableViewDelegate{
         return cell
     }
 }
-*/
+
