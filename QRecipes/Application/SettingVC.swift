@@ -8,8 +8,6 @@
 import UIKit
 import SnapKit
 import SDWebImage
-import Firebase
-import FBSDKLoginKit
 import MessageUI
 
 class SettingVC: UIViewController,UIGestureRecognizerDelegate {
@@ -43,6 +41,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         iv.layer.borderColor = UIColor.white.cgColor
         return iv
     }()
+    
     let messageButton: UIButton = {
         let button = UIButton(type: .system)
         //button.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
@@ -51,11 +50,11 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         return button
     }()
     
-    lazy var logoutButton: UIButton = {
+    lazy var ellipsisButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(#imageLiteral(resourceName: "logout-512").withRenderingMode(.alwaysOriginal), for: .normal)
-        //button.setImage(UIImage(systemName: "star.fill"), for: .normal)
-        button.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
+        button.tintColor = .black
+        button.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+        button.addTarget(self, action: #selector(presentAccountInfoVC), for: .touchUpInside)
         return button
     }()
     
@@ -133,8 +132,8 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
             make.left.equalToSuperview().offset(20)
         }
         
-        view.addSubview(logoutButton)
-        logoutButton.snp.makeConstraints { make in
+        view.addSubview(ellipsisButton)
+        ellipsisButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(40)
             make.height.width.equalTo(32)
             make.right.equalToSuperview().offset(-20)
@@ -204,22 +203,10 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         composer.setSubject("App Support")
         present(composer, animated: true)
     }
-
-    @objc func handleLogout() {
-        do {
-            try Auth.auth().signOut()
-            User.shared.clear()
-            LoginManager().logOut()
-            DispatchQueue.main.async {
-                let navigation = UINavigationController(rootViewController: AuthenticationVC())
-                navigation.modalPresentationStyle = .fullScreen
-                navigation.navigationBar.isHidden = true
-                
-                self.present(navigation, animated: false)
-            }
-        } catch let error {
-            print("------failed to sign out \(error.localizedDescription)")
-        }
+    
+    @objc func presentAccountInfoVC() {
+        let vc = AccountInfoVC()
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     // Navigation
