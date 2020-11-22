@@ -203,6 +203,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         composer.setSubject("App Support")
         present(composer, animated: true)
     }
+
     
     @objc func presentAccountInfoVC() {
         let vc = AccountInfoVC()

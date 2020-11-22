@@ -8,6 +8,9 @@
 
 import UIKit
 import SnapKit
+import Firebase
+import GoogleSignIn
+import FBSDKLoginKit
 
 class AuthenticationVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Properties
@@ -81,6 +84,10 @@ class AuthenticationVC: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    private func isLoggedIn() -> Bool {
+        return UserDefaults.standard.isLoggedIn()
+    }
+    
     @objc func presentCreditVC() {
         DispatchQueue.main.async {
             let navigation = UINavigationController(rootViewController: CreditVC())
@@ -97,13 +104,63 @@ class AuthenticationVC: UIViewController, UIGestureRecognizerDelegate {
             #if DEBUG
             let navigation = UINavigationController(rootViewController: MainTabBar.shared)
             #else
-            let navigation = UINavigationController(rootViewController: LogInVC())
+            var navigation:UINavigationController
+            if self.checkIfLoggedIn() {
+                navigation = UINavigationController(rootViewController: MainTabBar.shared)
+            }
+            else {
+                navigation = UINavigationController(rootViewController: LogInVC())
+            }
             #endif
 
-            
             navigation.modalPresentationStyle = .fullScreen
             navigation.navigationBar.isHidden = true
             self.present(navigation, animated: false, completion: nil)
+        }
+    }
+    
+    @objc func checkIfLoggedIn() -> Bool {
+        //User is already logged in using Email/Password
+        if self.isLoggedIn() {
+            API.logIn(email: UserDefaults.standard.getEmail(),password: UserDefaults.standard.getPassword()) { [weak self] (result, error) in
+                guard self != nil else { return }
+                
+                guard let result = result else { return }
+                API.fetchUser(uid: result.user.uid) { response in
+                    User.shared.email = response.email
+                    User.shared.firstName = response.firstName
+                    User.shared.lastName = response.lastName
+                    User.shared.favorite = response.favorite
+                    User.shared.purchased = response.purchased
+                    User.shared.profileImage = response.profileImageUrl
+                }
+                }
+            return true
+        }
+        //User is already logged in using Google account
+        else if (GIDSignIn.sharedInstance().hasPreviousSignIn()) {
+            GIDSignIn.sharedInstance()?.restorePreviousSignIn()
+            guard let uid = Auth.auth().currentUser?.uid else { return true }
+            
+            API.fetchUser(uid: uid) {result in
+                User.shared.email = result.email
+                User.shared.firstName = result.firstName
+                User.shared.lastName = result.lastName
+                User.shared.profileImage = result.profileImageUrl
+            }
+            return true
+        }
+        else if let token = AccessToken.current, !token.isExpired {
+            //User is already logged in using Facebook
+            API.fetchFBUser(accessToken: AccessToken.current!.tokenString){ [weak self] (result) in
+                guard self != nil else { return }
+                print("A new user is registered")
+                API.firebaseFBLogin(accessToken: AccessToken.current!.tokenString)
+            }
+            return true
+        }
+        else {
+            return false
         }
     }
 }

@@ -57,6 +57,7 @@
 		C6CA107A253953E3003DBB40 /* API+Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA1079253953E3003DBB40 /* API+Recipe.swift */; };
 		C6CA107D25395402003DBB40 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA107C25395402003DBB40 /* Recipe.swift */; };
 		C6CA109825398114003DBB40 /* API+Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA109725398114003DBB40 /* API+Restaurant.swift */; };
+		C6CA1104256653D9003DBB40 /* UserDefaults+helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA1103256653D9003DBB40 /* UserDefaults+helper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -115,6 +116,7 @@
 		C6CA107C25395402003DBB40 /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		C6CA109725398114003DBB40 /* API+Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Restaurant.swift"; sourceTree = "<group>"; };
 		C6CA1101255F325D003DBB40 /* QRecipes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QRecipes.entitlements; sourceTree = "<group>"; };
+		C6CA1103256653D9003DBB40 /* UserDefaults+helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+helper.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +174,7 @@
 				313C2F7C251060BD004BEB5A /* UIColorExtension.swift */,
 				316B798F251BB56100B4E080 /* UILabelExtension.swift */,
 				316B7992251BBBDB00B4E080 /* UIWindowExtension.swift */,
+				C6CA1103256653D9003DBB40 /* UserDefaults+helper.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -459,6 +462,7 @@
 				3113CB1F250AEA5200C147FF /* QRAPI.swift in Sources */,
 				313C2F892510643C004BEB5A /* QRScanVC.swift in Sources */,
 				316B7993251BBBDB00B4E080 /* UIWindowExtension.swift in Sources */,
+				C6CA1104256653D9003DBB40 /* UserDefaults+helper.swift in Sources */,
 				20C229A5253BF21300D19032 /* RecipeDetailVC.swift in Sources */,
 				316B7990251BB56100B4E080 /* UILabelExtension.swift in Sources */,
 				3182DDCE253755F4004C488E /* QRGuideVC.swift in Sources */,
