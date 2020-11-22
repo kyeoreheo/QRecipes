@@ -23,7 +23,8 @@ class RecipeInfoViewVC: UIViewController {
     }
     var scrollView: UIScrollView = {
         let view = UIScrollView()
-        view.contentSize.width = 300;
+        view.backgroundColor = .black
+        view.contentSize.width = view.frame.width;
         return view
     }()
     
@@ -57,7 +58,16 @@ class RecipeInfoViewVC: UIViewController {
         view.layer.shadowRadius = 4
         return view
     }()
-    
+    var commentView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 8
+        view.backgroundColor = .white
+        view.layer.shadowColor = UIColor.lightGray.cgColor
+        view.layer.shadowOpacity = 0.5
+        view.layer.shadowOffset = .zero
+        view.layer.shadowRadius = 4
+        return view
+    }()
     var favoriteButton: UIButton = {
         let button = UIButton(type: .custom)
         button.backgroundColor = .backgroundGray
@@ -132,7 +142,6 @@ class RecipeInfoViewVC: UIViewController {
         label.textColor = .darkGray
         label.font = UIFont.boldSystemFont(ofSize: 14 * ratio)
         label.textAlignment = NSTextAlignment.center
-        //label.textAlignment = .center
         return label
     }()
     
@@ -144,16 +153,6 @@ class RecipeInfoViewVC: UIViewController {
         label.font = UIFont.boldSystemFont(ofSize: 14 * ratio)
         return label
     }()
-    
-//    var spicyLevelLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "Spicy Level: Medium spicy"
-//        label.textColor = .darkGray
-//        label.font = UIFont.boldSystemFont(ofSize: 15)
-//        label.textAlignment = .center
-//        return label
-//    }()
-    
     var contentView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 8
@@ -170,7 +169,7 @@ class RecipeInfoViewVC: UIViewController {
         rimg.contentMode = .scaleAspectFill
         rimg.clipsToBounds = true
         rimg.layer.cornerRadius = 8
-        rimg.backgroundColor = .white
+        rimg.backgroundColor = .black
         rimg.layer.shadowColor = UIColor.lightGray.cgColor
         rimg.layer.shadowOpacity = 0.5
         rimg.layer.shadowOffset = .zero
@@ -178,6 +177,70 @@ class RecipeInfoViewVC: UIViewController {
         rimg.isUserInteractionEnabled = true
         return rimg
     }()
+    lazy var commentTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Comments: "
+        label.textColor = .primeOrange
+        label.font = UIFont(name:"Helvetica", size: 18 * ratio)
+        return label
+    }()
+    
+    var tableView: UITableView = {
+        let tv = UITableView()
+        tv.backgroundColor = .clear
+        //tv.layer.cornerRadius = 8
+        //tv.rowHeight = 100
+        tv.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        return tv
+    } ()
+    
+    var profileImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "profile")
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        iv.layer.borderWidth = 3
+        iv.layer.cornerRadius = 25
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.layer.borderColor = UIColor.white.cgColor
+        return iv
+    }()
+    lazy var userNameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Danny"
+        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 13 * ratio, weight: UIFont.Weight.bold)
+        
+        return label
+    }()
+    lazy var commentLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Love it, it is easy to follow.Thank you. :)"
+        label.textColor = .black
+        label.font = UIFont(name:"Helvetica", size: 14 * ratio)
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        label.sizeToFit()
+        
+        return label
+    }()
+    lazy var thumbsUpButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.tintColor = .primeOrange
+        button.backgroundColor = .white
+        button.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
+        
+        return button
+    }()
+    lazy var thumbsDownButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.tintColor = .primeOrange
+        button.backgroundColor = .white
+        button.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
+        
+        return button
+    }()
+
     
     private let isInPurchaseFlow: Bool
     
@@ -199,37 +262,43 @@ class RecipeInfoViewVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        configure()
         fetchRestaurant()
+        scrollView.frame = self.view.bounds
     }
     
     //MARK:- Helpers
+    private func configure() {
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
     private func configureUI() {
         view.backgroundColor = .backgroundGray
+        
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
             make.top.bottom.left.right.equalToSuperview()
         }
-        view.addSubview(restarantImageView)
+        
+        scrollView.addSubview(restarantImageView)
         restarantImageView.snp.makeConstraints { make in
             make.height.equalTo(view.frame.height * 0.4 * ratio)
             make.left.right.top.equalToSuperview()
         }
         
-        view.addSubview(backButton)
+        scrollView.addSubview(backButton)
         backButton.snp.makeConstraints { make in
             make.width.height.equalTo(40 * ratio)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
             make.left.equalToSuperview().offset(10)
         }
-        
-        view.addSubview(infoView)
+        //MARK:- RestaurantInfo
+        scrollView.addSubview(infoView)
         infoView.snp.makeConstraints { make in
-            make.size.equalTo(125 * ratio)
-            if isInPurchaseFlow {
-                make.top.equalTo(backButton.snp.bottom).offset(10)
-            } else {
-                make.top.equalTo(restarantImageView.snp.bottom).offset(-95)
-            }
+            make.size.equalTo(view.frame.width-40)
+            make.height.equalTo(120)
+            make.top.equalTo(restarantImageView.snp.bottom).offset(-135)
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
@@ -269,12 +338,12 @@ class RecipeInfoViewVC: UIViewController {
             make.left.equalTo(phoneIcon.snp.right).offset(10)
             make.right.equalTo(infoView).offset(-20)
         }
-        
-        view.addSubview(contentView)
+        //MARK:- contentView
+        scrollView.addSubview(contentView)
         contentView.snp.makeConstraints { make in
             make.size.equalTo(view.frame.height * 0.4 * ratio)
+            make.height.equalTo(310 * ratio)
             make.top.equalTo(infoView.snp.bottom).offset(12)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-15)
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
@@ -303,7 +372,7 @@ class RecipeInfoViewVC: UIViewController {
         
         contentView.addSubview(cookTimeLabel)
         cookTimeLabel.snp.makeConstraints { make in
-            make.top.equalTo(recipeImageView.snp.bottom).offset(10)
+            make.top.equalTo(recipeImageView.snp.bottom).offset(-5)
             make.centerX.equalTo(contentView)
         }
         
@@ -312,20 +381,65 @@ class RecipeInfoViewVC: UIViewController {
             make.top.equalTo(cookTimeLabel.snp.bottom).offset(5)
             make.centerX.equalTo(contentView)
         }
-        
-//        contentView.addSubview(spicyLevelLabel)
-//        spicyLevelLabel.snp.makeConstraints { make in
-//            make.top.equalTo(recipeImageView.snp.bottom).offset(65)
-//            make.centerX.equalTo(contentView)
-//        }
-        
-        view.addSubview(purchaseButton)
+                
+        contentView.addSubview(purchaseButton)
         purchaseButton.snp.makeConstraints { make in
             make.height.equalTo(45 * ratio)
             make.top.equalTo(cookDifficultyLabel.snp.bottom).offset(10)
             make.bottom.equalTo(contentView).offset(-18)
             make.left.equalToSuperview().offset(50)
             make.right.equalToSuperview().offset(-50)
+        }
+        
+        scrollView.addSubview(commentView)
+        commentView.snp.makeConstraints { make in
+            make.size.equalTo(view.frame.width-40)
+            make.top.equalTo(contentView.snp.bottom).offset(12)
+            make.bottom.equalTo(scrollView)
+            make.left.equalToSuperview().offset(20)
+            make.right.equalToSuperview().offset(-20)
+        }
+        commentView.addSubview(commentTitleLabel)
+        commentTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(commentView).offset(15)
+            make.left.equalTo(commentView).offset(20)
+        }
+        
+        commentView.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.top.left.equalToSuperview().offset(35)
+            make.right.equalToSuperview().offset(-15)
+            make.bottom.equalToSuperview().offset(-15)
+        }
+        tableView.addSubview(profileImageView)
+        profileImageView.snp.makeConstraints { make in
+            make.top.left.equalToSuperview().offset(15)
+            make.size.equalTo(view.frame.width-320)
+            make.left.equalToSuperview().offset(15)
+        }
+        tableView.addSubview(userNameLabel)
+        userNameLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(15)
+            make.left.equalToSuperview().offset(80)
+            
+        }
+        tableView.addSubview(commentLabel)
+        commentLabel.snp.makeConstraints { make in
+            make.top.equalTo(userNameLabel).offset(25)
+            make.left.equalToSuperview().offset(80)
+            make.right.equalTo(commentView).offset(-20)
+            
+        }
+        
+        tableView.addSubview(thumbsUpButton)
+        thumbsUpButton.snp.makeConstraints { make in
+            make.top.equalTo(userNameLabel).offset(80)
+            make.right.equalTo(commentView).offset(-50)
+        }
+        tableView.addSubview(thumbsDownButton)
+        thumbsDownButton.snp.makeConstraints { make in
+            make.top.equalTo(userNameLabel).offset(80)
+            make.right.equalTo(commentView).offset(-20)
         }
     }
     
@@ -400,4 +514,21 @@ class RecipeInfoViewVC: UIViewController {
     }
 }
 
+extension RecipeInfoViewVC: UITableViewDataSource, UITableViewDelegate{
+    // Deselect row
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10 //Choose your custom row number
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120.0;//Choose your custom row height
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+
+        return cell
+    }
+}
