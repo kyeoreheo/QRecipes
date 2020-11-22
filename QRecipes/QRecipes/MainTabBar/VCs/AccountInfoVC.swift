@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Firebase
 import FBSDKLoginKit
+import GoogleSignIn
 
 class AccountInfoVC: UIViewController {
     //MARK:- Properties
@@ -202,6 +203,8 @@ class AccountInfoVC: UIViewController {
         do {
             try Auth.auth().signOut()
             User.shared.clear()
+            UserDefaults.standard.clear()
+            GIDSignIn.sharedInstance().signOut()
             LoginManager().logOut()
             DispatchQueue.main.async {
                 let navigation = UINavigationController(rootViewController: AuthenticationVC())
