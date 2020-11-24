@@ -24,6 +24,7 @@ class RecipeInfoViewVC: UIViewController {
     var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.backgroundColor = .black
+        view.layer.cornerRadius = 8
         view.contentSize.width = view.frame.width;
         return view
     }()
@@ -169,7 +170,7 @@ class RecipeInfoViewVC: UIViewController {
         rimg.contentMode = .scaleAspectFill
         rimg.clipsToBounds = true
         rimg.layer.cornerRadius = 8
-        rimg.backgroundColor = .black
+        rimg.backgroundColor = .white
         rimg.layer.shadowColor = UIColor.lightGray.cgColor
         rimg.layer.shadowOpacity = 0.5
         rimg.layer.shadowOffset = .zero
@@ -179,7 +180,7 @@ class RecipeInfoViewVC: UIViewController {
     }()
     lazy var commentTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Comments: "
+        label.text = "Add a comment here ... "
         label.textColor = .primeOrange
         label.font = UIFont(name:"Helvetica", size: 18 * ratio)
         return label
@@ -297,8 +298,8 @@ class RecipeInfoViewVC: UIViewController {
         scrollView.addSubview(infoView)
         infoView.snp.makeConstraints { make in
             make.size.equalTo(view.frame.width-40)
-            make.height.equalTo(120)
-            make.top.equalTo(restarantImageView.snp.bottom).offset(-135)
+            make.height.equalTo(130)
+            make.top.equalTo(restarantImageView.snp.bottom).offset(-160)
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
@@ -395,7 +396,7 @@ class RecipeInfoViewVC: UIViewController {
         commentView.snp.makeConstraints { make in
             make.size.equalTo(view.frame.width-40)
             make.top.equalTo(contentView.snp.bottom).offset(12)
-            make.bottom.equalTo(scrollView)
+            make.bottom.equalTo(scrollView).offset(-20)
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
@@ -407,38 +408,40 @@ class RecipeInfoViewVC: UIViewController {
         
         commentView.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.left.equalToSuperview().offset(35)
+            make.top.equalTo(commentTitleLabel.snp.bottom).offset(50)
+            make.left.equalToSuperview().offset(35)
             make.right.equalToSuperview().offset(-15)
             make.bottom.equalToSuperview().offset(-15)
         }
         tableView.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(50 * ratio)
             make.top.left.equalToSuperview().offset(15)
-            make.size.equalTo(view.frame.width-320)
+            //make.size.equalTo(view.frame.width-320)
             make.left.equalToSuperview().offset(15)
         }
         tableView.addSubview(userNameLabel)
         userNameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(15)
-            make.left.equalToSuperview().offset(80)
+            make.top.equalToSuperview().offset(20)
+            make.left.equalTo(profileImageView.snp.right).offset(30)
             
         }
         tableView.addSubview(commentLabel)
         commentLabel.snp.makeConstraints { make in
             make.top.equalTo(userNameLabel).offset(25)
-            make.left.equalToSuperview().offset(80)
+            make.left.equalTo(profileImageView.snp.right).offset(30)
             make.right.equalTo(commentView).offset(-20)
             
         }
         
         tableView.addSubview(thumbsUpButton)
         thumbsUpButton.snp.makeConstraints { make in
-            make.top.equalTo(userNameLabel).offset(80)
+            make.top.equalTo(userNameLabel).offset(70)
             make.right.equalTo(commentView).offset(-50)
         }
         tableView.addSubview(thumbsDownButton)
         thumbsDownButton.snp.makeConstraints { make in
-            make.top.equalTo(userNameLabel).offset(80)
+            make.top.equalTo(userNameLabel).offset(70)
             make.right.equalTo(commentView).offset(-20)
         }
     }
