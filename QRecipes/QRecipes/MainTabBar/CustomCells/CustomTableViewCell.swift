@@ -60,13 +60,10 @@ class CustomTableViewCell: UITableViewCell {
     func configureCell() {
         
         contentView.addSubview(backView)
-        backView.addSubview(userImage)
-        backView.addSubview(nameLbl)
-        backView.addSubview(restaurantLbl)
-        
         backView.snp.makeConstraints { make in
             make.top.left.right.bottom.equalToSuperview()
         }
+        backView.addSubview(userImage)
         userImage.snp.makeConstraints { make in
             make.width.equalTo(130)
             make.top.equalTo(contentView.snp.top).offset(10)
@@ -74,6 +71,7 @@ class CustomTableViewCell: UITableViewCell {
             make.left.equalTo(contentView.snp.left).offset(10)
             //make.right.equalTo(contentView.snp.right)
         }
+        backView.addSubview(nameLbl)
         nameLbl.snp.makeConstraints { make in
             make.width.equalTo(110)
             make.top.equalTo(contentView.snp.top).offset(20)
@@ -81,6 +79,7 @@ class CustomTableViewCell: UITableViewCell {
             make.left.equalTo(contentView.snp.left).offset(160)
             make.right.equalTo(contentView.snp.right).offset(10)
         }
+        backView.addSubview(restaurantLbl)
         restaurantLbl.snp.makeConstraints { make in
             make.width.equalTo(110)
             make.top.equalTo(contentView.snp.top).offset(70)

@@ -23,7 +23,7 @@ class UserModal {
 class SearchVC: UIViewController{
     //MARK:- Properties
     
-    let navBar = UINavigationBar() //remove
+    //let navBar = UINavigationBar() //remove
     
     let searchBar = UISearchBar()
     let tableView = UITableView()
@@ -43,7 +43,7 @@ class SearchVC: UIViewController{
         super.viewDidLoad()
         //configure()
         configureUI()
-        configureNavBar()
+        //configureNavBar()
         configureSearchBar()
         setTableView()
         fetchRecipes()
@@ -83,23 +83,23 @@ class SearchVC: UIViewController{
                 //searchBar.barStyle = .black
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
-            make.top.equalTo(navBar.snp.bottom)
+            make.top.equalToSuperview().offset(40)
             make.left.equalTo(view)
             make.right.equalTo(view)
         }
     }
     
-    func configureNavBar() {
-        navBar.delegate = self
-        navBar.setItems([UINavigationItem(title: "Search")], animated: false)
-
-        view.addSubview(navBar)
-        navBar.snp.makeConstraints { make in
-            make.height.equalTo(44)
-            make.top.equalToSuperview()
-            make.left.right.equalToSuperview()
-        }
-    }
+//    func configureNavBar() {
+//        navBar.delegate = self
+//        navBar.setItems([UINavigationItem(title: "Search")], animated: false)
+//
+//        view.addSubview(navBar)
+//        navBar.snp.makeConstraints { make in
+//            make.height.equalTo(44)
+//            make.top.equalToSuperview()
+//            make.left.right.equalToSuperview()
+//        }
+//    }
     
     private func configureUI() {
         view.backgroundColor = .white

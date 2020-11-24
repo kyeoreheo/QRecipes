@@ -13,51 +13,74 @@ class ReceiptViewVC: UIViewController {
 
     private let ratio = SplashVC.shared.ratio
     
-//    lazy var backView: UIView = {
-//        let view = UIView()
-//        return view
-//    }()
-    lazy var titleLabel: UILabel = {
+    var backButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.addTarget(self, action: #selector(popVC), for: .touchUpInside)
+        button.setImage(UIImage(named: "arrow-left"), for: .normal)
+        button.contentMode = .scaleAspectFit
+        return button
+    }()
+    let titleLabel: UILabel = {
        let label = UILabel()
-       label.text = "Receipt:"
+       label.text = "Receipt"
        label.textColor = .black
        label.font = UIFont.boldSystemFont(ofSize: 28)
        return label
     }()
-    let tableView: UITableView = {
+    var receiptView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 8
+        view.backgroundColor = .white
+        view.layer.shadowColor = UIColor.lightGray.cgColor
+        view.layer.shadowOpacity = 0.5
+        view.layer.shadowOffset = .zero
+        view.layer.shadowRadius = 4
+        view.backgroundColor = .white
+        return view
+    }()
+    lazy var tableView: UITableView = {
         let tv = UITableView()
-        tv.backgroundColor = .white
+        
         tv.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return tv
     } ()
-    
-    lazy var foodImage: UIImageView = {
-        let img = UIImageView()
-        img.contentMode = .scaleAspectFill
-        img.clipsToBounds = true
-        img.layer.cornerRadius = 8
-        img.translatesAutoresizingMaskIntoConstraints = false
-        return img
+    var foodImageView: UIImageView = {
+        let fiv = UIImageView()
+        fiv.image = #imageLiteral(resourceName: "shushi")
+        fiv.contentMode = .scaleAspectFill
+        fiv.clipsToBounds = true
+        fiv.layer.borderWidth = 3
+        fiv.layer.cornerRadius = 8
+        fiv.translatesAutoresizingMaskIntoConstraints = false
+        fiv.layer.borderColor = UIColor.white.cgColor
+        return fiv
     }()
-    lazy var nameLbl : UILabel = {
-        let lbl = UILabel()
-        lbl.font = UIFont.boldSystemFont(ofSize: 15)
-        lbl.textColor = .black
-        return lbl
+ 
+    lazy var foodNameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Sashimi Dinner"
+        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 16 * ratio, weight: UIFont.Weight.bold)
+        
+        return label
     }()
     lazy var datePurchaseLbl : UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont.boldSystemFont(ofSize: 15)
-        lbl.textColor = .black
+        lbl.text = "11.20.2020"
+        lbl.textColor = .gray
+        lbl.font = UIFont.systemFont(ofSize: 16 * ratio, weight: UIFont.Weight.bold)
+        
         return lbl
     }()
     let priceButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 20
-        button.setTitle("$7", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
-        button.setTitleColor(.primeOrange, for: .normal)
+        let button = UIButton(type: .custom)
+        button.backgroundColor = .orange
+        button.layer.cornerRadius = 10
+        button.setTitle("   $7   ", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.setTitleColor(.white, for: .normal)
+        
         return button
     }()
     
@@ -74,42 +97,61 @@ class ReceiptViewVC: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = .backgroundGray
+        view.backgroundColor = .white
+
+        view.addSubview(backButton)
+        backButton.snp.makeConstraints { make in
+            make.width.height.equalTo(40)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
+            make.left.equalToSuperview().offset(10)
+        }
         
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.left.equalTo(view).offset(12)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(12)
+            make.left.equalTo(backButton.snp.right).offset(12)
         }
-    //    view.addSubview(backView)
-    //    backView.snp.makeConstraints { make in
-    //        make.top.left.right.bottom.equalToSuperview()
-    //    }
-        view.addSubview(tableView)
+        view.addSubview(receiptView)
+        receiptView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(110)
+            make.left.right.bottom.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-100)
+        }
+        receiptView.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.left.right.bottom.equalToSuperview()
+            make.top.left.equalToSuperview().offset(15)
+            make.right.equalToSuperview().offset(-15)
+            make.bottom.equalTo(receiptView.snp.bottom).offset(-10)
         }
-        tableView.addSubview(foodImage)
-        foodImage.snp.makeConstraints { make in
-            make.top.left.equalToSuperview().offset(10)
-            make.width.equalTo(40)
+        tableView.addSubview(foodImageView)
+        foodImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(90 * ratio)
+            make.top.left.equalToSuperview().offset(15)
+            make.size.equalTo(view.frame.width-280)
+            //make.left.equalToSuperview().offset(15)
         }
-        tableView.addSubview(nameLbl)
-        nameLbl.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
-            make.left.equalTo(foodImage.snp.right).offset(20)
+        tableView.addSubview(foodNameLabel)
+        foodNameLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(15)
+            make.left.equalTo(foodImageView.snp.right).offset(20)
+            
         }
         tableView.addSubview(datePurchaseLbl)
         datePurchaseLbl.snp.makeConstraints { make in
-            make.top.equalTo(nameLbl.snp.bottom).offset(30)
-            make.left.equalTo(foodImage.snp.right).offset(20)
+            make.top.equalTo(foodNameLabel.snp.bottom).offset(20)
+            make.left.equalTo(foodImageView.snp.right).offset(20)
+            
         }
         tableView.addSubview(priceButton)
         priceButton.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-30)
-            make.top.equalTo(datePurchaseLbl.snp.bottom).offset(20)
+            make.top.equalTo(datePurchaseLbl.snp.bottom).offset(5)
+            make.left.equalTo(receiptView.snp.right).offset(-80)
+            
         }
         
+    }
+    @objc func popVC() {
+        navigationController?.popViewController(animated: true)
     }
     
 }
