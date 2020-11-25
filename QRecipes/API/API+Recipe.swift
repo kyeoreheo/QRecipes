@@ -155,7 +155,7 @@ extension API {
         
         DB_USERS.child(uid).observe(DataEventType.value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            let purchased = value?["purchased"] as? [String : String] ?? [:]
+            let purchased = value?["purchased"] as? [String : AnyObject] ?? [:]
             User.shared.purchased = purchased // update user info when fetch
             let validUid = checkValidity(purchaseds: purchased)
             
@@ -172,7 +172,7 @@ extension API {
         })
     }
     
-    static func checkValidity(purchaseds: [String:String]) -> [String] {
+    static func checkValidity(purchaseds: [String:AnyObject]) -> [String] {
         let now = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -181,7 +181,7 @@ extension API {
         
         if purchaseds.count > 0 {
             for purchased in purchaseds {
-                if dateFormatter.date(from: purchased.value) ?? now > now
+                if dateFormatter.date(from: purchased.value["expirationDate"] as? String ?? "") ?? now > now
                 {
                     valid.append(purchased.key)
                 }
@@ -191,19 +191,23 @@ extension API {
 
     }
     
-    static func purhcasRecipe(recipeUid: String, completion: @escaping(Error?, DatabaseReference?) -> Void) {
+    static func purhcaseRecipe(recipeUid: String, price: String, completion: @escaping(Error?, DatabaseReference?) -> Void) {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         DB_USERS.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            var purchased = value?["purchased"] as? [String:String] ?? [:]
+            var purchased = value?["purchased"] as? [String:AnyObject] ?? [:]
             
-            let expirationDate = Date().addingTimeInterval(7*86400)
-            let format = expirationDate.getFormattedDate(format: "yyyy-MM-dd HH:mm:ss")
+            let now = Date().getFormattedDate(format: "yyyy-MM-dd HH:mm:ss")
+            let expirationDate = Date().addingTimeInterval(7*86400).getFormattedDate(format:"yyyy-MM-dd HH:mm:ss")
             
-            purchased[recipeUid] = format
-                    
+            let transaction = ["price": price,
+                               "purchaseDate": now,
+            "expirationDate": expirationDate] as AnyObject
+            
+            purchased[recipeUid] = transaction
+            
             let updates = ["purchased": purchased]
             DB_USERS.child(uid).updateChildValues(updates, withCompletionBlock: completion)
             }) { (error) in

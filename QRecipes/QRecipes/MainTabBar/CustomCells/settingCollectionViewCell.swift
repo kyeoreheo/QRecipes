@@ -79,7 +79,7 @@ class SettingCollectionViewCell: UICollectionViewCell {
             if purchased.key == recipe?.uid {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                expirationDate = dateFormatter.date(from: purchased.value)!
+                expirationDate = dateFormatter.date(from: purchased.value["expirationDate"] as? String ?? "")!
             }
         }
         let leftDays = Int(expirationDate.timeIntervalSince(Date()) / 86400)

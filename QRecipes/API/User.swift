@@ -13,7 +13,7 @@ class User {
     var firstName = ""
     var lastName = ""
     var favorite = [""]
-    var purchased = [String:String]()
+    var purchased = [String:AnyObject]()
     var profileImage: URL?
     
     func clear() {
