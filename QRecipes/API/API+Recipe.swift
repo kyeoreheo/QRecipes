@@ -150,6 +150,19 @@ extension API {
         }
     }
     
+    static func fetchACertainRecipes(uid: String, completion: @escaping(Recipe) -> Void) {
+        
+        DB_RECIPE.observe(.childAdded) { (snapshot) in
+            guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
+            let recipeUid = snapshot.key
+            if uid == recipeUid
+            {
+                let recipe = Recipe(uid: recipeUid, dictionary: dictionary)
+                completion(recipe)
+            }
+        }
+    }
+    
     static func fetchPurchasedRecipes(completion: @escaping([Recipe]) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         

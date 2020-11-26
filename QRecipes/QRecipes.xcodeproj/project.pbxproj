@@ -54,6 +54,7 @@
 		C20FE50E2525B00C003BDA99 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */; };
 		C20FE524253543F7003BDA99 /* settingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20FE523253543F7003BDA99 /* settingCollectionViewCell.swift */; };
 		C26A360725428698001A331E /* RecipeInfoViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26A360625428698001A331E /* RecipeInfoViewVC.swift */; };
+		C6314680256F8CC600EACBC6 /* TransanctionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C631467F256F8CC600EACBC6 /* TransanctionCell.swift */; };
 		C6CA107A253953E3003DBB40 /* API+Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA1079253953E3003DBB40 /* API+Recipe.swift */; };
 		C6CA107D25395402003DBB40 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA107C25395402003DBB40 /* Recipe.swift */; };
 		C6CA109825398114003DBB40 /* API+Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA109725398114003DBB40 /* API+Restaurant.swift */; };
@@ -112,6 +113,7 @@
 		C20FE523253543F7003BDA99 /* settingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingCollectionViewCell.swift; sourceTree = "<group>"; };
 		C23171396F957630F02FB16F /* Pods_QRecipes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QRecipes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C26A360625428698001A331E /* RecipeInfoViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeInfoViewVC.swift; sourceTree = "<group>"; };
+		C631467F256F8CC600EACBC6 /* TransanctionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransanctionCell.swift; sourceTree = "<group>"; };
 		C6CA1079253953E3003DBB40 /* API+Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "API+Recipe.swift"; sourceTree = "<group>"; };
 		C6CA107C25395402003DBB40 /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		C6CA109725398114003DBB40 /* API+Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Restaurant.swift"; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				205EC2012535FEFD0098CFE9 /* RecipeCell.swift */,
 				C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */,
 				C20FE523253543F7003BDA99 /* settingCollectionViewCell.swift */,
+				C631467F256F8CC600EACBC6 /* TransanctionCell.swift */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -462,6 +465,7 @@
 				3113CB1F250AEA5200C147FF /* QRAPI.swift in Sources */,
 				313C2F892510643C004BEB5A /* QRScanVC.swift in Sources */,
 				316B7993251BBBDB00B4E080 /* UIWindowExtension.swift in Sources */,
+				C6314680256F8CC600EACBC6 /* TransanctionCell.swift in Sources */,
 				C6CA1104256653D9003DBB40 /* UserDefaults+helper.swift in Sources */,
 				20C229A5253BF21300D19032 /* RecipeDetailVC.swift in Sources */,
 				316B7990251BB56100B4E080 /* UILabelExtension.swift in Sources */,
