@@ -38,7 +38,7 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
     private var firstName = ""
     private var lastName = ""
     private var favorite = [""]
-    private var purchased:[String:String] = [:]
+    private var purchased:[String:AnyObject] = [:]
     private var isPasswodHideen = true
         
     //MARK:- LifeCycles

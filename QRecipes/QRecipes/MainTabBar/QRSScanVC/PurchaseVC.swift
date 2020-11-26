@@ -25,7 +25,7 @@ class PurchaseVC: UIViewController {
     private let payButton = UIButton()
     
     private let itemName: String
-    private let payAmount: String
+    private var payAmount: String
     private let uid: String
     private let isInPurchaseFlow: Bool
     
@@ -46,6 +46,7 @@ class PurchaseVC: UIViewController {
         super.viewDidLoad()
         configure()
         configureUI()
+        updatePayAmount()
     }
     
     //MARK:- Helpers
@@ -65,12 +66,13 @@ class PurchaseVC: UIViewController {
         }
         
         view.addSubview(titleLabel)
-        let number = payAmount.replacingOccurrences(of: "$", with: "")
+        /*let number = payAmount.replacingOccurrences(of: "$", with: "")
         if isInPurchaseFlow {
             titleLabel.text = "\(itemName) \(payAmount) -> \(Int(Int(number)! / 2))"
         } else {
             titleLabel.text = "\(itemName) \(payAmount)"
-        }
+        }*/
+        titleLabel.text = "\(itemName) \(payAmount)"
         titleLabel.font = UIFont.boldSystemFont(ofSize: 22 * ratio)
         titleLabel.textColor = .darkGray
         titleLabel.snp.makeConstraints { make in
@@ -189,10 +191,16 @@ class PurchaseVC: UIViewController {
     }
 
     //MARK:- Selectors
+    func updatePayAmount() -> Void {
+        let number = payAmount.replacingOccurrences(of: "$", with: "")
+        if isInPurchaseFlow {
+            payAmount = "\(Int(Int(number)! / 2))"
+        }
+    }
     @objc func purchase() {
         //navigationController?.pushViewController(FinishedPurchaseVC(itemName
                                                    // : itemName), animated: true)
-        API.purhcasRecipe(recipeUid: uid) { [weak self] (error, ref) in
+        API.purhcaseRecipe(recipeUid: uid, price: payAmount) { [weak self] (error, ref) in
             guard let strongSelf = self else { return }
             if error != nil {
                 print("Error: failed to purchase")

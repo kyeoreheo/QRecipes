@@ -13,6 +13,12 @@ class ReceiptViewVC: UIViewController {
 
     private let ratio = SplashVC.shared.ratio
     
+    var transactions = [String:AnyObject]() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     var backButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
@@ -42,10 +48,10 @@ class ReceiptViewVC: UIViewController {
     lazy var tableView: UITableView = {
         let tv = UITableView()
         
-        tv.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tv.register(TransactionCell.self, forCellReuseIdentifier: "cell")
         return tv
     } ()
-    var foodImageView: UIImageView = {
+    /*var foodImageView: UIImageView = {
         let fiv = UIImageView()
         fiv.image = #imageLiteral(resourceName: "shushi")
         fiv.contentMode = .scaleAspectFill
@@ -82,7 +88,7 @@ class ReceiptViewVC: UIViewController {
         button.setTitleColor(.white, for: .normal)
         
         return button
-    }()
+    }()*/
     
     
     override func viewDidLoad() {
@@ -90,6 +96,12 @@ class ReceiptViewVC: UIViewController {
         configure()
         configureUI()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        fetchTransaction()
+        super.viewDidAppear(animated)
+    }
+    
     //MARK:- Helpers
     private func configure() {
         tableView.delegate = self
@@ -123,7 +135,7 @@ class ReceiptViewVC: UIViewController {
             make.right.equalToSuperview().offset(-15)
             make.bottom.equalTo(receiptView.snp.bottom).offset(-10)
         }
-        tableView.addSubview(foodImageView)
+        /*tableView.addSubview(foodImageView)
         foodImageView.snp.makeConstraints { make in
             make.width.height.equalTo(90 * ratio)
             make.top.left.equalToSuperview().offset(15)
@@ -147,14 +159,20 @@ class ReceiptViewVC: UIViewController {
             make.top.equalTo(datePurchaseLbl.snp.bottom).offset(5)
             make.left.equalTo(receiptView.snp.right).offset(-80)
             
-        }
+        }*/
         
     }
     @objc func popVC() {
         navigationController?.popViewController(animated: true)
     }
     
+    func fetchTransaction() {
+        API.fetchReceipt { transactions in
+            self.transactions = transactions
+        }
+    }
 }
+
 extension ReceiptViewVC: UITableViewDataSource, UITableViewDelegate{
     // Deselect row
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -162,14 +180,23 @@ extension ReceiptViewVC: UITableViewDataSource, UITableViewDelegate{
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10 //Choose your custom row number
+        print("DEBUG:- # of transactions \(transactions.count)")
+        return transactions.count  //Choose your custom row number
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120.0;//Choose your custom row height
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TransactionCell
+        var itr = 0
+        for transaction in transactions {
+            if indexPath.row == itr {
+                cell.recipeUid = transaction.key
+                cell.transaction = transaction.value
+                print("DEBUG:- at \(itr)th element, uid: \(transaction.key), value: \(transaction.value)")
+            }
+            itr += 1
+        }
         return cell
     }
 }

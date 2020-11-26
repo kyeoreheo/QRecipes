@@ -14,7 +14,7 @@ struct UserInfo {
     let firstName: String
     let lastName: String
     var favorite: [String]
-    var purchased: [String:String]
+    var purchased: [String:AnyObject]
     var profileImageUrl: URL?
     let uid: String
 
@@ -25,7 +25,7 @@ struct UserInfo {
         self.firstName = dictionary["firstName"] as? String ?? ""
         self.lastName = dictionary["lastName"] as? String ?? ""
         self.favorite = dictionary["favorite"] as? [String] ?? [""]
-        self.purchased = dictionary["purchased"] as? [String:String] ?? [:]
+        self.purchased = dictionary["purchased"] as? [String:AnyObject] ?? [:]
         if let profileImageUrlString = dictionary["profileImageUrl"] as? String {
             guard let url = URL(string: profileImageUrlString) else { return }
             self.profileImageUrl = url
@@ -39,7 +39,7 @@ struct AuthProperties {
     let firstName: String
     let lastName: String
     let favorite: [String]
-    let purchased: [String:String]
+    let purchased: [String:AnyObject]
     let profileImage: UIImage
 }
 
@@ -145,7 +145,7 @@ extension API {
             if snapshot.exists(){
                 let value = snapshot.value as? NSDictionary
                 let favorites = value?["favorite"] as? [String] ?? [""]
-                let purchased = value?["purchased"] as? [String : String] ?? [:]
+                let purchased = value?["purchased"] as? [String : AnyObject] ?? [:]
                 User.shared.favorite = favorites
                 User.shared.purchased = purchased
             }
