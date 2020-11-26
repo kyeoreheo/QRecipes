@@ -214,4 +214,16 @@ extension API {
                     print(error.localizedDescription)
                 }
     }
+    
+    static func fetchReceipt(completion: @escaping([String:AnyObject]) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        DB_USERS.child(uid).observe(DataEventType.value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let purchased = value?["purchased"] as? [String : AnyObject] ?? [:]
+            User.shared.purchased = purchased
+            
+            completion(purchased)
+        })
+    }
 }
