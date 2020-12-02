@@ -51,7 +51,8 @@ class ReceiptViewVC: UIViewController {
         tv.register(TransactionCell.self, forCellReuseIdentifier: "cell")
         return tv
     } ()
-    /*var foodImageView: UIImageView = {
+    /*
+    var foodImageView: UIImageView = {
         let fiv = UIImageView()
         fiv.image = #imageLiteral(resourceName: "shushi")
         fiv.contentMode = .scaleAspectFill
@@ -135,7 +136,8 @@ class ReceiptViewVC: UIViewController {
             make.right.equalToSuperview().offset(-15)
             make.bottom.equalTo(receiptView.snp.bottom).offset(-10)
         }
-        /*tableView.addSubview(foodImageView)
+        /*
+        tableView.addSubview(foodImageView)
         foodImageView.snp.makeConstraints { make in
             make.width.height.equalTo(90 * ratio)
             make.top.left.equalToSuperview().offset(15)

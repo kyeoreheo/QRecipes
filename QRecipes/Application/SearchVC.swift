@@ -89,18 +89,6 @@ class SearchVC: UIViewController{
         }
     }
     
-//    func configureNavBar() {
-//        navBar.delegate = self
-//        navBar.setItems([UINavigationItem(title: "Search")], animated: false)
-//
-//        view.addSubview(navBar)
-//        navBar.snp.makeConstraints { make in
-//            make.height.equalTo(44)
-//            make.top.equalToSuperview()
-//            make.left.right.equalToSuperview()
-//        }
-//    }
-    
     private func configureUI() {
         view.backgroundColor = .white
     }

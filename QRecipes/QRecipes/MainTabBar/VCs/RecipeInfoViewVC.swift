@@ -180,12 +180,31 @@ class RecipeInfoViewVC: UIViewController {
     }()
     lazy var commentTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Add a comment here ... "
+        label.text = "Comments "
         label.textColor = .primeOrange
         label.font = UIFont(name:"Helvetica", size: 18 * ratio)
         return label
     }()
     
+    var commentTextField: UITextField = {
+        let commentTextField = UITextField()
+        commentTextField.placeholder = "Add a comment here...."
+        //commentTextField.borderStyle = UITextField.BorderStyle.roundedRect
+        commentTextField.keyboardType = UIKeyboardType.default
+        commentTextField.returnKeyType = UIReturnKeyType.done
+        commentTextField.textColor = .black
+        
+        return commentTextField
+    }()
+    var submitButton: UIButton = {
+        let submitButton = UIButton(type: .custom)
+        submitButton.tintColor = .gray
+        submitButton.backgroundColor = .white
+        submitButton.setTitle("submit", for: .normal)
+        submitButton.setTitleColor(.primeOrange, for: .normal)
+        submitButton.contentMode = .scaleAspectFit
+        return submitButton
+    }()
     var tableView: UITableView = {
         let tv = UITableView()
         tv.backgroundColor = .clear
@@ -259,6 +278,7 @@ class RecipeInfoViewVC: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    var activeTextField : UITextField? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -266,7 +286,26 @@ class RecipeInfoViewVC: UIViewController {
         configure()
         fetchRestaurant()
         scrollView.frame = self.view.bounds
+        //commentTextField.becomeFirstResponder()
+        commentTextField.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(RecipeInfoViewVC.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(RecipeInfoViewVC.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+           // if keyboard size is not available for some reason, dont do anything
+           return
+        }
+      
+      // move the root view up by the distance of keyboard height
+      self.view.frame.origin.y = 0 - keyboardSize.height
+    }
+    @objc func keyboardWillHide(notification: NSNotification) {
+      // move back the root view origin to zero
+      self.view.frame.origin.y = 0
+    }
+    
     
     //MARK:- Helpers
     private func configure() {
@@ -394,9 +433,10 @@ class RecipeInfoViewVC: UIViewController {
         
         scrollView.addSubview(commentView)
         commentView.snp.makeConstraints { make in
-            make.size.equalTo(view.frame.width-40)
+            make.width.equalTo(view.frame.width-40)
+            make.height.equalTo(view.frame.width-10)
             make.top.equalTo(contentView.snp.bottom).offset(12)
-            make.bottom.equalTo(scrollView).offset(-20)
+            make.bottom.equalTo(scrollView).offset(-5)
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
@@ -405,7 +445,19 @@ class RecipeInfoViewVC: UIViewController {
             make.top.equalTo(commentView).offset(15)
             make.left.equalTo(commentView).offset(20)
         }
-        
+        commentView.addSubview(commentTextField)
+        commentTextField.snp.makeConstraints { make in
+            make.height.equalTo(36 * ratio)
+            make.top.equalTo(commentTitleLabel.snp.bottom).offset(10)
+            make.left.equalTo(commentView).offset(20)
+        }
+        commentView.addSubview(submitButton)
+        submitButton.snp.makeConstraints { make in
+            make.height.equalTo(35 * ratio)
+            make.width.equalTo(55 * ratio)
+            make.top.equalTo(commentTitleLabel.snp.bottom).offset(10)
+            make.right.equalTo(commentView).offset(-30)
+        }
         commentView.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.top.equalTo(commentTitleLabel.snp.bottom).offset(50)
@@ -515,6 +567,11 @@ class RecipeInfoViewVC: UIViewController {
             }
         }
     }
+    @objc func commentTextFieldDidhange(_ textField: UITextField) {
+        guard textField.text != nil else { return }
+        //self.comment = comment
+
+    }
 }
 
 extension RecipeInfoViewVC: UITableViewDataSource, UITableViewDelegate{
@@ -533,5 +590,25 @@ extension RecipeInfoViewVC: UITableViewDataSource, UITableViewDelegate{
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 
         return cell
+    }
+}
+extension RecipeInfoViewVC : UITextFieldDelegate {
+  // when user select a textfield, this method will be called
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+    // set the activeTextField to the selected textfield
+        self.activeTextField = textField
+    }
+    
+    // when user click 'done' or dismiss the keyboard
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.activeTextField = nil
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        if let text = textField.text{
+            print("\(text)")
+        }
+        
+        return true
     }
 }
