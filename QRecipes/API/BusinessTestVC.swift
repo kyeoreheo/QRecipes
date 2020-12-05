@@ -1,8 +1,8 @@
 //
-//  SignInVC.swift
+//  BusinessVC.swift
 //  QRecipes
 //
-//  Created by Kyo on 10/5/20.
+//  Created by Mingu Choi on 12/5/20.
 //  Copyright © 2020 Kyo. All rights reserved.
 //
 
@@ -10,17 +10,18 @@ import UIKit
 import SnapKit
 import Firebase
 
-class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
+class BusinessTestVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Properties
     private let ratio = SplashVC.shared.ratio
 
     private let viewModel = AuthenticationVM()
     private let backButton = UIButton()
     private let titleLabel = UILabel()
-    private lazy var firstNameTextField = viewModel.textField(placeHolder: "First name", target: self, action: #selector(firstNameTextFieldDidhange), type: .name)
-    private lazy var lastNameTextField = viewModel.textField(placeHolder: "Last name", target: self, action: #selector(lastNameTextFieldDidhange), type: .name)
+    private lazy var restaurantNameTextField = viewModel.textField(placeHolder: "Restaurant name", target: self, action: #selector(restaurantNameTextFieldDidhange), type: .name)
     private lazy var emailTextField = viewModel.textField(placeHolder: "Email", target: self, action: #selector(emailTextFieldDidChange), type: .email)
     private lazy var passwordTextField = viewModel.textField(placeHolder: "Password", target: self, action: #selector(passwordTextFieldDidchange), type: .password, buttonAction: #selector(toggleEyeButton))
+    private lazy var phoneNumberTextField = viewModel.textField(placeHolder: "Phone number", target: self, action: #selector(phoneNumberTextFieldDidhange), type: .name)
+    private lazy var locationTextField = viewModel.textField(placeHolder: "location", target: self, action: #selector(locationTextFieldDidhange), type: .name)
     private let registerButton = UIButton()
     private let signInLabel = UILabel()
     private let signInButton = UIButton()
@@ -28,18 +29,18 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
     private let warningLabel = UILabel()
     
     private let imagePicker = UIImagePickerController()
-    private var profileImage = UIImage(named: "avatar")
+    private var restaurantImage = UIImage(named: "avatar")
     private let addPhotoButton = UIButton()
     
     private lazy var popUpModal = CustomView().popUpModal(message: "Registered!", buttonText: "Log In", action: #selector(popVC), target: self)
 
     private var email = ""
     private var password = ""
-    private var firstName = ""
-    private var lastName = ""
-    private var favorite = [""]
-    private var purchased:[String:AnyObject] = [:]
-    private var isBusiness = false
+    private var restaurantName = ""
+    private var phoneNumber = ""
+    private var location = ""
+    private var recipes = [""]
+    private var isBusiness = true
     private var isPasswodHideen = true
         
     //MARK:- LifeCycles
@@ -92,26 +93,18 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
             make.right.equalToSuperview().offset(-30)
         }
         
-        view.addSubview(firstNameTextField)
-        firstNameTextField.snp.makeConstraints { make in
+        view.addSubview(restaurantNameTextField)
+        restaurantNameTextField.snp.makeConstraints { make in
             make.height.equalTo(36 * ratio)
             make.top.equalTo(addPhotoButton.snp.bottom).offset(20)
             make.left.equalToSuperview().offset(30)
-            make.right.equalTo(view.snp.centerX).offset(-15)
-        }
-        
-        view.addSubview(lastNameTextField)
-        lastNameTextField.snp.makeConstraints { make in
-            make.height.equalTo(36 * ratio)
-            make.top.equalTo(addPhotoButton.snp.bottom).offset(20)
-            make.left.equalTo(view.snp.centerX).offset(15)
             make.right.equalToSuperview().offset(-30)
         }
         
         view.addSubview(emailTextField)
         emailTextField.snp.makeConstraints { make in
             make.height.equalTo(36 * ratio)
-            make.top.equalTo(firstNameTextField.snp.bottom).offset(30)
+            make.top.equalTo(restaurantNameTextField.snp.bottom).offset(30)
             make.left.equalToSuperview().offset(30)
             make.right.equalToSuperview().offset(-30)
         }
@@ -120,6 +113,22 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
         passwordTextField.snp.makeConstraints { make in
             make.height.equalTo(36 * ratio)
             make.top.equalTo(emailTextField.snp.bottom).offset(30)
+            make.left.equalToSuperview().offset(30)
+            make.right.equalToSuperview().offset(-30)
+        }
+        
+        view.addSubview(phoneNumberTextField)
+        phoneNumberTextField.snp.makeConstraints { make in
+            make.height.equalTo(36 * ratio)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(30)
+            make.left.equalToSuperview().offset(30)
+            make.right.equalToSuperview().offset(-30)
+        }
+
+        view.addSubview(locationTextField)
+        locationTextField.snp.makeConstraints { make in
+            make.height.equalTo(36 * ratio)
+            make.top.equalTo(phoneNumberTextField.snp.bottom).offset(30)
             make.left.equalToSuperview().offset(30)
             make.right.equalToSuperview().offset(-30)
         }
@@ -138,10 +147,10 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
         registerButton.setTitle("Register", for: .normal)
         registerButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18 * ratio)
         registerButton.setTitleColor(.white, for: .normal)
-        registerButton.addTarget(self, action: #selector(registerUser), for: .touchUpInside)
+        registerButton.addTarget(self, action: #selector(registerOwner), for: .touchUpInside)
         registerButton.snp.makeConstraints { make in
             make.height.equalTo(60 * ratio)
-            make.top.equalTo(passwordTextField.snp.bottom).offset(50)
+            make.top.equalTo(locationTextField.snp.bottom).offset(50)
             make.left.equalToSuperview().offset(30)
             make.right.equalToSuperview().offset(-30)
         }
@@ -178,7 +187,7 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
     
     func checkValidity() {
         warningLabel.isHidden = true
-        if firstName != "" && lastName != "" && email != "" && password != "" {
+        if restaurantName != "" && email != "" && password != "" && phoneNumber != "" && location != ""{
             registerButton.backgroundColor = .primeOrange
         } else {
             registerButton.backgroundColor = .lightGray
@@ -186,13 +195,13 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
         
     }
     
-    @objc func registerUser() {
-        guard let profileImage = profileImage else { return }
+    @objc func registerOwner() {
+        guard let restaurantImage = restaurantImage else { return }
         let lowerCaseEmail = email.lowercased()
         
-        let user = AuthProperties(email: lowerCaseEmail, password: password, firstName: firstName, lastName: lastName, favorite: favorite, purchased: purchased, profileImage: profileImage, isBusiness: isBusiness)
+        let owner = OwnerAuthProperties(email: lowerCaseEmail, password: password, restaurantName: restaurantName, phoneNumber: phoneNumber, location: location, recipes: recipes, restaurantImage: restaurantImage, isBusiness: isBusiness)
         
-        API.registerUser(user: user) { [weak self] (error, ref) in
+        API.registerOwner(owner: owner) { [weak self] (error, ref) in
             guard let strongSelf = self else { return }
             if let error = error {
                 strongSelf.warningLabel.isHidden = false
@@ -218,15 +227,21 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
         checkValidity()
     }
     
-    @objc func firstNameTextFieldDidhange(_ textField: UITextField) {
-        guard let firstName = textField.text else { return }
-        self.firstName = firstName
+    @objc func restaurantNameTextFieldDidhange(_ textField: UITextField) {
+        guard let restaurantName = textField.text else { return }
+        self.restaurantName = restaurantName
         checkValidity()
     }
     
-    @objc func lastNameTextFieldDidhange(_ textField: UITextField) {
-        guard let lastName = textField.text else { return }
-        self.lastName = lastName
+    @objc func phoneNumberTextFieldDidhange(_ textField: UITextField) {
+        guard let phoneNumber = textField.text else { return }
+        self.phoneNumber = phoneNumber
+        checkValidity()
+    }
+    
+    @objc func locationTextFieldDidhange(_ textField: UITextField) {
+        guard let location = textField.text else { return }
+        self.location = location
         checkValidity()
     }
     
@@ -259,10 +274,10 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
 
 }
 
-extension SignUpVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension BusinessTestVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let profileImage = info [.editedImage] as? UIImage else { return }
-        self.profileImage = profileImage
+        guard let restaurantImage = info [.editedImage] as? UIImage else { return }
+        self.restaurantImage = restaurantImage
         
 
         addPhotoButton.imageView?.contentMode = .scaleAspectFill
@@ -270,7 +285,7 @@ extension SignUpVC: UIImagePickerControllerDelegate, UINavigationControllerDeleg
         addPhotoButton.layer.borderColor = UIColor.white.cgColor
         addPhotoButton.layer.borderWidth = 3
         
-        self.addPhotoButton.setImage(profileImage.withRenderingMode(.alwaysOriginal), for: .normal)
+        self.addPhotoButton.setImage(restaurantImage.withRenderingMode(.alwaysOriginal), for: .normal)
         
         dismiss(animated: true, completion: nil)
     }

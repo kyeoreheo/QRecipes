@@ -404,6 +404,7 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
                 User.shared.email = user.profile.email
                 User.shared.firstName = user.profile.givenName
                 User.shared.lastName = user.profile.familyName
+                User.shared.isBusiness = false
                 if user.profile.hasImage
                 {
                     let dimension = round(100 * UIScreen.main.scale)
