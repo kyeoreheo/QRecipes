@@ -365,27 +365,50 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
                     UserDefaults.standard.setPassword(value: strongSelf.password)
                 }
                 guard let result = result else { return }
-                API.fetchUser(uid: result.user.uid) { response in
-                    User.shared.email = response.email
-                    User.shared.firstName = response.firstName
-                    User.shared.lastName = response.lastName
-                    User.shared.favorite = response.favorite
-                    User.shared.purchased = response.purchased
-                    User.shared.profileImage = response.profileImageUrl
-                }
                 
-                DispatchQueue.main.async {
-                    let navigation = UINavigationController(rootViewController: MainTabBar.shared)
-                    navigation.modalPresentationStyle = .fullScreen
-                    navigation.navigationBar.isHidden = true
-                    strongSelf.present(navigation, animated: false, completion: nil)
-                }
+                DB_OWNER.child(result.user.uid).observeSingleEvent(of: .value, with: { (snapshot) in
+                    if snapshot.exists(){
+                        API.fetchOwner(uid: result.user.uid) { response in
+                            Owner.shared.email = response.email
+                            Owner.shared.restaurantName = response.restaurantName
+                            Owner.shared.phoneNumber = response.phoneNumber
+                            Owner.shared.location = response.location
+                            Owner.shared.restaurantImage = response.restaurantImageUrl
+                        }
+                        
+                        DispatchQueue.main.async {
+                            let navigation = UINavigationController(rootViewController: OwnerHomeVC())
+                            navigation.modalPresentationStyle = .fullScreen
+                            navigation.navigationBar.isHidden = true
+                            strongSelf.present(navigation, animated: false, completion: nil)
+                        }
+                    }
+                    else {
+                        API.fetchUser(uid: result.user.uid) { response in
+                            User.shared.email = response.email
+                            User.shared.firstName = response.firstName
+                            User.shared.lastName = response.lastName
+                            User.shared.favorite = response.favorite
+                            User.shared.purchased = response.purchased
+                            User.shared.profileImage = response.profileImageUrl
+                        }
+                            
+                        DispatchQueue.main.async {
+                            let navigation = UINavigationController(rootViewController: MainTabBar.shared)
+                            navigation.modalPresentationStyle = .fullScreen
+                            navigation.navigationBar.isHidden = true
+                            strongSelf.present(navigation, animated: false, completion: nil)
+                        }
+                    }
+                })
+                
             }
         }
     }
     
     @objc func presentSignUpVC() {
-        navigationController?.pushViewController(SignUpVC(), animated: true)
+        //navigationController?.pushViewController(SignUpVC(), animated: true)
+        navigationController?.pushViewController(BusinessSignUpVC(), animated: true)
     }
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?){

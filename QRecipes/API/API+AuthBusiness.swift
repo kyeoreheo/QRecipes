@@ -106,4 +106,15 @@ extension API {
 
         DB_OWNER.child(uid).updateChildValues(values, withCompletionBlock: completion)
     }
+    
+    static func checkIsBusiness(uid: String) -> Bool {
+        var result = false
+        
+        DB_OWNER.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            if snapshot.exists(){
+                result = true
+            }
+        })
+        return result
+    }
 }

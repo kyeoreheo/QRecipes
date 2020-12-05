@@ -1,8 +1,8 @@
 //
-//  BusinessVC.swift
+//  BusinessSignUpVC.swift
 //  QRecipes
 //
-//  Created by Mingu Choi on 12/5/20.
+//  Created by Mingu Choi on 2020/12/05.
 //  Copyright © 2020 Kyo. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Firebase
 
-class BusinessTestVC: UIViewController, UIGestureRecognizerDelegate {
+class BusinessSignUpVC: UIViewController, UIGestureRecognizerDelegate {
     //MARK:- Properties
     private let ratio = SplashVC.shared.ratio
 
@@ -274,7 +274,7 @@ class BusinessTestVC: UIViewController, UIGestureRecognizerDelegate {
 
 }
 
-extension BusinessTestVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension BusinessSignUpVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let restaurantImage = info [.editedImage] as? UIImage else { return }
         self.restaurantImage = restaurantImage
@@ -290,3 +290,4 @@ extension BusinessTestVC: UIImagePickerControllerDelegate, UINavigationControlle
         dismiss(animated: true, completion: nil)
     }
 }
+
