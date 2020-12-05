@@ -63,6 +63,7 @@
 		E5D417E6257B905F0052AAE8 /* API+AuthBusiness.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D417E5257B905F0052AAE8 /* API+AuthBusiness.swift */; };
 		E5D417EC257BA2580052AAE8 /* OwnerHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D417EB257BA2580052AAE8 /* OwnerHomeVC.swift */; };
 		E5D4180B257BB7D00052AAE8 /* BusinessSignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D4180A257BB7CF0052AAE8 /* BusinessSignUpVC.swift */; };
+		E5D4180F257BB9950052AAE8 /* AccountTypeSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D4180E257BB9950052AAE8 /* AccountTypeSelectionVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -127,6 +128,7 @@
 		E5D417E5257B905F0052AAE8 /* API+AuthBusiness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+AuthBusiness.swift"; sourceTree = "<group>"; };
 		E5D417EB257BA2580052AAE8 /* OwnerHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerHomeVC.swift; sourceTree = "<group>"; };
 		E5D4180A257BB7CF0052AAE8 /* BusinessSignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessSignUpVC.swift; sourceTree = "<group>"; };
+		E5D4180E257BB9950052AAE8 /* AccountTypeSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTypeSelectionVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,6 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				316B798A251BB0D000B4E080 /* AuthenticationVM.swift */,
+				E5D4180E257BB9950052AAE8 /* AccountTypeSelectionVC.swift */,
 				E5D4180A257BB7CF0052AAE8 /* BusinessSignUpVC.swift */,
 				313C2F7A25105426004BEB5A /* AuthenticationVC.swift */,
 				31306597251068C400491E44 /* CreaditVC.swift */,
@@ -455,6 +458,7 @@
 				31D3ED10252F6838000CA905 /* API.swift in Sources */,
 				31D3ED51252FA721000CA905 /* User.swift in Sources */,
 				20FDFCA4253D4BC600CE35C7 /* InstructionsVC.swift in Sources */,
+				E5D4180F257BB9950052AAE8 /* AccountTypeSelectionVC.swift in Sources */,
 				E5D417E6257B905F0052AAE8 /* API+AuthBusiness.swift in Sources */,
 				31306598251068C400491E44 /* CreaditVC.swift in Sources */,
 				E5D417EC257BA2580052AAE8 /* OwnerHomeVC.swift in Sources */,
