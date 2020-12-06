@@ -359,11 +359,13 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
                     strongSelf.warningLabel.text = error.localizedDescription
                     return
                 }
+                
                 if strongSelf.rememberMe == true {
                     UserDefaults.standard.setIsLoggedIn(value: true)
                     UserDefaults.standard.setEmail(value: lowerCaseEmail)
                     UserDefaults.standard.setPassword(value: strongSelf.password)
                 }
+                
                 guard let result = result else { return }
                 API.fetchUser(uid: result.user.uid) { response in
                     User.shared.email = response.email
