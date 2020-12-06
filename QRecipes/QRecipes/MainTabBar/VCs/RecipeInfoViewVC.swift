@@ -205,15 +205,13 @@ class RecipeInfoViewVC: UIViewController {
         submitButton.contentMode = .scaleAspectFit
         return submitButton
     }()
-    var tableView: UITableView = {
+    
+    lazy var tableView: UITableView = {
         let tv = UITableView()
-        tv.backgroundColor = .clear
-        //tv.layer.cornerRadius = 8
-        //tv.rowHeight = 100
-        tv.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tv.register(CommentCell.self, forCellReuseIdentifier: "cell")
         return tv
     } ()
-    
+    /*
     var profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "profile")
@@ -260,7 +258,7 @@ class RecipeInfoViewVC: UIViewController {
         
         return button
     }()
-
+ */
     
     private let isInPurchaseFlow: Bool
     
@@ -279,6 +277,7 @@ class RecipeInfoViewVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     var activeTextField : UITextField? = nil
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -397,6 +396,7 @@ class RecipeInfoViewVC: UIViewController {
         contentView.addSubview(recipeImageView)
         recipeImageView.snp.makeConstraints { make in
             make.height.equalTo(130 * ratio)
+            //make.width.equalTo(150 * ratio)
             make.top.equalTo(titleLabel.snp.bottom)
             make.left.equalTo(contentView).offset(10)
             make.right.equalTo(contentView).offset(-10)
@@ -432,8 +432,9 @@ class RecipeInfoViewVC: UIViewController {
         
         scrollView.addSubview(commentView)
         commentView.snp.makeConstraints { make in
-            make.width.equalTo(view.frame.width-40)
+            //make.width.equalTo(view.frame.width-40)
             make.height.equalTo(view.frame.width-10)
+            //make.size.lessThanOrEqualTo(view.frame.height*0.4)
             make.top.equalTo(contentView.snp.bottom).offset(12)
             make.bottom.equalTo(scrollView).offset(-5)
             make.left.equalToSuperview().offset(20)
@@ -457,6 +458,7 @@ class RecipeInfoViewVC: UIViewController {
             make.top.equalTo(commentTitleLabel.snp.bottom).offset(10)
             make.right.equalTo(commentView).offset(-30)
         }
+        
         commentView.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.top.equalTo(commentTitleLabel.snp.bottom).offset(50)
@@ -464,6 +466,8 @@ class RecipeInfoViewVC: UIViewController {
             make.right.equalToSuperview().offset(-15)
             make.bottom.equalToSuperview().offset(-15)
         }
+ 
+        /*
         tableView.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in
             make.width.height.equalTo(50 * ratio)
@@ -495,8 +499,9 @@ class RecipeInfoViewVC: UIViewController {
             make.top.equalTo(userNameLabel).offset(70)
             make.right.equalTo(commentView).offset(-20)
         }
-    }
     
+    */
+    }
     private func fetchRestaurant() {
         guard let recipe = recipe else { return }
         API.fetchRestaurant(byName: recipe.restaurant) { [weak self] response in
@@ -579,15 +584,14 @@ extension RecipeInfoViewVC: UITableViewDataSource, UITableViewDelegate{
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10 //Choose your custom row number
+        return 10  //Choose your custom row number
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120.0;//Choose your custom row height
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CommentCell
+            return cell
     }
 }
 extension RecipeInfoViewVC : UITextFieldDelegate {
@@ -610,3 +614,5 @@ extension RecipeInfoViewVC : UITextFieldDelegate {
         return true
     }
 }
+
+

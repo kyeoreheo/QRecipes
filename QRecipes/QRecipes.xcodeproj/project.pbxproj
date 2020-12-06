@@ -51,6 +51,7 @@
 		31D3ED51252FA721000CA905 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D3ED50252FA721000CA905 /* User.swift */; };
 		4A2A77BBB02A59AA291EF584 /* Pods_QRecipes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23171396F957630F02FB16F /* Pods_QRecipes.framework */; };
 		C2011E9225648ECF00B409AB /* ReceiptViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2011E9125648ECF00B409AB /* ReceiptViewVC.swift */; };
+		C2011E96257D846800B409AB /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2011E95257D846800B409AB /* CommentCell.swift */; };
 		C20FE50E2525B00C003BDA99 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */; };
 		C20FE524253543F7003BDA99 /* settingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20FE523253543F7003BDA99 /* settingCollectionViewCell.swift */; };
 		C26A360725428698001A331E /* RecipeInfoViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26A360625428698001A331E /* RecipeInfoViewVC.swift */; };
@@ -114,6 +115,7 @@
 		59433B390CDEE59F0FA6D4B0 /* Pods-QRecipes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.release.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.release.xcconfig"; sourceTree = "<group>"; };
 		637B5E3B9B20F801C5601BAC /* Pods-QRecipes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QRecipes.debug.xcconfig"; path = "Target Support Files/Pods-QRecipes/Pods-QRecipes.debug.xcconfig"; sourceTree = "<group>"; };
 		C2011E9125648ECF00B409AB /* ReceiptViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptViewVC.swift; sourceTree = "<group>"; };
+		C2011E95257D846800B409AB /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		C20FE50D2525B00C003BDA99 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		C20FE523253543F7003BDA99 /* settingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingCollectionViewCell.swift; sourceTree = "<group>"; };
 		C23171396F957630F02FB16F /* Pods_QRecipes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QRecipes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,6 +156,7 @@
 				20FDFCA1253D4BA800CE35C7 /* IngredientsVC.swift */,
 				20FDFCA3253D4BC600CE35C7 /* InstructionsVC.swift */,
 				20470FBB253579CE00F2B070 /* RestaurantOverviewVC.swift */,
+				C2011E95257D846800B409AB /* CommentCell.swift */,
 			);
 			path = VCs;
 			sourceTree = "<group>";
@@ -448,6 +451,7 @@
 				205EC2022535FEFD0098CFE9 /* RecipeCell.swift in Sources */,
 				319D1755254B03C900BB343F /* Restaurant.swift in Sources */,
 				3182DDDA2538BBA9004C488E /* FinishedPurchaseVC.swift in Sources */,
+				C2011E96257D846800B409AB /* CommentCell.swift in Sources */,
 				313C2F8125106395004BEB5A /* HomeVC.swift in Sources */,
 				317218092508454200EDF3DB /* SplashVC.swift in Sources */,
 				316B799A251BEC1400B4E080 /* QRScanVM.swift in Sources */,
