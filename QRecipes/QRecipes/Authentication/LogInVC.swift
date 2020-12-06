@@ -408,7 +408,7 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
     
     @objc func presentSignUpVC() {
         //navigationController?.pushViewController(SignUpVC(), animated: true)
-        navigationController?.pushViewController(BusinessSignUpVC(), animated: true)
+        navigationController?.pushViewController(AccountTypeSelectionVC(), animated: true)
     }
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?){

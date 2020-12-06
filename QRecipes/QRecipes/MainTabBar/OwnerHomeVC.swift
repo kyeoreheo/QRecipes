@@ -12,14 +12,7 @@ import SnapKit
 class OwnerHomeVC: UIViewController {
     
     //MARK:- Properties
-    let label: UILabel = {
-        let label = UILabel()
-        label.text = "Owner successfully logged in"
-        label.font = UIFont.boldSystemFont(ofSize: 22)
-        label.textColor = .black
-        
-        return label
-    }()
+    let label = UILabel()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -32,6 +25,9 @@ class OwnerHomeVC: UIViewController {
         view.backgroundColor = .white
         
         view.addSubview(label)
+        label.text = "Owner successfully logged in"
+        label.font = UIFont.boldSystemFont(ofSize: 22)
+        label.textColor = .black
         label.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
