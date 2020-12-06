@@ -1,0 +1,21 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'QRecipes' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for QRecipes
+
+  pod 'Alamofire'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+  pod 'GoogleSignIn'
+  pod 'FBSDKLoginKit'
+  pod 'Firebase/Database'
+  pod 'Firebase/Storage'
+  pod 'SnapKit'
+  pod 'SDWebImage', '~> 5.0'
+
+end
