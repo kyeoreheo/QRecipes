@@ -60,6 +60,11 @@
 		C6CA107D25395402003DBB40 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA107C25395402003DBB40 /* Recipe.swift */; };
 		C6CA109825398114003DBB40 /* API+Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA109725398114003DBB40 /* API+Restaurant.swift */; };
 		C6CA1104256653D9003DBB40 /* UserDefaults+helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CA1103256653D9003DBB40 /* UserDefaults+helper.swift */; };
+		E5D417E3257B8E5D0052AAE8 /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D417E2257B8E5D0052AAE8 /* Owner.swift */; };
+		E5D417E6257B905F0052AAE8 /* API+AuthBusiness.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D417E5257B905F0052AAE8 /* API+AuthBusiness.swift */; };
+		E5D417EC257BA2580052AAE8 /* OwnerHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D417EB257BA2580052AAE8 /* OwnerHomeVC.swift */; };
+		E5D4180B257BB7D00052AAE8 /* BusinessSignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D4180A257BB7CF0052AAE8 /* BusinessSignUpVC.swift */; };
+		E5D4180F257BB9950052AAE8 /* AccountTypeSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D4180E257BB9950052AAE8 /* AccountTypeSelectionVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -121,6 +126,11 @@
 		C6CA109725398114003DBB40 /* API+Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Restaurant.swift"; sourceTree = "<group>"; };
 		C6CA1101255F325D003DBB40 /* QRecipes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QRecipes.entitlements; sourceTree = "<group>"; };
 		C6CA1103256653D9003DBB40 /* UserDefaults+helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+helper.swift"; sourceTree = "<group>"; };
+		E5D417E2257B8E5D0052AAE8 /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
+		E5D417E5257B905F0052AAE8 /* API+AuthBusiness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+AuthBusiness.swift"; sourceTree = "<group>"; };
+		E5D417EB257BA2580052AAE8 /* OwnerHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerHomeVC.swift; sourceTree = "<group>"; };
+		E5D4180A257BB7CF0052AAE8 /* BusinessSignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessSignUpVC.swift; sourceTree = "<group>"; };
+		E5D4180E257BB9950052AAE8 /* AccountTypeSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTypeSelectionVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,11 +246,13 @@
 				3113CB1E250AEA5200C147FF /* QRAPI.swift */,
 				31D3ED0F252F6838000CA905 /* API.swift */,
 				31D3ED12252F6847000CA905 /* API+Auth.swift */,
+				E5D417E5257B905F0052AAE8 /* API+AuthBusiness.swift */,
 				C6CA1079253953E3003DBB40 /* API+Recipe.swift */,
 				C6CA109725398114003DBB40 /* API+Restaurant.swift */,
 				31D3ED50252FA721000CA905 /* User.swift */,
 				C6CA107C25395402003DBB40 /* Recipe.swift */,
 				319D1754254B03C900BB343F /* Restaurant.swift */,
+				E5D417E2257B8E5D0052AAE8 /* Owner.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -253,6 +265,7 @@
 				313C2F82251063CC004BEB5A /* SearchVC.swift */,
 				313C2F84251063E1004BEB5A /* FavoriteVC.swift */,
 				313C2F86251063EE004BEB5A /* SettingVC.swift */,
+				E5D417EB257BA2580052AAE8 /* OwnerHomeVC.swift */,
 				20C229A6253BF22000D19032 /* VCs */,
 				20C9424F252AE748000698E6 /* CustomCells */,
 				316B7998251BEC0100B4E080 /* QRSScanVC */,
@@ -279,6 +292,8 @@
 			isa = PBXGroup;
 			children = (
 				316B798A251BB0D000B4E080 /* AuthenticationVM.swift */,
+				E5D4180E257BB9950052AAE8 /* AccountTypeSelectionVC.swift */,
+				E5D4180A257BB7CF0052AAE8 /* BusinessSignUpVC.swift */,
 				313C2F7A25105426004BEB5A /* AuthenticationVC.swift */,
 				31306597251068C400491E44 /* CreaditVC.swift */,
 				3184D1AB25241B4500D3D75A /* LogInVC.swift */,
@@ -430,6 +445,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				313C2F7F251062FB004BEB5A /* MainTabBar.swift in Sources */,
+				E5D417E3257B8E5D0052AAE8 /* Owner.swift in Sources */,
 				313C2F83251063CC004BEB5A /* SearchVC.swift in Sources */,
 				20C94251252AE748000698E6 /* FavoriteCell.swift in Sources */,
 				205EC2022535FEFD0098CFE9 /* RecipeCell.swift in Sources */,
@@ -446,7 +462,10 @@
 				31D3ED10252F6838000CA905 /* API.swift in Sources */,
 				31D3ED51252FA721000CA905 /* User.swift in Sources */,
 				20FDFCA4253D4BC600CE35C7 /* InstructionsVC.swift in Sources */,
+				E5D4180F257BB9950052AAE8 /* AccountTypeSelectionVC.swift in Sources */,
+				E5D417E6257B905F0052AAE8 /* API+AuthBusiness.swift in Sources */,
 				31306598251068C400491E44 /* CreaditVC.swift in Sources */,
+				E5D417EC257BA2580052AAE8 /* OwnerHomeVC.swift in Sources */,
 				C20FE50E2525B00C003BDA99 /* CustomTableViewCell.swift in Sources */,
 				3182DDD625377CA6004C488E /* PurchaseVC.swift in Sources */,
 				313C2F85251063E1004BEB5A /* FavoriteVC.swift in Sources */,
@@ -459,6 +478,7 @@
 				C6CA107D25395402003DBB40 /* Recipe.swift in Sources */,
 				C6CA109825398114003DBB40 /* API+Restaurant.swift in Sources */,
 				314DCC51250863E400011BAD /* FrontEndTestVC.swift in Sources */,
+				E5D4180B257BB7D00052AAE8 /* BusinessSignUpVC.swift in Sources */,
 				20470FBC253579CE00F2B070 /* RestaurantOverviewVC.swift in Sources */,
 				316B799F251BEDDE00B4E080 /* ProgressBar.swift in Sources */,
 				313C2F7B25105426004BEB5A /* AuthenticationVC.swift in Sources */,

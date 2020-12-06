@@ -285,7 +285,6 @@ class RecipeInfoViewVC: UIViewController {
         configure()
         fetchRestaurant()
         scrollView.frame = self.view.bounds
-        //commentTextField.becomeFirstResponder()
         commentTextField.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(RecipeInfoViewVC.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -487,7 +486,6 @@ class RecipeInfoViewVC: UIViewController {
             make.top.equalTo(userNameLabel).offset(25)
             make.left.equalTo(profileImageView.snp.right).offset(30)
             make.right.equalTo(commentView).offset(-20)
-            
         }
         
         tableView.addSubview(thumbsUpButton)
@@ -495,6 +493,7 @@ class RecipeInfoViewVC: UIViewController {
             make.top.equalTo(userNameLabel).offset(70)
             make.right.equalTo(commentView).offset(-50)
         }
+        
         tableView.addSubview(thumbsDownButton)
         thumbsDownButton.snp.makeConstraints { make in
             make.top.equalTo(userNameLabel).offset(70)
@@ -575,7 +574,6 @@ class RecipeInfoViewVC: UIViewController {
     @objc func commentTextFieldDidhange(_ textField: UITextField) {
         guard textField.text != nil else { return }
         //self.comment = comment
-
     }
 }
 

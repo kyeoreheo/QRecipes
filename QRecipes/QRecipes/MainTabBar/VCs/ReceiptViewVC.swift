@@ -116,7 +116,6 @@ extension ReceiptViewVC: UITableViewDataSource, UITableViewDelegate{
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("DEBUG:- # of transactions \(transactions.count)")
         return transactions.count  //Choose your custom row number
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -129,7 +128,6 @@ extension ReceiptViewVC: UITableViewDataSource, UITableViewDelegate{
             if indexPath.row == itr {
                 cell.recipeUid = transaction.key
                 cell.transaction = transaction.value
-                print("DEBUG:- at \(itr)th element, uid: \(transaction.key), value: \(transaction.value)")
             }
             itr += 1
         }
