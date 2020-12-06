@@ -82,12 +82,17 @@ class RecipeInfoViewVC: UIViewController {
     
     var purchaseButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .primeOrange
         button.layer.cornerRadius = 10
         button.setTitle("Purchase", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(pressPurchaseButton), for: .touchUpInside)
+        if User.shared.isBusiness {
+            button.backgroundColor = .gray
+        } else {
+            button.backgroundColor = .primeOrange
+            button.addTarget(self, action: #selector(pressPurchaseButton), for: .touchUpInside)
+        }
+
         return button
     }()
     
