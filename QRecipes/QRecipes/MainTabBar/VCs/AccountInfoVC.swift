@@ -107,6 +107,10 @@ class AccountInfoVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        
+        if !User.shared.isBusiness {
+            configureUserUI()
+        }
     }
     
     //MARK:- Helpers
@@ -155,6 +159,16 @@ class AccountInfoVC: UIViewController {
             make.right.equalToSuperview().offset(-20)
         }
         
+        view.addSubview(logoutButton)
+        logoutButton.snp.makeConstraints { make in
+            make.height.equalTo(50)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-50)
+            make.left.equalToSuperview().offset(50)
+            make.right.equalToSuperview().offset(-50)
+        }
+    }
+    
+    private func configureUserUI(){
         view.addSubview(historyButton)
         historyButton.snp.makeConstraints { make in
             make.height.equalTo(40)
@@ -175,14 +189,6 @@ class AccountInfoVC: UIViewController {
             make.top.equalTo(historyButton.snp.bottom).offset(20)
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
-        }
-        
-        view.addSubview(logoutButton)
-        logoutButton.snp.makeConstraints { make in
-            make.height.equalTo(50)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-50)
-            make.left.equalToSuperview().offset(50)
-            make.right.equalToSuperview().offset(-50)
         }
     }
     
