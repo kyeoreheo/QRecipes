@@ -60,7 +60,7 @@ class CommentCell: UITableViewCell {
         return button
     }()
     
-    lazy var userUID = "" {
+    var userUID = "" {
         didSet {
             API.fetchUser(uid: userUID) { response in
                 self.userNameLabel.text = response.firstName + " " + response.lastName
