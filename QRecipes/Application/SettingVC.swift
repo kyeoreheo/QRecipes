@@ -107,6 +107,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         collectionView.delegate = self
         collectionView.dataSource = self
     }
+    
     private func configureUI(){
         view.backgroundColor = .orange
         
