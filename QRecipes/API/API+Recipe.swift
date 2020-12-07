@@ -227,9 +227,7 @@ extension API {
             
             let updates = ["purchased": purchased]
             DB_USERS.child(uid).updateChildValues(updates, withCompletionBlock: completion)
-            }) { (error) in
-                    print(error.localizedDescription)
-                }
+            })
     }
     
     static func fetchReceipt(completion: @escaping([String:AnyObject]) -> Void) {
@@ -241,6 +239,26 @@ extension API {
             User.shared.purchased = purchased
             
             completion(purchased)
+        })
+    }
+    
+    static func postComment(recipeUID: String, text: String, userUID: String, completion: @escaping(Error?, DatabaseReference?) -> Void) {
+        var hadPost = false
+
+        DB_RECIPE.child(recipeUID).observe(DataEventType.value, with:  {
+            snapshot in
+            guard let dictionary = snapshot.value as? NSMutableDictionary,
+                  var commentsDic = dictionary["comments"] as? [[String: Any]]
+            else { return }
+            if !hadPost {
+                let now = Date().getFormattedDate(format: "yyyy-MM-dd HH:mm:ss")
+                commentsDic.append(["date": now,
+                                    "text": text,
+                                    "user":userUID])
+                let update = ["comments" : commentsDic]
+                DB_RECIPE.child(recipeUID).updateChildValues(update, withCompletionBlock: completion)
+                hadPost = true
+            }
         })
     }
     

@@ -35,13 +35,13 @@ struct Recipe {
         self.price = dictionary["price"] as? String ?? ""
         self.tags = dictionary["tags"] as? [String] ?? [""]
         self.ingredients = dictionary["ingrediants"] as? [String] ?? [""] //typo in db
-        let commentDic = dictionary["comments"] as? [Any]
+        let commentsDic = dictionary["comments"] as? [Any]
         var tempComments = [Comment]()
-        commentDic?.forEach {element in
-            if let commentDic = element as? [String : String] {
-                let comment = Comment(date: commentDic["date"] ?? "",
-                                      text: commentDic["text"] ?? "",
-                                      user: commentDic["user"] ?? "")
+        commentsDic?.forEach {element in
+            if let commentsDic = element as? [String : String] {
+                let comment = Comment(date: commentsDic["date"] ?? "",
+                                      text: commentsDic["text"] ?? "",
+                                      user: commentsDic["user"] ?? "")
                 tempComments.append(comment)
             }
         }

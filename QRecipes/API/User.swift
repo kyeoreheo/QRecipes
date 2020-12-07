@@ -15,7 +15,7 @@ class User {
     var favorite = [""]
     var purchased = [String:AnyObject]()
     var profileImage: URL?
-    var isBusiness = true
+    var isBusiness = false
     
     func clear() {
         User.shared.email = ""
