@@ -12,6 +12,7 @@ let DB_REF = Database.database().reference()
 let DB_USERS = DB_REF.child("users")
 let DB_RECIPE = DB_REF.child("recipes")
 let DB_RESTAURANT = DB_REF.child("restaurants")
+let DB_OWNER = DB_REF.child("owners")
 
 let ST_REF = Storage.storage().reference()
 let ST_PROFILE_IMAGE = ST_REF.child("profile_image")

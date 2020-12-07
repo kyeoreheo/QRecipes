@@ -51,46 +51,6 @@ class ReceiptViewVC: UIViewController {
         tv.register(TransactionCell.self, forCellReuseIdentifier: "cell")
         return tv
     } ()
-    /*
-    var foodImageView: UIImageView = {
-        let fiv = UIImageView()
-        fiv.image = #imageLiteral(resourceName: "shushi")
-        fiv.contentMode = .scaleAspectFill
-        fiv.clipsToBounds = true
-        fiv.layer.borderWidth = 3
-        fiv.layer.cornerRadius = 8
-        fiv.translatesAutoresizingMaskIntoConstraints = false
-        fiv.layer.borderColor = UIColor.white.cgColor
-        return fiv
-    }()
- 
-    lazy var foodNameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Sashimi Dinner"
-        label.textColor = .gray
-        label.font = UIFont.systemFont(ofSize: 16 * ratio, weight: UIFont.Weight.bold)
-        
-        return label
-    }()
-    lazy var datePurchaseLbl : UILabel = {
-        let lbl = UILabel()
-        lbl.text = "11.20.2020"
-        lbl.textColor = .gray
-        lbl.font = UIFont.systemFont(ofSize: 16 * ratio, weight: UIFont.Weight.bold)
-        
-        return lbl
-    }()
-    let priceButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.backgroundColor = .orange
-        button.layer.cornerRadius = 10
-        button.setTitle("   $7   ", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        button.setTitleColor(.white, for: .normal)
-        
-        return button
-    }()*/
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,32 +96,6 @@ class ReceiptViewVC: UIViewController {
             make.right.equalToSuperview().offset(-15)
             make.bottom.equalTo(receiptView.snp.bottom).offset(-10)
         }
-        /*
-        tableView.addSubview(foodImageView)
-        foodImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(90 * ratio)
-            make.top.left.equalToSuperview().offset(15)
-            make.size.equalTo(view.frame.width-280)
-            //make.left.equalToSuperview().offset(15)
-        }
-        tableView.addSubview(foodNameLabel)
-        foodNameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(15)
-            make.left.equalTo(foodImageView.snp.right).offset(20)
-            
-        }
-        tableView.addSubview(datePurchaseLbl)
-        datePurchaseLbl.snp.makeConstraints { make in
-            make.top.equalTo(foodNameLabel.snp.bottom).offset(20)
-            make.left.equalTo(foodImageView.snp.right).offset(20)
-            
-        }
-        tableView.addSubview(priceButton)
-        priceButton.snp.makeConstraints { make in
-            make.top.equalTo(datePurchaseLbl.snp.bottom).offset(5)
-            make.left.equalTo(receiptView.snp.right).offset(-80)
-            
-        }*/
         
     }
     @objc func popVC() {
@@ -182,7 +116,6 @@ extension ReceiptViewVC: UITableViewDataSource, UITableViewDelegate{
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("DEBUG:- # of transactions \(transactions.count)")
         return transactions.count  //Choose your custom row number
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -195,7 +128,6 @@ extension ReceiptViewVC: UITableViewDataSource, UITableViewDelegate{
             if indexPath.row == itr {
                 cell.recipeUid = transaction.key
                 cell.transaction = transaction.value
-                print("DEBUG:- at \(itr)th element, uid: \(transaction.key), value: \(transaction.value)")
             }
             itr += 1
         }

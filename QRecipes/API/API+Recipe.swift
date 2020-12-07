@@ -19,6 +19,10 @@ struct newRecipe {
     var recipeImage: UIImage
 }
 
+struct commentsResponse {
+    
+}
+
 extension API {
     static func generateRestaurant(image: UIImage, recipes: [newRecipe], completion: @escaping(Error?, DatabaseReference?) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.3) else { return }
@@ -239,4 +243,6 @@ extension API {
             completion(purchased)
         })
     }
+    
+    //static func fetchComments(completion:)
 }

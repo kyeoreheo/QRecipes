@@ -30,26 +30,32 @@ class MainTabBar: UITabBarController, UITabBarControllerDelegate {
     // MARK: - configures
     func configureTabBar() {
         tabBar.barTintColor = .white
-        tabBar.tintColor = .orange
 
         let homeTab = barTabView(view: HomeVC(), image: "home")
         let searchTab = barTabView(view: SearchVC(), image: "search")
         let middleTab = QRSacnVC()
         let favoriteTab = barTabView(view: FavoriteVC(), image: "favorite")
         let settingTab = barTabView(view: SettingVC(), image: "setting")
-        
-        viewControllers = [homeTab, searchTab, middleTab, favoriteTab, settingTab]
-        tabBar.items?[2].isEnabled = false
+
+        if User.shared.isBusiness {
+            viewControllers = [homeTab, searchTab, settingTab]
+        } else {
+            viewControllers = [homeTab, searchTab, middleTab, favoriteTab, settingTab]
+            tabBar.items?[2].isEnabled = false
+        }
+
     }
     
     func configureUI() {
-        view.addSubview(qrButton)
-        qrButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(presentQRScanVC)))
-        qrButton.isUserInteractionEnabled = true
-        qrButton.snp.makeConstraints { make in
-            make.width.height.equalTo(70)
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
+        if !User.shared.isBusiness {
+            view.addSubview(qrButton)
+            qrButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(presentQRScanVC)))
+            qrButton.isUserInteractionEnabled = true
+            qrButton.snp.makeConstraints { make in
+                make.width.height.equalTo(70)
+                make.centerX.equalToSuperview()
+                make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
+            }
         }
     }
 
