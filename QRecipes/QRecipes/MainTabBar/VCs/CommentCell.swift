@@ -34,7 +34,7 @@ class CommentCell: UITableViewCell {
     }()
     lazy var commentLabel: UILabel = {
         let label = UILabel()
-        label.text = "Love it, it is easy to follow.Thank you. :)"
+        //label.text = "Love it, it is easy to follow.Thank you. :)"
         label.textColor = .black
         label.font = UIFont(name:"Helvetica", size: 14 * ratio)
         label.textAlignment = .left
@@ -60,6 +60,17 @@ class CommentCell: UITableViewCell {
         return button
     }()
     
+    lazy var userUID = "" {
+        didSet {
+            API.fetchUser(uid: userUID) { response in
+                self.userNameLabel.text = response.firstName + " " + response.lastName
+                self.profileImageView.sd_setImage(with: response.profileImageUrl, completed: nil)
+            }
+        }
+    }
+    
+    let timeLabel = UILabel()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.configureCell()
@@ -75,33 +86,42 @@ class CommentCell: UITableViewCell {
         contentView.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in
             make.width.height.equalTo(50 * ratio)
-            make.top.left.equalToSuperview().offset(15)
-            //make.left.equalToSuperview().offset(15)
+            make.top.left.equalToSuperview().offset(4)
         }
         contentView.addSubview(userNameLabel)
         userNameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
-            make.left.equalTo(profileImageView.snp.right).offset(30)
+            make.top.equalToSuperview().offset(4)
+            make.left.equalTo(profileImageView.snp.right).offset(8)
             
         }
         contentView.addSubview(commentLabel)
         commentLabel.snp.makeConstraints { make in
-            make.top.equalTo(userNameLabel).offset(25)
-            make.left.equalTo(profileImageView.snp.right).offset(30)
-            make.right.equalTo(contentView).offset(-20)
-            
+            make.top.equalTo(userNameLabel.snp.bottom).offset(4)
+            make.left.equalTo(profileImageView.snp.right).offset(8)
+            make.right.equalToSuperview().offset(-8)
         }
         
-        contentView.addSubview(thumbsUpButton)
-        thumbsUpButton.snp.makeConstraints { make in
-            make.top.equalTo(userNameLabel).offset(70)
-            make.right.equalTo(contentView).offset(-50)
-        }
-        contentView.addSubview(thumbsDownButton)
-        thumbsDownButton.snp.makeConstraints { make in
-            make.top.equalTo(userNameLabel).offset(70)
-            make.right.equalTo(contentView).offset(-20)
+        contentView.addSubview(timeLabel)
+        timeLabel.textColor = .gray
+        timeLabel.textAlignment = .right
+        timeLabel.font = UIFont.systemFont(ofSize: 12 * ratio)
+        timeLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(4)
+            make.right.equalToSuperview().offset(-4)
         }
         
+//        contentView.addSubview(thumbsDownButton)
+//        thumbsDownButton.snp.makeConstraints { make in
+//            make.top.equalToSuperview().offset(4)
+//            make.right.equalToSuperview().offset(-4)
+//        }
+//
+//        contentView.addSubview(thumbsUpButton)
+//        thumbsUpButton.snp.makeConstraints { make in
+//            make.top.equalToSuperview().offset(4)
+//            make.right.equalTo(thumbsDownButton.snp.left).offset(-4)
+//        }
     }
+    
+    
 }

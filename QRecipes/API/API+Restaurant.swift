@@ -23,22 +23,13 @@ struct RestaurantResponse {
     let phone: String
     let recipes: [String]
     var restaurantImageUrl: URL?
-    let comments: [Comment]
-    
-    struct Comment: Decodable {
-        let date: String
-        let text: String
-        let user: String
-    }
     
     init(uid: String, dictionary: [String: AnyObject]) {
         self.uid = uid
-        
         self.name = dictionary["name"] as? String ?? ""
         self.address = dictionary["address"] as? String ?? ""
         self.phone = dictionary["phone"] as? String ?? ""
         self.recipes = dictionary["recipes"] as? [String] ?? [""]
-        self.comments = dictionary["comments"] as? [Comment] ?? [Comment]()
         
         if let restaurantImageUrl = dictionary["restaurantImageUrl"] as? String {
             guard let url = URL(string: restaurantImageUrl)
