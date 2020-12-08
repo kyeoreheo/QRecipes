@@ -8,12 +8,14 @@
 
 import UIKit
 import SnapKit
+import Firebase
 
 class RecipeInfoViewVC: UIViewController {
     
     //MARK:- Properties
     var recipe: Recipe? {
         didSet {
+            tableView.reloadData()
             recipeImageView.sd_setImage(with: recipe?.recipeImageUrl, completed: nil)
             restaurantLabel.text = recipe?.restaurant
             titleLabel.text = recipe?.name
@@ -82,12 +84,18 @@ class RecipeInfoViewVC: UIViewController {
     
     var purchaseButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .primeOrange
         button.layer.cornerRadius = 10
         button.setTitle("Purchase", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(pressPurchaseButton), for: .touchUpInside)
+
+        if User.shared.isBusiness {
+            button.backgroundColor = .gray
+        } else {
+            button.backgroundColor = .primeOrange
+            button.addTarget(self, action: #selector(pressPurchaseButton), for: .touchUpInside)
+        }
+
         return button
     }()
     
@@ -197,12 +205,13 @@ class RecipeInfoViewVC: UIViewController {
         commentTextField.backgroundColor = .white
         return commentTextField
     }()
-    var submitButton: UIButton = {
+    lazy var submitButton: UIButton = {
         let submitButton = UIButton(type: .custom)
         submitButton.tintColor = .gray
         submitButton.backgroundColor = .white
         submitButton.setTitle("submit", for: .normal)
         submitButton.setTitleColor(.primeOrange, for: .normal)
+        submitButton.addTarget(self, action: #selector(postComment), for: .touchUpInside)
         submitButton.contentMode = .scaleAspectFit
         return submitButton
     }()
@@ -417,7 +426,7 @@ class RecipeInfoViewVC: UIViewController {
         commentView.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.top.equalTo(commentTitleLabel.snp.bottom).offset(50)
-            make.left.equalToSuperview().offset(35)
+            make.left.equalToSuperview().offset(15)
             make.right.equalToSuperview().offset(-15)
             make.bottom.equalToSuperview().offset(-15)
         }
@@ -434,6 +443,25 @@ class RecipeInfoViewVC: UIViewController {
     }
     
     //MARK:- Selectors
+    @objc func postComment() {
+        guard let recipeUID = recipe?.uid,
+              let comment = commentTextField.text,
+              let userUID = Auth.auth().currentUser?.uid
+        else { return}
+        if comment.count > 0 {
+            API.postComment(recipeUID: recipeUID, text: comment, userUID: userUID) { error, response in
+                guard let response = response
+                else { return }
+                self.commentTextField.text = ""
+                API.fetchACertainRecipes(uid: recipeUID) { response in
+                    self.recipe = response
+                    
+                }
+                //self.configureUI()
+            }
+        }
+    }
+    
     @objc func pressPurchaseButton() {
         guard let restaurantName = recipe?.name,
               let payAmount = recipe?.price,
@@ -505,14 +533,20 @@ extension RecipeInfoViewVC: UITableViewDataSource, UITableViewDelegate{
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10  //Choose your custom row number
+        return recipe?.comments.count ?? 0 //Choose your custom row number
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120.0;//Choose your custom row height
+        return 70 * ratio;//Choose your custom row height
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CommentCell
-            return cell
+        if let recipe = recipe {
+            cell.commentLabel.text = recipe.comments[indexPath.row].text
+            cell.userUID = recipe.comments[indexPath.row].user
+            cell.timeLabel.text = recipe.comments[indexPath.row].date
+        }
+        
+        return cell
     }
 }
 extension RecipeInfoViewVC : UITextFieldDelegate {

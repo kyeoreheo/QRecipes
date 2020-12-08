@@ -17,7 +17,9 @@ class MainTabBar: UITabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTabBar()
-        configureUI()
+        if !User.shared.isBusiness {
+            displayQrButton()
+        }
     }
     
     
@@ -37,12 +39,16 @@ class MainTabBar: UITabBarController, UITabBarControllerDelegate {
         let middleTab = QRSacnVC()
         let favoriteTab = barTabView(view: FavoriteVC(), image: "favorite")
         let settingTab = barTabView(view: SettingVC(), image: "setting")
-        
-        viewControllers = [homeTab, searchTab, middleTab, favoriteTab, settingTab]
-        tabBar.items?[2].isEnabled = false
+        if User.shared.isBusiness {
+            viewControllers = [homeTab, searchTab, settingTab]
+        } else {
+            viewControllers = [homeTab, searchTab, middleTab, favoriteTab, settingTab]
+            tabBar.items?[2].isEnabled = false
+        }
+
     }
     
-    func configureUI() {
+    func displayQrButton() {
         view.addSubview(qrButton)
         qrButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(presentQRScanVC)))
         qrButton.isUserInteractionEnabled = true
