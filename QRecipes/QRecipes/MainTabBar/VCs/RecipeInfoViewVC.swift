@@ -23,7 +23,7 @@ class RecipeInfoViewVC: UIViewController {
     }
     var scrollView: UIScrollView = {
         let view = UIScrollView()
-        view.backgroundColor = .black
+        view.backgroundColor = .white
         view.layer.cornerRadius = 8
         view.contentSize.width = view.frame.width;
         return view
@@ -188,12 +188,13 @@ class RecipeInfoViewVC: UIViewController {
     
     var commentTextField: UITextField = {
         let commentTextField = UITextField()
-        commentTextField.placeholder = "Add a comment here...."
-        //commentTextField.borderStyle = UITextField.BorderStyle.roundedRect
+        //commentTextField.placeholder = "Add a comment here...."
+        commentTextField.attributedPlaceholder =
+            NSAttributedString(string: " Add a comment here....", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
         commentTextField.keyboardType = UIKeyboardType.default
         commentTextField.returnKeyType = UIReturnKeyType.done
         commentTextField.textColor = .black
-        
+        commentTextField.backgroundColor = .white
         return commentTextField
     }()
     var submitButton: UIButton = {
@@ -209,6 +210,7 @@ class RecipeInfoViewVC: UIViewController {
     lazy var tableView: UITableView = {
         let tv = UITableView()
         tv.register(CommentCell.self, forCellReuseIdentifier: "cell")
+        tv.backgroundColor = .white
         return tv
     } ()
     
@@ -274,7 +276,9 @@ class RecipeInfoViewVC: UIViewController {
         scrollView.addSubview(restarantImageView)
         restarantImageView.snp.makeConstraints { make in
             make.height.equalTo(view.frame.height * 0.4 * ratio)
-            make.left.right.top.equalToSuperview()
+            make.left.right.equalToSuperview()
+            make.top.equalToSuperview().offset(-45)
+            
         }
         
         scrollView.addSubview(backButton)
@@ -348,7 +352,6 @@ class RecipeInfoViewVC: UIViewController {
         contentView.addSubview(recipeImageView)
         recipeImageView.snp.makeConstraints { make in
             make.height.equalTo(130 * ratio)
-            //make.width.equalTo(150 * ratio)
             make.top.equalTo(titleLabel.snp.bottom)
             make.left.equalTo(contentView).offset(10)
             make.right.equalTo(contentView).offset(-10)
@@ -384,9 +387,9 @@ class RecipeInfoViewVC: UIViewController {
         
         scrollView.addSubview(commentView)
         commentView.snp.makeConstraints { make in
-            //make.width.equalTo(view.frame.width-40)
+            
             make.height.equalTo(view.frame.width-10)
-            //make.size.lessThanOrEqualTo(view.frame.height*0.4)
+            
             make.top.equalTo(contentView.snp.bottom).offset(12)
             make.bottom.equalTo(scrollView).offset(-5)
             make.left.equalToSuperview().offset(20)
@@ -518,17 +521,21 @@ extension RecipeInfoViewVC : UITextFieldDelegate {
     // set the activeTextField to the selected textfield
         self.activeTextField = textField
     }
-    
+   
+//    func hideKeyboard() {
+//        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+//    }
     // when user click 'done' or dismiss the keyboard
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.activeTextField = nil
     }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         if let text = textField.text{
             print("\(text)")
         }
-        
+        //self.hideKeyboard()
         return true
     }
 }
