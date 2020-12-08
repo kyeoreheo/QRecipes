@@ -25,7 +25,7 @@ class RecipeInfoViewVC: UIViewController {
     }
     var scrollView: UIScrollView = {
         let view = UIScrollView()
-        view.backgroundColor = .black
+        view.backgroundColor = .white
         view.layer.cornerRadius = 8
         view.contentSize.width = view.frame.width;
         return view
@@ -196,12 +196,13 @@ class RecipeInfoViewVC: UIViewController {
     
     var commentTextField: UITextField = {
         let commentTextField = UITextField()
-        commentTextField.placeholder = "Add a comment here...."
-        //commentTextField.borderStyle = UITextField.BorderStyle.roundedRect
+        //commentTextField.placeholder = "Add a comment here...."
+        commentTextField.attributedPlaceholder =
+            NSAttributedString(string: " Add a comment here....", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
         commentTextField.keyboardType = UIKeyboardType.default
         commentTextField.returnKeyType = UIReturnKeyType.done
         commentTextField.textColor = .black
-        
+        commentTextField.backgroundColor = .white
         return commentTextField
     }()
     lazy var submitButton: UIButton = {
@@ -218,56 +219,9 @@ class RecipeInfoViewVC: UIViewController {
     lazy var tableView: UITableView = {
         let tv = UITableView()
         tv.register(CommentCell.self, forCellReuseIdentifier: "cell")
+        tv.backgroundColor = .white
         return tv
     } ()
-    /*
-    var profileImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "profile")
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        iv.layer.borderWidth = 3
-        iv.layer.cornerRadius = 25
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.layer.borderColor = UIColor.white.cgColor
-        return iv
-    }()
-    lazy var userNameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Danny"
-        label.textColor = .gray
-        label.font = UIFont.systemFont(ofSize: 13 * ratio, weight: UIFont.Weight.bold)
-        
-        return label
-    }()
-    lazy var commentLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Love it, it is easy to follow.Thank you. :)"
-        label.textColor = .black
-        label.font = UIFont(name:"Helvetica", size: 14 * ratio)
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.sizeToFit()
-        
-        return label
-    }()
-    lazy var thumbsUpButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.tintColor = .primeOrange
-        button.backgroundColor = .white
-        button.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
-        
-        return button
-    }()
-    lazy var thumbsDownButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.tintColor = .primeOrange
-        button.backgroundColor = .white
-        button.setImage(UIImage(systemName: "hand.thumbsdown"), for: .normal)
-        
-        return button
-    }()
- */
     
     private let isInPurchaseFlow: Bool
     
@@ -331,7 +285,9 @@ class RecipeInfoViewVC: UIViewController {
         scrollView.addSubview(restarantImageView)
         restarantImageView.snp.makeConstraints { make in
             make.height.equalTo(view.frame.height * 0.4 * ratio)
-            make.left.right.top.equalToSuperview()
+            make.left.right.equalToSuperview()
+            make.top.equalToSuperview().offset(-45)
+            
         }
         
         scrollView.addSubview(backButton)
@@ -405,7 +361,6 @@ class RecipeInfoViewVC: UIViewController {
         contentView.addSubview(recipeImageView)
         recipeImageView.snp.makeConstraints { make in
             make.height.equalTo(130 * ratio)
-            //make.width.equalTo(150 * ratio)
             make.top.equalTo(titleLabel.snp.bottom)
             make.left.equalTo(contentView).offset(10)
             make.right.equalTo(contentView).offset(-10)
@@ -441,9 +396,9 @@ class RecipeInfoViewVC: UIViewController {
         
         scrollView.addSubview(commentView)
         commentView.snp.makeConstraints { make in
-            //make.width.equalTo(view.frame.width-40)
+            
             make.height.equalTo(view.frame.width-10)
-            //make.size.lessThanOrEqualTo(view.frame.height*0.4)
+            
             make.top.equalTo(contentView.snp.bottom).offset(12)
             make.bottom.equalTo(scrollView).offset(-5)
             make.left.equalToSuperview().offset(20)
@@ -476,40 +431,6 @@ class RecipeInfoViewVC: UIViewController {
             make.bottom.equalToSuperview().offset(-15)
         }
  
-        /*
-        tableView.addSubview(profileImageView)
-        profileImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(50 * ratio)
-            make.top.left.equalToSuperview().offset(15)
-            //make.size.equalTo(view.frame.width-320)
-            make.left.equalToSuperview().offset(15)
-        }
-        tableView.addSubview(userNameLabel)
-        userNameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
-            make.left.equalTo(profileImageView.snp.right).offset(30)
-            
-        }
-        tableView.addSubview(commentLabel)
-        commentLabel.snp.makeConstraints { make in
-            make.top.equalTo(userNameLabel).offset(25)
-            make.left.equalTo(profileImageView.snp.right).offset(30)
-            make.right.equalTo(commentView).offset(-20)
-        }
-        
-        tableView.addSubview(thumbsUpButton)
-        thumbsUpButton.snp.makeConstraints { make in
-            make.top.equalTo(userNameLabel).offset(70)
-            make.right.equalTo(commentView).offset(-50)
-        }
-        
-        tableView.addSubview(thumbsDownButton)
-        thumbsDownButton.snp.makeConstraints { make in
-            make.top.equalTo(userNameLabel).offset(70)
-            make.right.equalTo(commentView).offset(-20)
-        }
-    
-    */
     }
     private func fetchRestaurant() {
         guard let recipe = recipe else { return }
@@ -634,17 +555,21 @@ extension RecipeInfoViewVC : UITextFieldDelegate {
     // set the activeTextField to the selected textfield
         self.activeTextField = textField
     }
-    
+   
+//    func hideKeyboard() {
+//        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+//    }
     // when user click 'done' or dismiss the keyboard
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.activeTextField = nil
     }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         if let text = textField.text{
             print("\(text)")
         }
-        
+        //self.hideKeyboard()
         return true
     }
 }
