@@ -189,6 +189,28 @@ extension API {
         })
     }
     
+    static func fetchUploadedRecipes(completion: @escaping([Recipe]) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        DB_OWNER.child(uid).observe(DataEventType.value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let uploaded = value?["recipes"] as? [String : AnyObject] ?? [:]
+            Owner.shared.recipes = uploaded // update owner info when fetch
+            
+            var uploadedRecipes = [Recipe]()
+            DB_RECIPE.observe(.childAdded) { (snapshot) in
+                guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
+                let recipeUid = snapshot.key
+                if uid.contains(recipeUid)
+                {
+                    let recipe = Recipe(uid: recipeUid, dictionary: dictionary)
+                    uploadedRecipes.append(recipe)
+                }
+                completion(uploadedRecipes)
+            }
+        })
+    }
+    
     static func checkValidity(purchaseds: [String:AnyObject]) -> [String] {
         let now = Date()
         let dateFormatter = DateFormatter()

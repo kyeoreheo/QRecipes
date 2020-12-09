@@ -20,7 +20,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     let columns: CGFloat = 3.0
     let inset: CGFloat = 8.0
     
-    var purchasedRecipes = [Recipe]() {
+    var userRecipes = [Recipe]() {
         didSet {
             collectionView.reloadData()
         }
@@ -116,7 +116,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         fetchUser()
-        fetchPurchasedRecipes()
+        fetchUserRecipes()
     }
     
     private func configure() {
@@ -204,9 +204,15 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         }
     }
     
-    func fetchPurchasedRecipes() {
-        API.fetchPurchasedRecipes { recipes in
-            self.purchasedRecipes = recipes
+    func fetchUserRecipes() {
+        if User.shared.isBusiness {
+            API.fetchUploadedRecipes { recipes in
+                self.userRecipes = recipes
+            }
+        } else {
+            API.fetchPurchasedRecipes { recipes in
+                self.userRecipes = recipes
+            }
         }
     }
     
@@ -245,7 +251,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Selected Row \(indexPath.row)")
         let vc = RecipeDetailVC()
-        vc.recipe = purchasedRecipes[indexPath.row]
+        vc.recipe = userRecipes[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -253,15 +259,13 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
 //MARK:- Collection view data source
 extension SettingVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return purchasedRecipes.count
+        return userRecipes.count
     }
     
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SettingCollectionViewCell
         
-        //cell.dayExpireLabel.text = "ExpireDay"
-        cell.recipe = purchasedRecipes[indexPath.row]
+        cell.recipe = userRecipes[indexPath.row]
         return cell
     }
 }
