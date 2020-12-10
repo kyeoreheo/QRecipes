@@ -179,7 +179,18 @@ extension API {
             let validUid = checkValidity(purchaseds: purchased)
             
             var purchasedRecipes = [Recipe]()
-            DB_RECIPE.observe(.childAdded) { (snapshot) in
+            for uid in validUid {
+                DB_RECIPE.observe(.childAdded) { (snapshot) in
+                    guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
+                    let recipeUid = snapshot.key
+                    if uid == recipeUid {
+                        let recipe = Recipe(uid: recipeUid, dictionary: dictionary)
+                        purchasedRecipes.append(recipe)
+                    }
+                    completion(purchasedRecipes)
+                }
+            }
+            /*DB_RECIPE.observe(.childAdded) { (snapshot) in
                 guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
                 let uid = snapshot.key
                 if validUid.contains(uid) {
@@ -187,8 +198,9 @@ extension API {
                     purchasedRecipes.append(recipe)
                 }
                 completion(purchasedRecipes)
-            }
+            }*/
         })
+        
     }
     
     static func fetchUploadedRecipes(completion: @escaping([Recipe]) -> Void) {
@@ -219,7 +231,7 @@ extension API {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         var valid = [""]
-        let sortedPurchased = purchaseds.sorted{dateFormatter.date(from: $0.value["purchaseDate"] as? String ?? "") ?? Date() < dateFormatter.date(from: $1.value["purchaseDate"] as? String ?? "") ?? Date()}
+        let sortedPurchased = purchaseds.sorted{dateFormatter.date(from: $0.value["purchaseDate"] as? String ?? "") ?? Date() > dateFormatter.date(from: $1.value["purchaseDate"] as? String ?? "") ?? Date()}
         
         if purchaseds.count > 0 {
             for purchased in sortedPurchased {
