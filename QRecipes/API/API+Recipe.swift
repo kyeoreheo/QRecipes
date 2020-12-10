@@ -208,7 +208,7 @@ extension API {
         
         DB_OWNER.child(uid).observe(DataEventType.value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            let uploaded = value?["recipes"] as? [String : AnyObject] ?? [:]
+            let uploaded = value?["recipes"] as? [String] ?? [""]
             Owner.shared.recipes = uploaded // update owner info when fetch
             
             var uploadedRecipes = [Recipe]()
