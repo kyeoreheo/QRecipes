@@ -12,6 +12,7 @@
 		202A8EFD2568DA2E008AB13E /* AccountInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202A8EFC2568DA2E008AB13E /* AccountInfoVC.swift */; };
 		20470FBC253579CE00F2B070 /* RestaurantOverviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20470FBB253579CE00F2B070 /* RestaurantOverviewVC.swift */; };
 		205EC2022535FEFD0098CFE9 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205EC2012535FEFD0098CFE9 /* RecipeCell.swift */; };
+		20661A2F2582D76100001229 /* FinishedUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20661A2E2582D76100001229 /* FinishedUploadVC.swift */; };
 		20C229A5253BF21300D19032 /* RecipeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C229A4253BF21300D19032 /* RecipeDetailVC.swift */; };
 		20C94251252AE748000698E6 /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C94250252AE748000698E6 /* FavoriteCell.swift */; };
 		20ECFA1D2520466B00EEE280 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20ECFA1C2520466B00EEE280 /* FeedCell.swift */; };
@@ -75,6 +76,7 @@
 		202A8EFC2568DA2E008AB13E /* AccountInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfoVC.swift; sourceTree = "<group>"; };
 		20470FBB253579CE00F2B070 /* RestaurantOverviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantOverviewVC.swift; sourceTree = "<group>"; };
 		205EC2012535FEFD0098CFE9 /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
+		20661A2E2582D76100001229 /* FinishedUploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedUploadVC.swift; sourceTree = "<group>"; };
 		20C229A4253BF21300D19032 /* RecipeDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailVC.swift; sourceTree = "<group>"; };
 		20C94250252AE748000698E6 /* FavoriteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
 		20ECFA1C2520466B00EEE280 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
@@ -162,7 +164,7 @@
 				20470FBB253579CE00F2B070 /* RestaurantOverviewVC.swift */,
 				2022E220257DE19F0020B8A6 /* UploadVC.swift */,
 				2022E222257DEC5D0020B8A6 /* UploadContVC.swift */,
-				C2011E95257D846800B409AB /* CommentCell.swift */,
+				20661A2E2582D76100001229 /* FinishedUploadVC.swift */,
 			);
 			path = VCs;
 			sourceTree = "<group>";
@@ -170,6 +172,7 @@
 		20C9424F252AE748000698E6 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				C2011E95257D846800B409AB /* CommentCell.swift */,
 				20ECFA1C2520466B00EEE280 /* FeedCell.swift */,
 				20C94250252AE748000698E6 /* FavoriteCell.swift */,
 				205EC2012535FEFD0098CFE9 /* RecipeCell.swift */,
@@ -483,6 +486,7 @@
 				317218052508454200EDF3DB /* AppDelegate.swift in Sources */,
 				C6CA107A253953E3003DBB40 /* API+Recipe.swift in Sources */,
 				313C2F7D251060BD004BEB5A /* UIColorExtension.swift in Sources */,
+				20661A2F2582D76100001229 /* FinishedUploadVC.swift in Sources */,
 				C6CA107D25395402003DBB40 /* Recipe.swift in Sources */,
 				C6CA109825398114003DBB40 /* API+Restaurant.swift in Sources */,
 				314DCC51250863E400011BAD /* FrontEndTestVC.swift in Sources */,
