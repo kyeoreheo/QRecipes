@@ -173,7 +173,9 @@ class UploadContVC: UIViewController, UITextViewDelegate {
     @objc func uploadRecipe() {
         if allFilled {
             splitString(string: ingredients)
-            navigationController?.popToRootViewController(animated: true)
+            
+            let vc = FinishedUploadVC()
+            navigationController?.pushViewController(vc, animated: true)
         } else {
             let alert = UIAlertController(title: "Need to fill out all sections before uploading", message: "", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
