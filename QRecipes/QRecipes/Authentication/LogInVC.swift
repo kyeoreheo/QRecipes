@@ -379,7 +379,7 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
                         }
                         
                         DispatchQueue.main.async {
-                            let navigation = UINavigationController(rootViewController: OwnerHomeVC())
+                            let navigation = UINavigationController(rootViewController: MainTabBar.shared)
                             navigation.modalPresentationStyle = .fullScreen
                             navigation.navigationBar.isHidden = true
                             strongSelf.present(navigation, animated: false, completion: nil)

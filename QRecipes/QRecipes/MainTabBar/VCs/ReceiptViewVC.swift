@@ -13,7 +13,7 @@ class ReceiptViewVC: UIViewController {
 
     private let ratio = SplashVC.shared.ratio
     
-    var transactions = [String:AnyObject]() {
+    var transactions = [Dictionary<String, AnyObject>.Element]() {
         didSet {
             tableView.reloadData()
         }
