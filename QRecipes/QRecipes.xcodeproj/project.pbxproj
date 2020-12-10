@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2022E221257DE19F0020B8A6 /* UploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2022E220257DE19F0020B8A6 /* UploadVC.swift */; };
+		2022E223257DEC5D0020B8A6 /* UploadContVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2022E222257DEC5D0020B8A6 /* UploadContVC.swift */; };
 		202A8EFD2568DA2E008AB13E /* AccountInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202A8EFC2568DA2E008AB13E /* AccountInfoVC.swift */; };
 		20470FBC253579CE00F2B070 /* RestaurantOverviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20470FBB253579CE00F2B070 /* RestaurantOverviewVC.swift */; };
 		205EC2022535FEFD0098CFE9 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205EC2012535FEFD0098CFE9 /* RecipeCell.swift */; };
@@ -68,6 +70,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2022E220257DE19F0020B8A6 /* UploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadVC.swift; sourceTree = "<group>"; };
+		2022E222257DEC5D0020B8A6 /* UploadContVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadContVC.swift; sourceTree = "<group>"; };
 		202A8EFC2568DA2E008AB13E /* AccountInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfoVC.swift; sourceTree = "<group>"; };
 		20470FBB253579CE00F2B070 /* RestaurantOverviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantOverviewVC.swift; sourceTree = "<group>"; };
 		205EC2012535FEFD0098CFE9 /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
@@ -156,6 +160,8 @@
 				20FDFCA1253D4BA800CE35C7 /* IngredientsVC.swift */,
 				20FDFCA3253D4BC600CE35C7 /* InstructionsVC.swift */,
 				20470FBB253579CE00F2B070 /* RestaurantOverviewVC.swift */,
+				2022E220257DE19F0020B8A6 /* UploadVC.swift */,
+				2022E222257DEC5D0020B8A6 /* UploadContVC.swift */,
 				C2011E95257D846800B409AB /* CommentCell.swift */,
 			);
 			path = VCs;
@@ -444,6 +450,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2022E223257DEC5D0020B8A6 /* UploadContVC.swift in Sources */,
 				313C2F7F251062FB004BEB5A /* MainTabBar.swift in Sources */,
 				E5D417E3257B8E5D0052AAE8 /* Owner.swift in Sources */,
 				313C2F83251063CC004BEB5A /* SearchVC.swift in Sources */,
@@ -451,6 +458,7 @@
 				205EC2022535FEFD0098CFE9 /* RecipeCell.swift in Sources */,
 				319D1755254B03C900BB343F /* Restaurant.swift in Sources */,
 				3182DDDA2538BBA9004C488E /* FinishedPurchaseVC.swift in Sources */,
+				2022E221257DE19F0020B8A6 /* UploadVC.swift in Sources */,
 				C2011E96257D846800B409AB /* CommentCell.swift in Sources */,
 				313C2F8125106395004BEB5A /* HomeVC.swift in Sources */,
 				317218092508454200EDF3DB /* SplashVC.swift in Sources */,

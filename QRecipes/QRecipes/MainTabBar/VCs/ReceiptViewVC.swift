@@ -47,7 +47,7 @@ class ReceiptViewVC: UIViewController {
     }()
     lazy var tableView: UITableView = {
         let tv = UITableView()
-        
+        tv.backgroundColor = .white
         tv.register(TransactionCell.self, forCellReuseIdentifier: "cell")
         return tv
     } ()

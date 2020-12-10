@@ -86,7 +86,6 @@ extension API {
             Owner.shared.email = owner.email
             Owner.shared.restaurantName = owner.restaurantName
             Owner.shared.phoneNumber = owner.phoneNumber
-            Owner.shared.recipes = owner.recipes
             Owner.shared.restaurantImage = owner.restaurantImageUrl
             Owner.shared.isBusiness = owner.isBusiness
             completion(owner)

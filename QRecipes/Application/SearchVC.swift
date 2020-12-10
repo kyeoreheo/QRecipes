@@ -53,7 +53,7 @@ class SearchVC: UIViewController{
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorColor = UIColor.clear
-        //tableView.backgroundColor = UIColor.white
+        tableView.backgroundColor = UIColor.white
         
         view.addSubview(tableView)
         
@@ -77,10 +77,12 @@ class SearchVC: UIViewController{
         searchBar.setShowsCancelButton(true, animated: false)
         
         // change the dark mode issue for search bar background
-        
+        //searchBar.tintColor = .blue
         searchBar.barTintColor = UIColor.white
+        searchBar.tintColor = UIColor.orange
         
-                //searchBar.barStyle = .black
+       
+        //searchBar.barStyle = .black
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(40)
@@ -114,14 +116,31 @@ extension SearchVC: UISearchBarDelegate{
             }
         }
     }
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
     }
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = nil
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
         
+        // Dismiss the keyboard
+        searchBar.resignFirstResponder()
+        
+//        // Reload of table data
+//        self.loadCollectionViewData()
+    }
+    
+
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        
+//        let attributes = [NSAttributedString.Key.foregroundColor : UIColor.black]
+//        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes(attributes, for: .normal)
+        
+        searchBar.text = nil
+        searchBar.showsCancelButton = false
         searchBar.resignFirstResponder()
         searchBar.endEditing(true)
+        tableView.reloadData()
         recipes = fullRecipes
     }
     

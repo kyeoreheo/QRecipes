@@ -48,8 +48,6 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
     private var keyboardHeight: CGFloat = 0.0
     private var buttonConstraint: NSLayoutConstraint?
     
-    private let isBusinessLabel = UILabel()
-    private let isBusinessButton = UIButton()
     
     //MARK:- LifeCycles
     override func viewDidLoad() {
@@ -111,27 +109,6 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
             make.right.equalToSuperview().offset(-30)
         }
         
-        view.addSubview(isBusinessLabel)
-        isBusinessLabel.text = "Is Business Account?"
-        isBusinessLabel.textColor = .gray
-        isBusinessLabel.font = UIFont.boldSystemFont(ofSize: 15 * ratio)
-        isBusinessLabel.snp.makeConstraints { make in
-            make.top.equalTo(passwordTextField.snp.bottom).offset(30)
-            make.left.equalToSuperview().offset(30)
-        }
-        
-        view.addSubview(isBusinessButton)
-        isBusinessButton.backgroundColor = .white
-        isBusinessButton.layer.cornerRadius = 5
-        isBusinessButton.layer.borderWidth = 1.5
-        isBusinessButton.layer.borderColor = UIColor.lightlightGray.cgColor
-        isBusinessButton.addTarget(self, action: #selector(isBusinessPressed), for: .touchUpInside)
-        isBusinessButton.snp.makeConstraints { make in
-            make.width.height.equalTo(20)
-            make.centerY.equalTo(isBusinessLabel.snp.centerY)
-            make.right.equalToSuperview().offset(-30)
-        }
-        
         view.addSubview(warningLabel)
         warningLabel.textColor = .red
         warningLabel.font = UIFont.boldSystemFont(ofSize: 12)
@@ -151,7 +128,7 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
         signInButton.addTarget(self, action: #selector(logInButton), for: .touchUpInside)
         signInButton.snp.makeConstraints { make in
             make.height.equalTo(60 * ratio)
-            make.top.equalTo(isBusinessLabel.snp.bottom).offset(50)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(50)
             make.left.equalToSuperview().offset(30)
             make.right.equalToSuperview().offset(-30)
         }
@@ -325,17 +302,6 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
         print("DEBUG:- Not ready")
     }
     
-    @objc func isBusinessPressed() {
-        User.shared.isBusiness = !User.shared.isBusiness
-        
-        if User.shared.isBusiness {
-            isBusinessButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
-        }
-        else {
-            isBusinessButton.setImage(nil, for: .normal)
-        }
-    }
-    
     @objc func rememberMePressed() {
         rememberMe = !rememberMe
         
@@ -377,13 +343,6 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
                             Owner.shared.location = response.location
                             Owner.shared.restaurantImage = response.restaurantImageUrl
                         }
-                        
-                        DispatchQueue.main.async {
-                            let navigation = UINavigationController(rootViewController: MainTabBar.shared)
-                            navigation.modalPresentationStyle = .fullScreen
-                            navigation.navigationBar.isHidden = true
-                            strongSelf.present(navigation, animated: false, completion: nil)
-                        }
                     }
                     else {
                         API.fetchUser(uid: result.user.uid) { response in
@@ -394,15 +353,15 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
                             User.shared.purchased = response.purchased
                             User.shared.profileImage = response.profileImageUrl
                         }
-                            
-                        DispatchQueue.main.async {
-                            let navigation = UINavigationController(rootViewController: MainTabBar.shared)
-                            navigation.modalPresentationStyle = .fullScreen
-                            navigation.navigationBar.isHidden = true
-                            strongSelf.present(navigation, animated: false, completion: nil)
-                        }
                     }
                 })
+                
+                DispatchQueue.main.async {
+                    let navigation = UINavigationController(rootViewController: MainTabBar.shared)
+                    navigation.modalPresentationStyle = .fullScreen
+                    navigation.navigationBar.isHidden = true
+                    strongSelf.present(navigation, animated: false, completion: nil)
+                }
                 
             }
         }

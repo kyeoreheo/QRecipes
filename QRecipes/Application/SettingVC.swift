@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import SDWebImage
 import MessageUI
+import Firebase
 
 class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     
@@ -19,7 +20,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     let columns: CGFloat = 3.0
     let inset: CGFloat = 8.0
     
-    var purchasedRecipes = [Recipe]() {
+    var userRecipes = [Recipe]() {
         didSet {
             collectionView.reloadData()
         }
@@ -55,6 +56,17 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         button.tintColor = .black
         button.setImage(UIImage(systemName: "ellipsis"), for: .normal)
         button.addTarget(self, action: #selector(presentAccountInfoVC), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var uploadButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .lightGray
+        button.layer.cornerRadius = 10
+        button.setTitle("Upload Recipe", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(presentUploadVC), for: .touchUpInside)
         return button
     }()
     
@@ -96,11 +108,15 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         super.viewDidLoad()
         configure()
         configureUI()
+        
+        if User.shared.isBusiness {
+            configureBuisnessUI()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         fetchUser()
-        fetchPurchasedRecipes()
+        fetchUserRecipes()
     }
     
     private func configure() {
@@ -167,6 +183,16 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         }
     }
     
+    private func configureBuisnessUI(){
+        contentView.addSubview(uploadButton)
+        uploadButton.snp.makeConstraints { make in
+            make.height.equalTo(45)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-30)
+            make.left.equalToSuperview().offset(50)
+            make.right.equalToSuperview().offset(-50)
+        }
+    }
+    
     func fetchUser() {
         if User.shared.profileImage != nil &&
            User.shared.firstName != "" &&
@@ -178,9 +204,15 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         }
     }
     
-    func fetchPurchasedRecipes() {
-        API.fetchPurchasedRecipes { recipes in
-            self.purchasedRecipes = recipes
+    func fetchUserRecipes() {
+        if User.shared.isBusiness {
+            API.fetchUploadedRecipes { recipes in
+                self.userRecipes = recipes
+            }
+        } else {
+            API.fetchPurchasedRecipes { recipes in
+                self.userRecipes = recipes
+            }
         }
     }
     
@@ -209,12 +241,17 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         let vc = AccountInfoVC()
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    @objc func presentUploadVC() {
+        let vc = UploadVC()
+        navigationController?.pushViewController(vc, animated: true)
+    }
 
     // Navigation
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Selected Row \(indexPath.row)")
         let vc = RecipeDetailVC()
-        vc.recipe = purchasedRecipes[indexPath.row]
+        vc.recipe = userRecipes[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -222,15 +259,13 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
 //MARK:- Collection view data source
 extension SettingVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return purchasedRecipes.count
+        return userRecipes.count
     }
     
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SettingCollectionViewCell
         
-        //cell.dayExpireLabel.text = "ExpireDay"
-        cell.recipe = purchasedRecipes[indexPath.row]
+        cell.recipe = userRecipes[indexPath.row]
         return cell
     }
 }
