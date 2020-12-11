@@ -108,7 +108,7 @@ class AccountInfoVC: UIViewController {
         super.viewDidLoad()
         configureUI()
         
-        if !User.shared.isBusiness {
+        if Owner.shared.email == "" {
             configureUserUI()
         }
     }
