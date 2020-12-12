@@ -198,8 +198,9 @@ class PurchaseVC: UIViewController {
         }
     }
     @objc func purchase() {
-        //navigationController?.pushViewController(FinishedPurchaseVC(itemName
-                                                   // : itemName), animated: true)
+//        navigationController?.pushViewController(FinishedPurchaseVC(itemName
+//                                                    : itemName), animated: true)
+//        
         API.purhcaseRecipe(recipeUid: uid, price: payAmount) { [weak self] (error, ref) in
             guard let strongSelf = self else { return }
             if error != nil {
