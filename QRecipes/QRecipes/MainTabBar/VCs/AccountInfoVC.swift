@@ -110,7 +110,7 @@ class AccountInfoVC: UIViewController {
         
         if !User.shared.isBusiness {
             configureUserUI()
-        }
+        } 
     }
     
     //MARK:- Helpers
