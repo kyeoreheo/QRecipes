@@ -62,7 +62,7 @@ class CommentCell: UITableViewCell {
     
     var userUID = "" {
         didSet {
-            API.fetchUser(uid: userUID) { response in
+            API.fetchUser(uid: userUID, updateUser: false) { response in
                 self.userNameLabel.text = response.firstName + " " + response.lastName
                 self.profileImageView.sd_setImage(with: response.profileImageUrl, completed: nil)
             }
@@ -109,19 +109,7 @@ class CommentCell: UITableViewCell {
             make.top.equalToSuperview().offset(4)
             make.right.equalToSuperview().offset(-4)
         }
-        
-//        contentView.addSubview(thumbsDownButton)
-//        thumbsDownButton.snp.makeConstraints { make in
-//            make.top.equalToSuperview().offset(4)
-//            make.right.equalToSuperview().offset(-4)
-//        }
-//
-//        contentView.addSubview(thumbsUpButton)
-//        thumbsUpButton.snp.makeConstraints { make in
-//            make.top.equalToSuperview().offset(4)
-//            make.right.equalTo(thumbsDownButton.snp.left).offset(-4)
-//        }
+
     }
-    
     
 }
