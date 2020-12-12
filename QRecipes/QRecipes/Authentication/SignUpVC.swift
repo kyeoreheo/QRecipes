@@ -39,7 +39,6 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
     private var lastName = ""
     private var favorite = [""]
     private var purchased:[String:AnyObject] = [:]
-    private var isBusiness = false
     private var isPasswodHideen = true
         
     //MARK:- LifeCycles
@@ -190,7 +189,7 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
         guard let profileImage = profileImage else { return }
         let lowerCaseEmail = email.lowercased()
         
-        let user = AuthProperties(email: lowerCaseEmail, password: password, firstName: firstName, lastName: lastName, favorite: favorite, purchased: purchased, profileImage: profileImage, isBusiness: isBusiness)
+        let user = AuthProperties(email: lowerCaseEmail, password: password, firstName: firstName, lastName: lastName, favorite: favorite, purchased: purchased, profileImage: profileImage)
         
         API.registerUser(user: user) { [weak self] (error, ref) in
             guard let strongSelf = self else { return }

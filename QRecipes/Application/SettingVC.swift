@@ -242,7 +242,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     }
     
     @objc func presentAccountInfoVC() {
-        let vc = AccountInfoVC()
+        let vc = AccountInfoVC() //copy
         navigationController?.pushViewController(vc, animated: true)
     }
     

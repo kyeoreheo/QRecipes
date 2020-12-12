@@ -17,7 +17,6 @@ struct UserInfo {
     var purchased: [String:AnyObject]
     var profileImageUrl: URL?
     let uid: String
-    var isBusiness: Bool
 
     init(uid: String, dictionary: [String: AnyObject]) {
         self.uid = uid
@@ -27,7 +26,6 @@ struct UserInfo {
         self.lastName = dictionary["lastName"] as? String ?? ""
         self.favorite = dictionary["favorite"] as? [String] ?? [""]
         self.purchased = dictionary["purchased"] as? [String:AnyObject] ?? [:]
-        self.isBusiness = false
         if let profileImageUrlString = dictionary["profileImageUrl"] as? String {
             guard let url = URL(string: profileImageUrlString) else { return }
             self.profileImageUrl = url
@@ -43,7 +41,6 @@ struct AuthProperties {
     let favorite: [String]
     let purchased: [String:AnyObject]
     let profileImage: UIImage
-    let isBusiness: Bool
 }
 
 extension API {
@@ -73,8 +70,8 @@ extension API {
                               "lastName": user.lastName,
                               "favorite": user.favorite,
                               "purchased": user.purchased,
-                              "profileImageUrl": profileImageUrl,
-                              "isBusiness": user.isBusiness] as [String : AnyObject]
+                              "profileImageUrl": profileImageUrl
+                            ] as [String : AnyObject]
 
                 DB_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
                }
@@ -92,9 +89,7 @@ extension API {
             User.shared.firstName = user.firstName
             User.shared.lastName = user.lastName
             User.shared.profileImage = user.profileImageUrl
-            User.shared.isBusiness = user.isBusiness
             completion(user)
-            
         })
     }
     
@@ -105,8 +100,8 @@ extension API {
                       "lastName": User.shared.lastName,
                       "favorite": User.shared.favorite,
                       "purchased": User.shared.purchased,
-                      "profileImageUrl": User.shared.profileImage?.absoluteString,
-                      "isBusiness": User.shared.isBusiness] as [String : AnyObject]
+                      "profileImageUrl": User.shared.profileImage?.absoluteString
+                      ] as [String : AnyObject]
 
         DB_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
     }
@@ -140,7 +135,6 @@ extension API {
             User.shared.lastName = info["last_name"] as? String ?? ""
             let FBpicutre = ((info["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String
             User.shared.profileImage = URL(string: FBpicutre!)
-            User.shared.isBusiness = false
             completion(info)
         })
     }
