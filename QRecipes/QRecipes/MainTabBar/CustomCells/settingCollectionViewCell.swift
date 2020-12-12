@@ -13,7 +13,7 @@ class SettingCollectionViewCell: UICollectionViewCell {
         didSet {
             imageView.sd_setImage(with: recipe?.recipeImageUrl, completed: nil)
             
-            if !User.shared.isBusiness {
+            if User.shared.email != "" {
                 updateExpDateLabel()
             }
         }
@@ -47,7 +47,7 @@ class SettingCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         configureCell()
         
-        if !User.shared.isBusiness {
+        if User.shared.email != "" {
             configureExpDateUI()
         }
     }

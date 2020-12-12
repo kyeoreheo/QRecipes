@@ -209,6 +209,7 @@ class AccountInfoVC: UIViewController {
         do {
             try Auth.auth().signOut()
             User.shared.clear()
+            Owner.shared.clear()
             UserDefaults.standard.clear()
             GIDSignIn.sharedInstance().signOut()
             LoginManager().logOut()
