@@ -110,7 +110,7 @@ class AccountInfoVC: UIViewController {
         
         if Owner.shared.email == "" {
             configureUserUI()
-        }
+        } 
     }
     
     //MARK:- Helpers
