@@ -45,7 +45,6 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     
     let messageButton: UIButton = {
         let button = UIButton(type: .system)
-        //button.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "envelope").withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(handleEmailSupport), for: .touchUpInside)
         return button
@@ -73,7 +72,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     let nameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = "Dan Zhao"
+        label.text = ""
         label.font = UIFont.boldSystemFont(ofSize: 22)
         label.textColor = .white
         
@@ -83,7 +82,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     let emailLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = "zhaodan618@gmail.com"
+        label.text = ""
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .white
         
@@ -108,8 +107,8 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         super.viewDidLoad()
         configure()
         configureUI()
-        
-        if User.shared.isBusiness {
+
+        if Owner.shared.email != "" {
             configureBuisnessUI()
         }
     }
@@ -194,18 +193,23 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     }
     
     func fetchUser() {
-        if User.shared.profileImage != nil &&
-           User.shared.firstName != "" &&
-           User.shared.lastName != "" &&
-           User.shared.email != "" {
-            profileImageView.sd_setImage(with: User.shared.profileImage, completed: nil)
+        if Owner.shared.email != "" {
+            if Owner.shared.restaurantImage != nil {
+                profileImageView.sd_setImage(with: Owner.shared.restaurantImage, completed: nil)
+            }
+            nameLabel.text = Owner.shared.restaurantName
+            emailLabel.text = Owner.shared.email
+        } else {
+            if User.shared.profileImage != nil {
+                profileImageView.sd_setImage(with: User.shared.profileImage, completed: nil)
+            }
             nameLabel.text = "\(User.shared.firstName) \(User.shared.lastName)"
             emailLabel.text = User.shared.email
         }
     }
     
     func fetchUserRecipes() {
-        if User.shared.isBusiness {
+        if Owner.shared.email != "" {
             API.fetchUploadedRecipes { recipes in
                 self.userRecipes = recipes
             }
