@@ -40,7 +40,6 @@ class BusinessSignUpVC: UIViewController, UIGestureRecognizerDelegate {
     private var phoneNumber = ""
     private var location = ""
     private var recipes = [""]
-    private var isBusiness = true
     private var isPasswodHideen = true
         
     //MARK:- LifeCycles
@@ -199,7 +198,7 @@ class BusinessSignUpVC: UIViewController, UIGestureRecognizerDelegate {
         guard let restaurantImage = restaurantImage else { return }
         let lowerCaseEmail = email.lowercased()
         
-        let owner = OwnerAuthProperties(email: lowerCaseEmail, password: password, restaurantName: restaurantName, phoneNumber: phoneNumber, location: location, recipes: recipes, restaurantImage: restaurantImage, isBusiness: isBusiness)
+        let owner = OwnerAuthProperties(email: lowerCaseEmail, password: password, restaurantName: restaurantName, phoneNumber: phoneNumber, location: location, recipes: recipes, restaurantImage: restaurantImage)
         
         API.registerOwner(owner: owner) { [weak self] (error, ref) in
             guard let strongSelf = self else { return }

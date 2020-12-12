@@ -174,7 +174,7 @@ extension API {
             let value = snapshot.value as? NSDictionary
             let purchased = value?["purchased"] as? [String : AnyObject] ?? [:]
             User.shared.purchased = purchased // update user info when fetch
-            print("DEBUG:-purchsed: \(purchased)")
+            //print("DEBUG:-purchsed: \(purchased)")
             
             let validUid = checkValidity(purchaseds: purchased)
             

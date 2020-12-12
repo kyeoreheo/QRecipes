@@ -287,6 +287,7 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
         guard let button = passwordTextField.subviews[2] as? UIButton,
               let textField = passwordTextField.subviews[0] as? UITextField
         else { return }
+        
         if isPasswodHideen {
             button.setImage(UIImage(named: "eyeOff"), for: .normal)
             textField.isSecureTextEntry = false
@@ -307,11 +308,9 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
         
         if rememberMe {
             rememberMeButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
-        }
-        else {
+        } else {
             rememberMeButton.setImage(nil, for: .normal)
         }
-        //print("DEBUG:- rememberMe value: \(rememberMe)")
     }
     
     @objc func logInButton() {
@@ -342,6 +341,8 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
                             Owner.shared.phoneNumber = response.phoneNumber
                             Owner.shared.location = response.location
                             Owner.shared.restaurantImage = response.restaurantImageUrl
+                            
+                            strongSelf.presentMainTabBar()
                         }
                     }
                     else {
@@ -352,23 +353,26 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
                             User.shared.favorite = response.favorite
                             User.shared.purchased = response.purchased
                             User.shared.profileImage = response.profileImageUrl
+                            
+                            strongSelf.presentMainTabBar()
                         }
                     }
                 })
-                
-                DispatchQueue.main.async {
-                    let navigation = UINavigationController(rootViewController: MainTabBar.shared)
-                    navigation.modalPresentationStyle = .fullScreen
-                    navigation.navigationBar.isHidden = true
-                    strongSelf.present(navigation, animated: false, completion: nil)
-                }
-                
             }
         }
     }
     
+    func presentMainTabBar() {
+        DispatchQueue.main.async {
+            let navigation = UINavigationController(rootViewController: MainTabBar.shared)
+            navigation.modalPresentationStyle = .fullScreen
+            navigation.navigationBar.isHidden = true
+            MainTabBar.shared.configureTabBar()
+            self.present(navigation, animated: false, completion: nil)
+        }
+    }
+    
     @objc func presentSignUpVC() {
-        //navigationController?.pushViewController(SignUpVC(), animated: true)
         navigationController?.pushViewController(AccountTypeSelectionVC(), animated: true)
     }
     
@@ -388,7 +392,6 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
                 User.shared.email = user.profile.email
                 User.shared.firstName = user.profile.givenName
                 User.shared.lastName = user.profile.familyName
-                User.shared.isBusiness = false
                 if user.profile.hasImage
                 {
                     let dimension = round(100 * UIScreen.main.scale)
@@ -399,6 +402,8 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
                     let navigation = UINavigationController(rootViewController: MainTabBar.shared)
                     navigation.modalPresentationStyle = .fullScreen
                     navigation.navigationBar.isHidden = true
+                    MainTabBar.shared.configureTabBar()
+                    
                     self.present(navigation, animated: false, completion: nil)
                 }
             }
@@ -422,6 +427,8 @@ class LogInVC: UIViewController, UIGestureRecognizerDelegate, GIDSignInDelegate,
                     let navigation = UINavigationController(rootViewController: MainTabBar.shared)
                     navigation.modalPresentationStyle = .fullScreen
                     navigation.navigationBar.isHidden = true
+                    MainTabBar.shared.configureTabBar()
+
                     strongSelf.present(navigation, animated: false, completion: nil)
                 }
             }

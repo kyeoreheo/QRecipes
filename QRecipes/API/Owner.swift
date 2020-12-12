@@ -16,7 +16,6 @@ class Owner {
     var location = ""
     var recipes = [String : AnyObject]()
     var restaurantImage: URL?
-    var isBusiness = true
     
     func clear() {
         Owner.shared.email = ""

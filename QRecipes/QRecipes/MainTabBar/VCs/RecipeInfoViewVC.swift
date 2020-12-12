@@ -89,7 +89,7 @@ class RecipeInfoViewVC: UIViewController {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         button.setTitleColor(.white, for: .normal)
 
-        if User.shared.isBusiness {
+        if User.shared.email == "" {
             button.backgroundColor = .gray
         } else {
             button.backgroundColor = .primeOrange
@@ -213,6 +213,7 @@ class RecipeInfoViewVC: UIViewController {
         submitButton.setTitleColor(.primeOrange, for: .normal)
         submitButton.addTarget(self, action: #selector(postComment), for: .touchUpInside)
         submitButton.contentMode = .scaleAspectFit
+        submitButton.resignFirstResponder()
         return submitButton
     }()
     
@@ -285,7 +286,8 @@ class RecipeInfoViewVC: UIViewController {
         scrollView.addSubview(restarantImageView)
         restarantImageView.snp.makeConstraints { make in
             make.height.equalTo(view.frame.height * 0.4 * ratio)
-            make.left.right.equalToSuperview()
+            make.left.equalToSuperview()
+            make.right.equalTo(view.safeAreaLayoutGuide.snp.right)
             make.top.equalToSuperview().offset(-45)
             
         }
@@ -303,7 +305,7 @@ class RecipeInfoViewVC: UIViewController {
             make.height.equalTo(130)
             make.top.equalTo(restarantImageView.snp.bottom).offset(-160)
             make.left.equalToSuperview().offset(20)
-            make.right.equalToSuperview().offset(-20)
+            make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-20)
         }
 
         infoView.addSubview(restaurantLabel)
@@ -348,7 +350,7 @@ class RecipeInfoViewVC: UIViewController {
             make.height.equalTo(310 * ratio)
             make.top.equalTo(infoView.snp.bottom).offset(12)
             make.left.equalToSuperview().offset(20)
-            make.right.equalToSuperview().offset(-20)
+            make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-20)
         }
         
         contentView.addSubview(titleLabel)
@@ -402,7 +404,7 @@ class RecipeInfoViewVC: UIViewController {
             make.top.equalTo(contentView.snp.bottom).offset(12)
             make.bottom.equalTo(scrollView).offset(-5)
             make.left.equalToSuperview().offset(20)
-            make.right.equalToSuperview().offset(-20)
+            make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-20)
         }
         commentView.addSubview(commentTitleLabel)
         commentTitleLabel.snp.makeConstraints { make in
@@ -418,16 +420,17 @@ class RecipeInfoViewVC: UIViewController {
         commentView.addSubview(submitButton)
         submitButton.snp.makeConstraints { make in
             make.height.equalTo(35 * ratio)
-            make.width.equalTo(55 * ratio)
+            make.width.equalTo(80 * ratio)
             make.top.equalTo(commentTitleLabel.snp.bottom).offset(10)
-            make.right.equalTo(commentView).offset(-30)
+            //make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-80)
+            make.right.equalTo(commentView.snp.right).offset(-10)
         }
         
         commentView.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(commentTitleLabel.snp.bottom).offset(50)
+            make.top.equalTo(commentTextField.snp.bottom).offset(20)
             make.left.equalToSuperview().offset(15)
-            make.right.equalToSuperview().offset(-15)
+            make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-20)
             make.bottom.equalToSuperview().offset(-15)
         }
  
@@ -536,7 +539,7 @@ extension RecipeInfoViewVC: UITableViewDataSource, UITableViewDelegate{
         return recipe?.comments.count ?? 0 //Choose your custom row number
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70 * ratio;//Choose your custom row height
+        return 80 * ratio;//Choose your custom row height
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CommentCell
