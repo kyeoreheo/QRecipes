@@ -16,7 +16,6 @@ struct OwnerInfo {
     var recipes: [String]
     var restaurantImageUrl: URL?
     let uid: String
-    var isBusiness: Bool
 
     init(uid: String, dictionary: [String: AnyObject]) {
         self.uid = uid
@@ -26,7 +25,7 @@ struct OwnerInfo {
         self.phoneNumber = dictionary["phoneNumber"] as? String ?? ""
         self.location = dictionary["location"] as? String ?? ""
         self.recipes = dictionary["recipes"] as? [String] ?? [""]
-        self.isBusiness = true
+
         if let restaurantImageUrlString = dictionary["restaurantImageUrl"] as? String {
             guard let url = URL(string: restaurantImageUrlString) else { return }
             self.restaurantImageUrl = url
@@ -42,7 +41,6 @@ struct OwnerAuthProperties {
     let location: String
     let recipes: [String]
     let restaurantImage: UIImage
-    let isBusiness: Bool
 }
 
 extension API {
@@ -68,8 +66,8 @@ extension API {
                               "phoneNumber": owner.phoneNumber,
                               "location": owner.location,
                               "recipes": owner.recipes,
-                              "RestaurantImageUrl": restaurantImageUrl,
-                              "isBusiness": owner.isBusiness] as [String : AnyObject]
+                              "RestaurantImageUrl": restaurantImageUrl
+                             ] as [String : AnyObject]
 
                 DB_OWNER.child(uid).updateChildValues(values, withCompletionBlock: completion)
                }
@@ -86,9 +84,7 @@ extension API {
             Owner.shared.email = owner.email
             Owner.shared.restaurantName = owner.restaurantName
             Owner.shared.phoneNumber = owner.phoneNumber
-            Owner.shared.recipes = owner.recipes
             Owner.shared.restaurantImage = owner.restaurantImageUrl
-            Owner.shared.isBusiness = owner.isBusiness
             completion(owner)
             
         })
@@ -101,8 +97,8 @@ extension API {
                       "phoneNumber": Owner.shared.phoneNumber,
                       "location": Owner.shared.location,
                       "recipes": Owner.shared.recipes,
-                      "restaurantImageUrl": Owner.shared.restaurantImage?.absoluteString,
-                      "isBusiness": Owner.shared.isBusiness] as [String : AnyObject]
+                      "restaurantImageUrl": Owner.shared.restaurantImage?.absoluteString
+                      ] as [String : AnyObject]
 
         DB_OWNER.child(uid).updateChildValues(values, withCompletionBlock: completion)
     }

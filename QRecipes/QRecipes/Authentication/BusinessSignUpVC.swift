@@ -40,7 +40,6 @@ class BusinessSignUpVC: UIViewController, UIGestureRecognizerDelegate {
     private var phoneNumber = ""
     private var location = ""
     private var recipes = [""]
-    private var isBusiness = true
     private var isPasswodHideen = true
         
     //MARK:- LifeCycles
@@ -171,7 +170,7 @@ class BusinessSignUpVC: UIViewController, UIGestureRecognizerDelegate {
         signInButton.titleLabel?.underline()
         signInButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12 * ratio)
         signInButton.setTitleColor(.primeOrange, for: .normal)
-        signInButton.addTarget(self, action: #selector(popVC), for: .touchUpInside)
+        signInButton.addTarget(self, action: #selector(presentSingInVC), for: .touchUpInside)
         signInButton.snp.makeConstraints { make in
             make.right.equalTo(signInLabel.snp.right)
             make.centerY.equalTo(signInLabel.snp.centerY)
@@ -199,7 +198,7 @@ class BusinessSignUpVC: UIViewController, UIGestureRecognizerDelegate {
         guard let restaurantImage = restaurantImage else { return }
         let lowerCaseEmail = email.lowercased()
         
-        let owner = OwnerAuthProperties(email: lowerCaseEmail, password: password, restaurantName: restaurantName, phoneNumber: phoneNumber, location: location, recipes: recipes, restaurantImage: restaurantImage, isBusiness: isBusiness)
+        let owner = OwnerAuthProperties(email: lowerCaseEmail, password: password, restaurantName: restaurantName, phoneNumber: phoneNumber, location: location, recipes: recipes, restaurantImage: restaurantImage)
         
         API.registerOwner(owner: owner) { [weak self] (error, ref) in
             guard let strongSelf = self else { return }
@@ -266,6 +265,10 @@ class BusinessSignUpVC: UIViewController, UIGestureRecognizerDelegate {
 
     @objc func popVC() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func presentSingInVC() {
+        navigationController?.pushViewController(LogInVC(), animated: true)
     }
     
     @objc func addPhoto() {

@@ -16,12 +16,9 @@ class MainTabBar: UITabBarController, UITabBarControllerDelegate {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureTabBar()
-        if !User.shared.isBusiness {
-            displayQrButton()
-        }
+        //configureTabBar()
+ 
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -38,14 +35,15 @@ class MainTabBar: UITabBarController, UITabBarControllerDelegate {
         let searchTab = barTabView(view: SearchVC(), image: "search")
         let middleTab = QRSacnVC()
         let favoriteTab = barTabView(view: FavoriteVC(), image: "favorite")
-        let settingTab = barTabView(view: SettingVC(), image: "setting")
-        if User.shared.isBusiness {
+        let settingTab = barTabView(view: SettingVC(), image: "AddFriend")
+        if User.shared.email == "" {
             viewControllers = [homeTab, searchTab, settingTab]
+            
         } else {
             viewControllers = [homeTab, searchTab, middleTab, favoriteTab, settingTab]
+            displayQrButton()
             tabBar.items?[2].isEnabled = false
         }
-
     }
     
     func displayQrButton() {

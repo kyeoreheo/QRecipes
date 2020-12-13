@@ -89,7 +89,7 @@ class RecipeInfoViewVC: UIViewController {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         button.setTitleColor(.white, for: .normal)
 
-        if User.shared.isBusiness {
+        if User.shared.email == "" {
             button.backgroundColor = .gray
         } else {
             button.backgroundColor = .primeOrange

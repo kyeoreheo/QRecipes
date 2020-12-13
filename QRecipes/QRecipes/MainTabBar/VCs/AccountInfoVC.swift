@@ -108,7 +108,7 @@ class AccountInfoVC: UIViewController {
         super.viewDidLoad()
         configureUI()
         
-        if !User.shared.isBusiness {
+        if Owner.shared.email == "" {
             configureUserUI()
         } 
     }
@@ -209,6 +209,7 @@ class AccountInfoVC: UIViewController {
         do {
             try Auth.auth().signOut()
             User.shared.clear()
+            Owner.shared.clear()
             UserDefaults.standard.clear()
             GIDSignIn.sharedInstance().signOut()
             LoginManager().logOut()

@@ -17,7 +17,6 @@ struct UserInfo {
     var purchased: [String:AnyObject]
     var profileImageUrl: URL?
     let uid: String
-    var isBusiness: Bool
 
     init(uid: String, dictionary: [String: AnyObject]) {
         self.uid = uid
@@ -27,7 +26,6 @@ struct UserInfo {
         self.lastName = dictionary["lastName"] as? String ?? ""
         self.favorite = dictionary["favorite"] as? [String] ?? [""]
         self.purchased = dictionary["purchased"] as? [String:AnyObject] ?? [:]
-        self.isBusiness = false
         if let profileImageUrlString = dictionary["profileImageUrl"] as? String {
             guard let url = URL(string: profileImageUrlString) else { return }
             self.profileImageUrl = url
@@ -43,7 +41,6 @@ struct AuthProperties {
     let favorite: [String]
     let purchased: [String:AnyObject]
     let profileImage: UIImage
-    let isBusiness: Bool
 }
 
 extension API {
@@ -73,8 +70,8 @@ extension API {
                               "lastName": user.lastName,
                               "favorite": user.favorite,
                               "purchased": user.purchased,
-                              "profileImageUrl": profileImageUrl,
-                              "isBusiness": user.isBusiness] as [String : AnyObject]
+                              "profileImageUrl": profileImageUrl
+                            ] as [String : AnyObject]
 
                 DB_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
                }
@@ -82,19 +79,19 @@ extension API {
         }
     }
     
-    static func fetchUser(uid: String, completion: @escaping(UserInfo) -> Void) {
+    static func fetchUser(uid: String, updateUser: Bool = true, completion: @escaping(UserInfo) -> Void) {
         
         DB_USERS.child(uid).observe(DataEventType.value, with: { (snapshot) in
             guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
 
             let user = UserInfo(uid: uid, dictionary: dictionary)
-            User.shared.email = user.email
-            User.shared.firstName = user.firstName
-            User.shared.lastName = user.lastName
-            User.shared.profileImage = user.profileImageUrl
-            User.shared.isBusiness = user.isBusiness
+            if updateUser {
+                User.shared.email = user.email
+                User.shared.firstName = user.firstName
+                User.shared.lastName = user.lastName
+                User.shared.profileImage = user.profileImageUrl
+            }
             completion(user)
-            
         })
     }
     
@@ -105,8 +102,8 @@ extension API {
                       "lastName": User.shared.lastName,
                       "favorite": User.shared.favorite,
                       "purchased": User.shared.purchased,
-                      "profileImageUrl": User.shared.profileImage?.absoluteString,
-                      "isBusiness": User.shared.isBusiness] as [String : AnyObject]
+                      "profileImageUrl": User.shared.profileImage?.absoluteString
+                      ] as [String : AnyObject]
 
         DB_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
     }
@@ -140,7 +137,6 @@ extension API {
             User.shared.lastName = info["last_name"] as? String ?? ""
             let FBpicutre = ((info["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String
             User.shared.profileImage = URL(string: FBpicutre!)
-            User.shared.isBusiness = false
             completion(info)
         })
     }

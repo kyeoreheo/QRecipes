@@ -132,20 +132,23 @@ class QRSacnVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UIGest
                 guard let qrCode = machineReadableCode.stringValue
                 else { return }
                 
-//                guard let transformedObject = (videoPreview.layer.sublayers![0] as! AVCaptureVideoPreviewLayer).transformedMetadataObject(for: machineReadableCode) as? AVMetadataMachineReadableCodeObject
-//                else { return }
+                guard let transformedObject = (videoPreview.layer.sublayers![0] as! AVCaptureVideoPreviewLayer).transformedMetadataObject(for: machineReadableCode) as? AVMetadataMachineReadableCodeObject
+                else { return }
 
                 setupBoundingBox(color: .gray)
                 hideBoundingBox(after: 0.25)
                 setupBoundingBox(color: .primeOrange)
-//                hasScanned = true
-                //validationLabel.text = "Valid Code 😆"
-                if !hadScan {
-                    hadScan = true
-                    dismiss(animated: true) {
-                        MainTabBar.shared.presentRecipeInfoViewVC(code: String(qrCode))
+                
+                if qrCode.first == "%" && qrCode.last == "*" {
+                    let restaurantName = qrCode.replacingOccurrences(of: "%", with: "").replacingOccurrences(of: "*", with: "")
+                    if !hadScan {
+                        hadScan = true
+                        dismiss(animated: true) {
+                            MainTabBar.shared.presentRecipeInfoViewVC(code: String(restaurantName))
+                        }
                     }
                 }
+
             }
         }
     }

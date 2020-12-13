@@ -14,16 +14,15 @@ class Owner {
     var restaurantName = ""
     var phoneNumber = ""
     var location = ""
-    var recipes = [""]
+    var recipes = [String : AnyObject]()
     var restaurantImage: URL?
-    var isBusiness = true
     
     func clear() {
         Owner.shared.email = ""
         Owner.shared.restaurantName = ""
         Owner.shared.phoneNumber = ""
         Owner.shared.location = ""
-        Owner.shared.recipes = [""]
+        Owner.shared.recipes = [:]
         Owner.shared.restaurantImage = nil
     }
 }

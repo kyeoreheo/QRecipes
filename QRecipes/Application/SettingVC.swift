@@ -20,7 +20,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     let columns: CGFloat = 3.0
     let inset: CGFloat = 8.0
     
-    var purchasedRecipes = [Recipe]() {
+    var userRecipes = [Recipe]() {
         didSet {
             collectionView.reloadData()
         }
@@ -45,7 +45,6 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     
     let messageButton: UIButton = {
         let button = UIButton(type: .system)
-        //button.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
         button.setImage(#imageLiteral(resourceName: "envelope").withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(handleEmailSupport), for: .touchUpInside)
         return button
@@ -73,7 +72,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     let nameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = "Dan Zhao"
+        label.text = ""
         label.font = UIFont.boldSystemFont(ofSize: 22)
         label.textColor = .white
         
@@ -83,7 +82,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     let emailLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = "zhaodan618@gmail.com"
+        label.text = ""
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .white
         
@@ -108,15 +107,15 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
         super.viewDidLoad()
         configure()
         configureUI()
-        
-        if User.shared.isBusiness {
+
+        if Owner.shared.email != "" {
             configureBuisnessUI()
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         fetchUser()
-        fetchPurchasedRecipes()
+        fetchUserRecipes()
     }
     
     private func configure() {
@@ -194,19 +193,30 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     }
     
     func fetchUser() {
-        if User.shared.profileImage != nil &&
-           User.shared.firstName != "" &&
-           User.shared.lastName != "" &&
-           User.shared.email != "" {
-            profileImageView.sd_setImage(with: User.shared.profileImage, completed: nil)
+        if Owner.shared.email != "" {
+            if Owner.shared.restaurantImage != nil {
+                profileImageView.sd_setImage(with: Owner.shared.restaurantImage, completed: nil)
+            }
+            nameLabel.text = Owner.shared.restaurantName
+            emailLabel.text = Owner.shared.email
+        } else {
+            if User.shared.profileImage != nil {
+                profileImageView.sd_setImage(with: User.shared.profileImage, completed: nil)
+            }
             nameLabel.text = "\(User.shared.firstName) \(User.shared.lastName)"
             emailLabel.text = User.shared.email
         }
     }
     
-    func fetchPurchasedRecipes() {
-        API.fetchPurchasedRecipes { recipes in
-            self.purchasedRecipes = recipes
+    func fetchUserRecipes() {
+        if Owner.shared.email != "" {
+            API.fetchUploadedRecipes { recipes in
+                self.userRecipes = recipes
+            }
+        } else {
+            API.fetchPurchasedRecipes { recipes in
+                self.userRecipes = recipes
+            }
         }
     }
     
@@ -232,7 +242,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     }
     
     @objc func presentAccountInfoVC() {
-        let vc = AccountInfoVC()
+        let vc = AccountInfoVC() //copy
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -245,7 +255,7 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Selected Row \(indexPath.row)")
         let vc = RecipeDetailVC()
-        vc.recipe = purchasedRecipes[indexPath.row]
+        vc.recipe = userRecipes[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -253,15 +263,13 @@ class SettingVC: UIViewController,UIGestureRecognizerDelegate {
 //MARK:- Collection view data source
 extension SettingVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return purchasedRecipes.count
+        return userRecipes.count
     }
     
      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SettingCollectionViewCell
         
-        //cell.dayExpireLabel.text = "ExpireDay"
-        cell.recipe = purchasedRecipes[indexPath.row]
+        cell.recipe = userRecipes[indexPath.row]
         return cell
     }
 }

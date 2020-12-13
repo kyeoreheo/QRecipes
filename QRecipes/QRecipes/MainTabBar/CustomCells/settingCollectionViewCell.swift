@@ -12,7 +12,10 @@ class SettingCollectionViewCell: UICollectionViewCell {
     var recipe: Recipe? {
         didSet {
             imageView.sd_setImage(with: recipe?.recipeImageUrl, completed: nil)
-            updateExpDateLabel()
+            
+            if User.shared.email != "" {
+                updateExpDateLabel()
+            }
         }
     }
     
@@ -43,6 +46,10 @@ class SettingCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect){
         super.init(frame: frame)
         configureCell()
+        
+        if User.shared.email != "" {
+            configureExpDateUI()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -59,17 +66,16 @@ class SettingCollectionViewCell: UICollectionViewCell {
             make.left.right.top.bottom.equalToSuperview()
     
         }
-
+    }
+    
+    private func configureExpDateUI() {
         contentView.addSubview(expirationDayButton)
         expirationDayButton.snp.makeConstraints { make in
-           //make.top.equalTo(imageView.snp.center).offset(10)
-           
             make.left.equalTo(contentView).offset(20)
             make.right.equalTo(contentView).offset(-20)
             make.centerY.equalTo(imageView)
             make.width.height.equalTo(30)
         }
-    
     }
     
     private func updateExpDateLabel() {

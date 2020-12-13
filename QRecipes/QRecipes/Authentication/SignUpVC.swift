@@ -39,7 +39,6 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
     private var lastName = ""
     private var favorite = [""]
     private var purchased:[String:AnyObject] = [:]
-    private var isBusiness = false
     private var isPasswodHideen = true
         
     //MARK:- LifeCycles
@@ -162,7 +161,7 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
         signInButton.titleLabel?.underline()
         signInButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12 * ratio)
         signInButton.setTitleColor(.primeOrange, for: .normal)
-        signInButton.addTarget(self, action: #selector(popVC), for: .touchUpInside)
+        signInButton.addTarget(self, action: #selector(presentSingInVC), for: .touchUpInside)
         signInButton.snp.makeConstraints { make in
             make.right.equalTo(signInLabel.snp.right)
             make.centerY.equalTo(signInLabel.snp.centerY)
@@ -190,7 +189,7 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
         guard let profileImage = profileImage else { return }
         let lowerCaseEmail = email.lowercased()
         
-        let user = AuthProperties(email: lowerCaseEmail, password: password, firstName: firstName, lastName: lastName, favorite: favorite, purchased: purchased, profileImage: profileImage, isBusiness: isBusiness)
+        let user = AuthProperties(email: lowerCaseEmail, password: password, firstName: firstName, lastName: lastName, favorite: favorite, purchased: purchased, profileImage: profileImage)
         
         API.registerUser(user: user) { [weak self] (error, ref) in
             guard let strongSelf = self else { return }
@@ -251,6 +250,10 @@ class SignUpVC: UIViewController, UIGestureRecognizerDelegate {
 
     @objc func popVC() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func presentSingInVC() {
+        navigationController?.pushViewController(LogInVC(), animated: true)
     }
     
     @objc func addPhoto() {
