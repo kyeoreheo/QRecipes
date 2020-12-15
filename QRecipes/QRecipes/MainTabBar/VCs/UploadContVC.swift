@@ -66,6 +66,7 @@ class UploadContVC: UIViewController, UITextViewDelegate {
         ingredientsTextView.text = "Enter ingredietns here [separated by commma] ..."
         ingredientsTextView.textColor = .lightGray
         ingredientsTextView.font = UIFont.systemFont(ofSize: 18)
+        ingredientsTextView.backgroundColor = .white
         ingredientsTextView.layer.borderColor = UIColor.lightlightGray.cgColor
         ingredientsTextView.layer.borderWidth = 1
         ingredientsTextView.layer.cornerRadius = 6
@@ -74,7 +75,7 @@ class UploadContVC: UIViewController, UITextViewDelegate {
         ingredientsTextView.autocorrectionType = .no
         ingredientsTextView.isScrollEnabled = false
         ingredientsTextView.snp.makeConstraints { make in
-            make.height.equalTo(200 * ratio)
+            make.height.equalTo(160 * ratio)
             make.top.equalTo(ingredientsLabel.snp.bottom).offset(5)
             make.left.equalToSuperview().offset(30)
             make.right.equalToSuperview().offset(-30)
@@ -85,7 +86,7 @@ class UploadContVC: UIViewController, UITextViewDelegate {
         instructionLabel.textColor = .black
         instructionLabel.font = UIFont.boldSystemFont(ofSize: 18 * ratio)
         instructionLabel.snp.makeConstraints { make in
-            make.top.equalTo(ingredientsTextView.snp.bottom).offset(20)
+            make.top.equalTo(ingredientsTextView.snp.bottom).offset(15)
             make.left.equalToSuperview().offset(30)
         }
         
@@ -93,6 +94,7 @@ class UploadContVC: UIViewController, UITextViewDelegate {
         instructionTextView.text = "Enter instruction here ..."
         instructionTextView.textColor = .lightGray
         instructionTextView.font = UIFont.systemFont(ofSize: 18)
+        instructionTextView.backgroundColor = .white
         instructionTextView.layer.borderColor = UIColor.lightlightGray.cgColor
         instructionTextView.layer.borderWidth = 1
         instructionTextView.layer.cornerRadius = 6
@@ -101,7 +103,7 @@ class UploadContVC: UIViewController, UITextViewDelegate {
         instructionTextView.autocorrectionType = .no
         instructionTextView.isScrollEnabled = false
         instructionTextView.snp.makeConstraints { make in
-            make.height.equalTo(250 * ratio)
+            make.height.equalTo(200 * ratio)
             make.top.equalTo(instructionLabel.snp.bottom).offset(5)
             make.left.equalToSuperview().offset(30)
             make.right.equalToSuperview().offset(-30)
@@ -116,8 +118,7 @@ class UploadContVC: UIViewController, UITextViewDelegate {
             uploadButton.addTarget(self, action: #selector(uploadRecipe), for: .touchUpInside)
             uploadButton.snp.makeConstraints { make in
             make.height.equalTo(50 * ratio)
-            make.top.equalTo(instructionTextView.snp.bottom).offset(50)
-            make.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide.snp.bottom).offset(-40)
+            make.top.equalTo(instructionTextView.snp.bottom).offset(30)
             make.left.equalToSuperview().offset(50)
             make.right.equalToSuperview().offset(-50)
         }
@@ -152,7 +153,7 @@ class UploadContVC: UIViewController, UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.text = nil
-        textView.textColor = UIColor.black
+        textView.textColor = .black
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {

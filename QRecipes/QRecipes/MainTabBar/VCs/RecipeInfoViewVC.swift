@@ -12,6 +12,7 @@ import Firebase
 
 class RecipeInfoViewVC: UIViewController {
     
+    static let shared = RecipeInfoViewVC()
     //MARK:- Properties
     var recipe: Recipe? {
         didSet {
@@ -23,6 +24,7 @@ class RecipeInfoViewVC: UIViewController {
             cookDifficultyLabel.text = "Difficulty: " + recipe!.level
         }
     }
+
     var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.backgroundColor = .white
@@ -246,10 +248,15 @@ class RecipeInfoViewVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        if Owner.shared.email == "" {
+            configureUserUI()
+        }
         configure()
         fetchRestaurant()
         scrollView.frame = self.view.bounds
         commentTextField.delegate = self
+        
+        
         
         NotificationCenter.default.addObserver(self, selector: #selector(RecipeInfoViewVC.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(RecipeInfoViewVC.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -270,6 +277,7 @@ class RecipeInfoViewVC: UIViewController {
     
     
     //MARK:- Helpers
+    
     private func configure() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -282,7 +290,6 @@ class RecipeInfoViewVC: UIViewController {
         scrollView.snp.makeConstraints { make in
             make.top.bottom.left.right.equalToSuperview()
         }
-        
         scrollView.addSubview(restarantImageView)
         restarantImageView.snp.makeConstraints { make in
             make.height.equalTo(view.frame.height * 0.4 * ratio)
@@ -291,7 +298,6 @@ class RecipeInfoViewVC: UIViewController {
             make.top.equalToSuperview().offset(-45)
             
         }
-        
         scrollView.addSubview(backButton)
         backButton.snp.makeConstraints { make in
             make.width.height.equalTo(40 * ratio)
@@ -307,20 +313,17 @@ class RecipeInfoViewVC: UIViewController {
             make.left.equalToSuperview().offset(20)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-20)
         }
-
         infoView.addSubview(restaurantLabel)
         restaurantLabel.snp.makeConstraints { make in
             make.top.equalTo(infoView).offset(15)
             make.left.equalTo(infoView).offset(20)
         }
-        
         infoView.addSubview(locationIcon)
         locationIcon.snp.makeConstraints { make in
             make.size.equalTo(40 * ratio)
             make.top.equalTo(restaurantLabel.snp.bottom).offset(5)
             make.left.equalTo(infoView).offset(20)
         }
-        
         infoView.addSubview(locationLabel)
         locationLabel.snp.makeConstraints { make in
             make.height.equalTo(40 * ratio)
@@ -328,14 +331,12 @@ class RecipeInfoViewVC: UIViewController {
             make.left.equalTo(locationIcon.snp.right).offset(10)
             make.right.equalTo(infoView).offset(-20)
         }
-        
         infoView.addSubview(phoneIcon)
         phoneIcon.snp.makeConstraints { make in
             make.size.equalTo(40)
             make.top.equalTo(locationLabel.snp.bottom)
             make.left.equalTo(infoView).offset(20)
         }
-        
         infoView.addSubview(phoneLabel)
         phoneLabel.snp.makeConstraints { make in
             make.height.equalTo(40 * ratio)
@@ -346,20 +347,17 @@ class RecipeInfoViewVC: UIViewController {
         //MARK:- contentView
         scrollView.addSubview(contentView)
         contentView.snp.makeConstraints { make in
-            make.size.equalTo(view.frame.height * 0.4 * ratio)
-            make.height.equalTo(310 * ratio)
+            make.height.equalTo(320 * ratio)
             make.top.equalTo(infoView.snp.bottom).offset(12)
             make.left.equalToSuperview().offset(20)
             make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-20)
         }
-        
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.height.equalTo(40 * ratio)
             make.top.equalTo(contentView)
             make.left.equalTo(infoView).offset(10)
         }
-        
         contentView.addSubview(recipeImageView)
         recipeImageView.snp.makeConstraints { make in
             make.height.equalTo(130 * ratio)
@@ -367,74 +365,74 @@ class RecipeInfoViewVC: UIViewController {
             make.left.equalTo(contentView).offset(10)
             make.right.equalTo(contentView).offset(-10)
         }
-        
-        recipeImageView.addSubview(favoriteButton)
-        favoriteButton.snp.makeConstraints { make in
-            make.size.equalTo(40 * ratio)
-            make.bottom.equalTo(recipeImageView.snp.bottom).offset(-10)
-            make.right.equalTo(recipeImageView).offset(-10)
-        }
-        
         contentView.addSubview(cookTimeLabel)
         cookTimeLabel.snp.makeConstraints { make in
-            make.top.equalTo(recipeImageView.snp.bottom).offset(-5)
+            make.top.equalTo(recipeImageView.snp.bottom).offset(10)
             make.centerX.equalTo(contentView)
         }
-        
         contentView.addSubview(cookDifficultyLabel)
         cookDifficultyLabel.snp.makeConstraints { make in
-            make.top.equalTo(cookTimeLabel.snp.bottom).offset(5)
+            make.top.equalTo(cookTimeLabel.snp.bottom).offset(10)
             make.centerX.equalTo(contentView)
         }
-                
-        contentView.addSubview(purchaseButton)
-        purchaseButton.snp.makeConstraints { make in
-            make.height.equalTo(45 * ratio)
-            make.top.equalTo(cookDifficultyLabel.snp.bottom).offset(10)
-            make.bottom.equalTo(contentView).offset(-18)
-            make.left.equalToSuperview().offset(50)
-            make.right.equalToSuperview().offset(-50)
-        }
-        
-        scrollView.addSubview(commentView)
-        commentView.snp.makeConstraints { make in
-            
-            make.height.equalTo(view.frame.width-10)
-            
-            make.top.equalTo(contentView.snp.bottom).offset(12)
-            make.bottom.equalTo(scrollView).offset(-5)
-            make.left.equalToSuperview().offset(20)
-            make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-20)
-        }
-        commentView.addSubview(commentTitleLabel)
-        commentTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(commentView).offset(15)
-            make.left.equalTo(commentView).offset(20)
-        }
-        commentView.addSubview(commentTextField)
-        commentTextField.snp.makeConstraints { make in
-            make.height.equalTo(36 * ratio)
-            make.top.equalTo(commentTitleLabel.snp.bottom).offset(10)
-            make.left.equalTo(commentView).offset(20)
-        }
-        commentView.addSubview(submitButton)
-        submitButton.snp.makeConstraints { make in
-            make.height.equalTo(35 * ratio)
-            make.width.equalTo(80 * ratio)
-            make.top.equalTo(commentTitleLabel.snp.bottom).offset(10)
-            //make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-80)
-            make.right.equalTo(commentView.snp.right).offset(-10)
-        }
-        
-        commentView.addSubview(tableView)
-        tableView.snp.makeConstraints { make in
-            make.top.equalTo(commentTextField.snp.bottom).offset(20)
-            make.left.equalToSuperview().offset(15)
-            make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-20)
-            make.bottom.equalToSuperview().offset(-15)
-        }
- 
     }
+    //MARK:- configureBusinessUI
+    
+        private func configureUserUI() {
+            
+            recipeImageView.addSubview(favoriteButton)
+            favoriteButton.snp.makeConstraints { make in
+                make.size.equalTo(40 * ratio)
+                make.bottom.equalTo(recipeImageView.snp.bottom).offset(-10)
+                make.right.equalTo(recipeImageView).offset(-10)
+            }
+            contentView.addSubview(purchaseButton)
+            purchaseButton.snp.makeConstraints { make in
+                make.height.equalTo(45 * ratio)
+                make.top.equalTo(cookDifficultyLabel.snp.bottom).offset(10)
+                make.bottom.equalTo(contentView).offset(-18)
+                make.left.equalToSuperview().offset(50)
+                make.right.equalToSuperview().offset(-50)
+            }
+            //MARK:- commentView
+            scrollView.addSubview(commentView)
+            commentView.snp.makeConstraints { make in
+                
+                make.height.equalTo(view.frame.width-10)
+                
+                make.top.equalTo(contentView.snp.bottom).offset(12)
+                make.bottom.equalTo(scrollView).offset(-5)
+                make.left.equalToSuperview().offset(20)
+                make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-20)
+            }
+            commentView.addSubview(commentTitleLabel)
+            commentTitleLabel.snp.makeConstraints { make in
+                make.top.equalTo(commentView).offset(15)
+                make.left.equalTo(commentView).offset(20)
+            }
+            commentView.addSubview(commentTextField)
+            commentTextField.snp.makeConstraints { make in
+                make.height.equalTo(36 * ratio)
+                make.top.equalTo(commentTitleLabel.snp.bottom).offset(10)
+                make.left.equalTo(commentView).offset(20)
+            }
+            commentView.addSubview(submitButton)
+            submitButton.snp.makeConstraints { make in
+                make.height.equalTo(35 * ratio)
+                make.width.equalTo(80 * ratio)
+                make.top.equalTo(commentTitleLabel.snp.bottom).offset(10)
+                //make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-80)
+                make.right.equalTo(commentView.snp.right).offset(-10)
+            }
+            
+            commentView.addSubview(tableView)
+            tableView.snp.makeConstraints { make in
+                make.top.equalTo(commentTextField.snp.bottom).offset(20)
+                make.left.equalToSuperview().offset(15)
+                make.right.equalTo(view.safeAreaLayoutGuide.snp.right).offset(-20)
+                make.bottom.equalToSuperview().offset(-15)
+            }
+       }
     private func fetchRestaurant() {
         guard let recipe = recipe else { return }
         API.fetchRestaurant(byName: recipe.restaurant) { [weak self] response in
@@ -539,7 +537,7 @@ extension RecipeInfoViewVC: UITableViewDataSource, UITableViewDelegate{
         return recipe?.comments.count ?? 0 //Choose your custom row number
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80 * ratio;//Choose your custom row height
+        return 100 * ratio;//Choose your custom row height
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CommentCell
@@ -558,10 +556,6 @@ extension RecipeInfoViewVC : UITextFieldDelegate {
     // set the activeTextField to the selected textfield
         self.activeTextField = textField
     }
-   
-//    func hideKeyboard() {
-//        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-//    }
     // when user click 'done' or dismiss the keyboard
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.activeTextField = nil
@@ -572,7 +566,6 @@ extension RecipeInfoViewVC : UITextFieldDelegate {
         if let text = textField.text{
             print("\(text)")
         }
-        //self.hideKeyboard()
         return true
     }
 }

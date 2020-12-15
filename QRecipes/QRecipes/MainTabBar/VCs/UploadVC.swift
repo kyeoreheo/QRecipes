@@ -12,8 +12,7 @@ import SnapKit
 class UploadVC: UIViewController, UIGestureRecognizerDelegate, UITextViewDelegate {
     //MARK:- Properties
     private let ratio = SplashVC.shared.ratio
-    private let viewModel = AuthenticationVM()
-    
+   
     private let cancelButton = UIButton()
     private let titleLabel = UILabel()
     
@@ -66,9 +65,9 @@ class UploadVC: UIViewController, UIGestureRecognizerDelegate, UITextViewDelegat
         view.addSubview(titleLabel)
         titleLabel.text = "Upload Recipe"
         titleLabel.textColor = .black
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 36 * ratio)
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 30 * ratio)
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(cancelButton.snp.bottom).offset(20)
+            make.top.equalTo(cancelButton.snp.bottom).offset(10)
             make.left.equalToSuperview().offset(30)
         }
 
@@ -80,23 +79,26 @@ class UploadVC: UIViewController, UIGestureRecognizerDelegate, UITextViewDelegat
         addPhotoButton.setTitleColor(.black, for: .normal)
         addPhotoButton.addTarget(self, action: #selector(addPhoto), for: .touchUpInside)
         addPhotoButton.snp.makeConstraints { make in
-            make.width.equalTo(view.frame.width-120)
-            make.height.equalTo(view.frame.width-160)
-            make.top.equalTo(titleLabel.snp.bottom).offset(20)
+            make.width.equalTo((view.frame.width-120) * ratio)
+            make.height.equalTo((view.frame.width-160) * ratio)
+            make.top.equalTo(titleLabel.snp.bottom).offset(15)
             make.centerX.equalToSuperview()
         }
 
         view.addSubview(recipeNameTextField)
-        recipeNameTextField.placeholder = "Recipe name"
-        recipeNameTextField.font = UIFont.systemFont(ofSize: 18)
-        recipeNameTextField.borderStyle = UITextField.BorderStyle.roundedRect
+        recipeNameTextField.attributedPlaceholder = NSAttributedString(string: " Recipe name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightlightGray, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)])
+        recipeNameTextField.textColor = .black
+        recipeNameTextField.backgroundColor = .white
+        recipeNameTextField.layer.borderWidth = 1
+        recipeNameTextField.layer.cornerRadius = 6
+        recipeNameTextField.layer.borderColor = UIColor.lightlightGray.cgColor
         recipeNameTextField.keyboardType = .default
         recipeNameTextField.addTarget(self, action: #selector(recipeNameTextFieldDidChange), for: .editingChanged)
         recipeNameTextField.autocorrectionType = .no
         recipeNameTextField.delegate = target as? UITextFieldDelegate
         recipeNameTextField.snp.makeConstraints { make in
             make.height.equalTo(36 * ratio)
-            make.top.equalTo(addPhotoButton.snp.bottom).offset(30)
+            make.top.equalTo(addPhotoButton.snp.bottom).offset(20)
             make.left.equalToSuperview().offset(30)
             make.right.equalToSuperview().offset(-30)
         }
@@ -106,7 +108,7 @@ class UploadVC: UIViewController, UIGestureRecognizerDelegate, UITextViewDelegat
         keywordsLabel.textColor = .black
         keywordsLabel.font = UIFont.boldSystemFont(ofSize: 18 * ratio)
         keywordsLabel.snp.makeConstraints { make in
-            make.top.equalTo(recipeNameTextField.snp.bottom).offset(20)
+            make.top.equalTo(recipeNameTextField.snp.bottom).offset(15)
             make.left.equalToSuperview().offset(30)
         }
         
@@ -114,6 +116,7 @@ class UploadVC: UIViewController, UIGestureRecognizerDelegate, UITextViewDelegat
         keywordsTextView.text = "Enter search keywords here [separated by commma] ..."
         keywordsTextView.textColor = .lightGray
         keywordsTextView.font = UIFont.systemFont(ofSize: 18)
+        keywordsTextView.backgroundColor = .white
         keywordsTextView.layer.borderColor = UIColor.lightlightGray.cgColor
         keywordsTextView.layer.borderWidth = 1
         keywordsTextView.layer.cornerRadius = 6
@@ -122,7 +125,7 @@ class UploadVC: UIViewController, UIGestureRecognizerDelegate, UITextViewDelegat
         keywordsTextView.autocorrectionType = .no
         keywordsTextView.isScrollEnabled = false
         keywordsTextView.snp.makeConstraints { make in
-            make.height.equalTo(100 * ratio)
+            make.height.equalTo(80 * ratio)
             make.top.equalTo(keywordsLabel.snp.bottom).offset(5)
             make.left.equalToSuperview().offset(30)
             make.right.equalToSuperview().offset(-30)
@@ -137,8 +140,7 @@ class UploadVC: UIViewController, UIGestureRecognizerDelegate, UITextViewDelegat
             nextButton.addTarget(self, action: #selector(pushUploadContVC), for: .touchUpInside)
             nextButton.snp.makeConstraints { make in
             make.height.equalTo(45 * ratio)
-            make.top.equalTo(keywordsTextView.snp.bottom).offset(50)
-            make.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide.snp.bottom).offset(-50)
+            make.top.equalTo(keywordsTextView.snp.bottom).offset(30)
             make.left.equalTo(view.snp.centerX).offset(15)
             make.right.equalToSuperview().offset(-30)
         }
