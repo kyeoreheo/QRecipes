@@ -376,7 +376,7 @@ class RecipeInfoViewVC: UIViewController {
             make.centerX.equalTo(contentView)
         }
     }
-    //MARK:- configureBusinessUI
+    //MARK:- configureUserUI
     
         private func configureUserUI() {
             
