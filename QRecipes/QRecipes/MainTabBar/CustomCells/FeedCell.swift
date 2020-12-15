@@ -92,17 +92,24 @@ class FeedCell: UICollectionViewCell {
             make.left.equalTo(contentView).offset(12)
         }
         
-        contentView.addSubview(favoriteButton)
-        favoriteButton.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(10)
-            make.right.equalTo(contentView).offset(-12)
+        if User.shared.email == "" {
+            favoriteButton.isHidden = true
+            commentButton.isHidden = true
+        } else {
+            favoriteButton.isHidden = false
+            commentButton.isHidden = false
+            contentView.addSubview(favoriteButton)
+            favoriteButton.snp.makeConstraints { make in
+                make.top.equalTo(imageView.snp.bottom).offset(10)
+                make.right.equalTo(contentView).offset(-12)
+            }
+            contentView.addSubview(commentButton)
+            commentButton.snp.makeConstraints { make in
+                make.top.equalTo(imageView.snp.bottom).offset(10)
+                make.left.equalTo(favoriteButton).offset(-30)
+            }
         }
-        contentView.addSubview(commentButton)
-        commentButton.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(10)
-            //make.right.equalTo(favoriteButton).offset(-14)
-            make.left.equalTo(favoriteButton).offset(-30)
-        }
+
         
     }
     

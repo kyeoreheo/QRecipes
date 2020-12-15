@@ -78,10 +78,8 @@ class HomeVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Selected Row \(indexPath.row)")
         let vc = RecipeInfoViewVC()
         vc.recipe = recipes[indexPath.row]
-        print("DEBUG:- \(recipes[indexPath.row].restaurant)")
         navigationController?.pushViewController(vc, animated: true)
     }
 }

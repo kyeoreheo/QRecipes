@@ -38,10 +38,11 @@ class MainTabBar: UITabBarController, UITabBarControllerDelegate {
         let settingTab = barTabView(view: SettingVC(), image: "AddFriend")
         if User.shared.email == "" {
             viewControllers = [homeTab, searchTab, settingTab]
-            
+            qrButton.isHidden = true
         } else {
             viewControllers = [homeTab, searchTab, middleTab, favoriteTab, settingTab]
             displayQrButton()
+            qrButton.isHidden = false
             tabBar.items?[2].isEnabled = false
         }
     }
